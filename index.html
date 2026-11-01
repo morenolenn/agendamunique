@@ -9,10 +9,10 @@
 <meta property="og:type" content="website">
 <meta property="og:locale" content="pt_BR">
 <meta property="og:site_name" content="Agenda Munique">
-<meta property="og:title" content="Agenda Munique: feiras e eventos de rua em Munique">
+<meta property="og:title" content="Agenda Munique: tá rolando o quê em Munique?">
 <meta property="og:description" content="Feiras de Natal, Flohmärkte e eventos de rua em Munique, em português, com mapa e envio por WhatsApp.">
 <meta property="og:url" content="https://agendamunique.com/">
-<meta name="theme-color" content="#8c1d3b">
+<meta name="theme-color" content="#a5d86a">
 <style>:root{color-scheme:light}body{margin:0}[hidden]{display:none!important}</style>
 <style>
 @font-face { font-family: "Bricolage Grotesque"; src: url("fonts/bricolage-grotesque.woff2") format("woff2"); font-weight: 200 800; font-style: normal; font-display: swap; }
@@ -20,134 +20,280 @@
 @font-face { font-family: "Source Sans 3"; src: url("fonts/source-sans-3-600.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: swap; }
 </style>
 <style>
-/* Layout: cabeçalho curto, bloco "agora", lista em linhas com data à esquerda e ações embaixo. Rodapé com fontes dos dados. */
+/* Visual: hero verde-limão com título gigante, doodles flutuando, fundo creme, cartões brancos arredondados e adesivos de data coloridos. */
 :root {
-  --bg: #eef1f5;
-  --surface: #ffffff;
-  --tint: #e3e8f0;
-  --fg: #1b2230;
-  --muted: #566073;
-  --line: #d3dae5;
-  --accent: #8c1d3b;
-  --accent-fg: #ffffff;
-  --live: #1b6f46;
-  --live-bg: #dcf0e5;
-  --soon: #6e4f0c;
-  --soon-bg: #f4e8c8;
-  --warn-bg: #fbeed3;
+  --lime: #a5d86a;
+  --lime-deep: #7fbf4a;
+  --cream: #f5f0e3;
+  --ink: #1d2a1a;
+  --muted: #55604f;
+  --card: #ffffff;
+  --yellow: #f7d84a;
+  --coral: #f58a74;
+  --blue: #8fbaf7;
+  --lilac: #cdb8f5;
   --font-display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
   --font-body: "Source Sans 3", "Helvetica Neue", Arial, sans-serif;
 }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #11151c; --surface: #1a202b; --tint: #202838; --fg: #e8ecf3; --muted: #9aa5b8; --line: #2c3544;
-    --accent: #e5738f; --accent-fg: #11151c;
-    --live: #6fd6a0; --live-bg: #17342a; --soon: #e6c36a; --soon-bg: #352c14; --warn-bg: #3a2f17;
-    color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --bg: #11151c; --surface: #1a202b; --tint: #202838; --fg: #e8ecf3; --muted: #9aa5b8; --line: #2c3544;
-  --accent: #e5738f; --accent-fg: #11151c;
-  --live: #6fd6a0; --live-bg: #17342a; --soon: #e6c36a; --soon-bg: #352c14; --warn-bg: #3a2f17;
-  color-scheme: dark;
-}
 * { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 body {
-  background: var(--bg); color: var(--fg);
-  font-family: var(--font-body); font-size: 16px; line-height: 1.45;
-  padding-block: 32px 56px;
-  padding-left: max(16px, env(safe-area-inset-left, 0px));
-  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  background: var(--cream); color: var(--ink);
+  font-family: var(--font-body); font-size: 17px; line-height: 1.45;
+  overflow-x: hidden;
 }
-.wrap { max-width: 740px; margin: 0 auto; }
-header { margin-bottom: 22px; }
-.brand { font-family: var(--font-display); font-weight: 800; font-size: clamp(2.2rem, 9vw, 3.4rem); line-height: 0.98; letter-spacing: -0.02em; margin: 0 0 10px; text-wrap: balance; }
-.brand span { color: var(--accent); }
-.lede { color: var(--muted); margin: 0 0 6px; max-width: 56ch; font-size: 1.0625rem; }
-.updated { color: var(--muted); font-size: 0.875rem; margin: 0; font-variant-numeric: tabular-nums; }
-.now { background: var(--tint); border-radius: 12px; padding: 16px; margin-bottom: 22px; }
-.now h2 { margin: 0 0 4px; color: var(--fg); }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+
+/* Topo flutuante */
+.top {
+  position: absolute; z-index: 5; top: 12px; left: max(12px, env(safe-area-inset-left, 0px)); right: max(12px, env(safe-area-inset-right, 0px));
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+}
+.logo {
+  display: inline-flex; align-items: center; gap: 10px; background: #fff; border-radius: 18px; padding: 10px 16px;
+  font-family: var(--font-display); font-weight: 800; font-size: 1.1rem; letter-spacing: -0.02em; text-decoration: none;
+}
+.logo svg { width: 28px; height: 28px; flex: none; }
+.pill {
+  display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 8px 8px 8px 18px;
+  background: #fff; border-radius: 18px; font: 600 0.95rem var(--font-body); text-decoration: none; border: 0; cursor: pointer;
+}
+.pill i, .go i {
+  font-style: normal; display: inline-grid; place-items: center; width: 30px; height: 30px; border-radius: 50%;
+  background: var(--lime); color: var(--ink); font-weight: 700; transition: transform .2s;
+}
+.pill:hover i, .go:hover i { transform: rotate(45deg); }
+
+/* Hero */
+.hero {
+  position: relative; background: var(--lime); border-radius: 0 0 44px 44px; overflow: hidden;
+  padding: 112px max(20px, env(safe-area-inset-right, 0px)) 0 max(20px, env(safe-area-inset-left, 0px));
+}
+.hero-in { max-width: 1040px; margin: 0 auto; display: grid; grid-template-columns: 1fr; gap: 8px; position: relative; z-index: 2; }
+.hero h1 {
+  font-family: var(--font-display); font-weight: 800; font-size: clamp(2.9rem, 12vw, 6.4rem);
+  line-height: 0.92; letter-spacing: -0.05em; margin: 0; text-wrap: balance;
+}
+.hero h1 em { font-style: normal; background: var(--yellow); border-radius: 18px; padding: 0 0.14em; display: inline-block; transform: rotate(-2deg); }
+.hero p.lede { font-size: 1.2rem; max-width: 34ch; margin: 18px 0 0; font-weight: 600; }
+.hero-btns { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+.go {
+  display: inline-flex; align-items: center; gap: 12px; min-height: 48px; padding: 8px 8px 8px 20px; border-radius: 999px;
+  background: var(--ink); color: var(--cream); font: 600 1rem var(--font-body); text-decoration: none;
+}
+.go.light { background: #fff; color: var(--ink); }
+.go:hover { filter: brightness(1.12); }
+.scene { width: min(100%, 520px); margin: 6px auto 0; display: block; position: relative; z-index: 2; }
+.updated-chip { display: inline-block; margin-top: 18px; font-size: 0.9rem; font-weight: 600; background: rgba(255,255,255,.55); border-radius: 999px; padding: 4px 12px; }
+
+/* Doodles */
+.doodle { position: absolute; z-index: 1; pointer-events: none; }
+.d1 { top: 22%; right: 8%; width: 90px; animation: float 6s ease-in-out infinite; }
+.d2 { top: 52%; left: 4%; width: 58px; animation: float 7s ease-in-out -2s infinite; }
+.d3 { top: 14%; left: 42%; width: 120px; opacity: .9; animation: drift 14s ease-in-out infinite; }
+.d4 { bottom: 18%; right: 3%; width: 70px; animation: float 5s ease-in-out -1s infinite; }
+.d5 { top: 40%; right: 38%; width: 40px; animation: spin 18s linear infinite; }
+@keyframes float { 0%,100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-14px) rotate(6deg); } }
+@keyframes drift { 0%,100% { transform: translateX(0); } 50% { transform: translateX(26px); } }
+@keyframes spin { to { transform: rotate(360deg); } }
+.steam { animation: steam 2.6s ease-in-out infinite; transform-origin: center bottom; }
+@keyframes steam { 0%,100% { transform: translateY(0); opacity: .9; } 50% { transform: translateY(-5px); opacity: .5; } }
+
+/* Conteúdo */
+.wrap { max-width: 1040px; margin: 0 auto; padding: 36px max(16px, env(safe-area-inset-left, 0px)) 24px; }
+.now { background: #fff; border-radius: 32px; padding: 24px; margin-bottom: 20px; display: grid; gap: 14px; }
+.now h2 { font-family: var(--font-display); font-size: 1.5rem; letter-spacing: -0.03em; margin: 0; }
 .now p { margin: 0; color: var(--muted); }
-.now ul { list-style: none; padding: 0; margin: 10px 0 0; display: flex; flex-direction: column; gap: 6px; }
-.now li { display: flex; flex-wrap: wrap; gap: 2px 10px; align-items: baseline; }
-.now strong { font-family: var(--font-display); }
-.filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+.count { display: flex; align-items: center; gap: 16px; }
+.count b {
+  font-family: var(--font-display); font-weight: 800; font-size: clamp(3.6rem, 16vw, 5.6rem); line-height: 0.85; letter-spacing: -0.06em;
+  background: var(--yellow); border-radius: 22px; padding: 10px 18px 14px; transform: rotate(-3deg); display: inline-block;
+}
+.count span { font-family: var(--font-display); font-weight: 700; font-size: 1.3rem; line-height: 1.1; letter-spacing: -0.02em; max-width: 12ch; }
+.now ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+.now li { display: flex; flex-wrap: wrap; gap: 2px 10px; align-items: baseline; padding: 10px 14px; background: var(--cream); border-radius: 16px; }
+.now strong { font-family: var(--font-display); font-weight: 700; }
+
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 30px; }
+.stat { text-align: center; padding: 10px 4px; }
+.stat b { display: block; font-family: var(--font-display); font-weight: 800; font-size: clamp(2rem, 8vw, 3.4rem); letter-spacing: -0.05em; line-height: 1; }
+.stat span { display: block; color: var(--muted); font-size: 0.9rem; margin-top: 4px; }
+
+.filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; }
 .chip {
-  font: 600 0.875rem var(--font-body); color: var(--fg); background: var(--surface);
-  border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px; cursor: pointer; min-height: 40px;
+  font: 600 0.95rem var(--font-body); color: var(--ink); background: #fff; border: 2px solid transparent; border-radius: 999px;
+  padding: 9px 16px; cursor: pointer; min-height: 44px; transition: transform .15s;
 }
-.chip[aria-pressed="true"] { background: var(--accent); color: var(--accent-fg); border-color: var(--accent); }
-.chip:focus-visible, .act:focus-visible, a:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
-h2 { font-family: var(--font-display); font-size: 0.8125rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin: 26px 0 4px; }
-.list { padding: 0; margin: 0; list-style: none; }
-.row { display: grid; grid-template-columns: 62px minmax(0, 1fr); gap: 0 14px; padding: 16px 0; border-top: 1px solid var(--line); }
-.date { text-align: center; font-family: var(--font-display); line-height: 1; padding-top: 2px; }
-.date b { display: block; font-size: 1.9rem; font-weight: 800; font-variant-numeric: tabular-nums; }
-.date i { display: block; font-style: normal; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-top: 3px; }
-.date.alt b { font-size: 1.05rem; line-height: 1.1; padding-top: 6px; }
-.body { min-width: 0; }
-.titleline { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; }
-.row h3 { font-family: var(--font-display); font-weight: 700; font-size: 1.1875rem; line-height: 1.2; margin: 0; }
-.status { font-size: 0.8125rem; font-weight: 600; border-radius: 999px; padding: 2px 10px; white-space: nowrap; }
-.status.live { color: var(--live); background: var(--live-bg); }
-.status.soon { color: var(--soon); background: var(--soon-bg); }
-.status.plain { color: var(--muted); border: 1px solid var(--line); }
-.when { margin: 2px 0 0; color: var(--muted); font-size: 0.9375rem; font-variant-numeric: tabular-nums; }
-.desc { margin: 6px 0 0; }
-.place { margin: 6px 0 0; font-size: 0.9375rem; }
-.tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 0; padding: 0; list-style: none; }
-.tag { font-size: 0.8125rem; color: var(--fg); background: var(--tint); border-radius: 6px; padding: 2px 8px; }
-.acts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.chip:hover { transform: translateY(-2px) rotate(-1.5deg); }
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--cream); }
+
+h2.sec { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.8rem, 6vw, 2.6rem); letter-spacing: -0.04em; margin: 34px 0 14px; }
+.list { padding: 0; margin: 0; list-style: none; display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; }
+.card h3, .desc, .place { overflow-wrap: anywhere; }
+.card {
+  min-width: 0;
+  background: var(--card); border-radius: 30px; padding: 20px; display: flex; flex-direction: column; gap: 10px;
+  transition: transform .2s; --c: var(--yellow);
+}
+.card:nth-child(5n+2) { --c: var(--coral); }
+.card:nth-child(5n+3) { --c: var(--blue); }
+.card:nth-child(5n+4) { --c: var(--lilac); }
+.card:nth-child(5n+5) { --c: var(--lime); }
+.card:hover { transform: translateY(-4px); }
+.card:hover .sticker { transform: rotate(3deg) scale(1.05); }
+.head { display: flex; gap: 14px; align-items: flex-start; }
+.sticker {
+  flex: none; min-width: 78px; text-align: center; background: var(--c); border-radius: 22px; padding: 10px 8px;
+  font-family: var(--font-display); line-height: 1; transform: rotate(-4deg); transition: transform .2s;
+}
+.sticker b { display: block; font-size: 2.1rem; font-weight: 800; letter-spacing: -0.05em; font-variant-numeric: tabular-nums; }
+.sticker i { display: block; font-style: normal; font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-top: 3px; }
+.sticker.alt b { font-size: 1.05rem; line-height: 1.05; letter-spacing: -0.02em; }
+.sticker.alt span { font-size: 1.4rem; display: block; margin-bottom: 4px; }
+.titles { min-width: 0; }
+.card h3 { font-family: var(--font-display); font-weight: 800; font-size: 1.45rem; line-height: 1.05; letter-spacing: -0.03em; margin: 0 0 6px; }
+.status { display: inline-block; font-size: 0.82rem; font-weight: 600; border-radius: 999px; padding: 3px 11px; background: var(--cream); }
+.status.live { background: var(--lime); }
+.status.soon { background: var(--yellow); }
+.when { margin: 0; color: var(--muted); font-size: 0.95rem; font-variant-numeric: tabular-nums; }
+.desc { margin: 0; }
+.place { margin: 0; font-weight: 600; font-size: 0.95rem; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.tag { font-size: 0.82rem; font-weight: 600; background: var(--cream); border-radius: 999px; padding: 3px 11px; }
+.acts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; padding-top: 6px; }
 .act {
-  display: inline-flex; align-items: center; min-height: 40px; padding: 8px 14px; border-radius: 8px;
-  font: 600 0.9375rem var(--font-body); text-decoration: none; color: var(--accent); border: 1px solid var(--accent); background: transparent;
+  display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 8px 16px; border-radius: 999px;
+  font: 600 0.95rem var(--font-body); text-decoration: none; color: var(--ink); border: 2px solid var(--ink); background: transparent;
 }
-.act:hover { background: var(--accent); color: var(--accent-fg); }
-.act.main { background: var(--accent); color: var(--accent-fg); }
-.act.main:hover { filter: brightness(1.08); }
-.empty { color: var(--muted); padding: 16px 0; }
-footer { margin-top: 40px; border-top: 1px solid var(--line); padding-top: 20px; color: var(--muted); font-size: 0.9375rem; display: flex; flex-direction: column; gap: 14px; }
-footer p { margin: 0; max-width: 64ch; }
-footer a { color: var(--accent); }
-@media (max-width: 480px) {
-  .row { grid-template-columns: 48px minmax(0, 1fr); gap: 0 12px; }
-  .date b { font-size: 1.6rem; }
-  .acts .act { flex: 1 1 auto; justify-content: center; }
+.act:hover { background: var(--cream); }
+.act.main { background: var(--ink); color: var(--cream); padding-right: 8px; gap: 10px; }
+.act.main:hover { filter: brightness(1.15); background: var(--ink); }
+.act.main i { font-style: normal; display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--lime); color: var(--ink); transition: transform .2s; }
+.act.main:hover i { transform: rotate(45deg); }
+.empty { padding: 24px; background: #fff; border-radius: 24px; }
+
+/* Rodapé */
+.foot { background: var(--lime); border-radius: 44px 44px 0 0; margin-top: 40px; padding: 44px max(20px, env(safe-area-inset-left, 0px)) calc(40px + env(safe-area-inset-bottom, 0px)); }
+.foot-in { max-width: 1040px; margin: 0 auto; display: grid; gap: 18px; }
+.foot h2 { font-family: var(--font-display); font-weight: 800; font-size: clamp(2.4rem, 10vw, 4.6rem); line-height: 0.95; letter-spacing: -0.05em; margin: 0; }
+.foot p { margin: 0; max-width: 64ch; font-size: 0.95rem; }
+.foot a { text-decoration-thickness: 2px; text-underline-offset: 3px; }
+
+@media (min-width: 720px) {
+  .hero-in { grid-template-columns: 1.15fr 1fr; align-items: end; gap: 24px; }
+  .hero-text { padding-bottom: 56px; }
+  .scene { margin: 0; }
+  .list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .now { grid-template-columns: auto 1fr; align-items: center; gap: 24px 36px; padding: 28px 32px; }
+  .now > h2 { grid-column: 1 / -1; }
+  .logo { font-size: 1.2rem; }
+}
+@media (max-width: 719px) {
+  .d3, .d5, #share-site { display: none; }
+  .d1 { top: 11%; width: 64px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .doodle, .steam { animation: none; }
+  .card, .chip, .sticker, .pill i, .go i, .act.main i { transition: none; }
 }
 </style>
 </head>
 <body>
 
+<div class="top">
+  <a class="logo" href="./" aria-label="Agenda Munique, início">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M4 22c4-14 8-14 9-4 1 7 4 7 6-2 1-5 4-7 9-4" fill="none" stroke="#7fbf4a" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="26" cy="9" r="3" fill="#f58a74"/></svg>
+    Agenda Munique
+  </a>
+  <a class="pill" id="share-site" href="#" target="_blank" rel="noopener">Mandar pro grupo <i aria-hidden="true">↗</i></a>
+</div>
 
-<div class="wrap">
-  <header>
-    <h1 class="brand">Agenda <span>Munique</span></h1>
-    <p class="lede">Feiras de Natal, Flohmärkte e eventos de rua, em português, para planejar o fim de semana com a família.</p>
-    <p class="updated" id="updated"></p>
-  </header>
+<section class="hero">
+  <svg class="doodle d1" viewBox="0 0 90 40" aria-hidden="true"><path d="M4 30q10-26 20 0t20 0 20 0 20 0" fill="none" stroke="#f7d84a" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <svg class="doodle d2" viewBox="0 0 60 60" aria-hidden="true"><circle cx="18" cy="18" r="9" fill="#8fbaf7"/><circle cx="44" cy="40" r="6" fill="#f58a74"/><circle cx="14" cy="48" r="4" fill="#fff"/></svg>
+  <svg class="doodle d3" viewBox="0 0 120 56" aria-hidden="true"><path d="M20 50c-14 0-18-18-4-22 0-16 22-20 32-8 8-10 28-6 30 8 16-2 24 16 12 22z" fill="#fff"/></svg>
+  <svg class="doodle d4" viewBox="0 0 70 70" aria-hidden="true"><path d="M35 6v58M6 35h58M14 14l42 42M56 14L14 56" stroke="#fff" stroke-width="5" stroke-linecap="round"/></svg>
+  <svg class="doodle d5" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 3l4.7 11.8L37 16l-9.6 8.1L30.5 37 20 30l-10.5 7 3.1-12.9L3 16l12.3-1.2z" fill="#f58a74"/></svg>
 
+  <div class="hero-in">
+    <div class="hero-text">
+      <h1>Tá rolando o quê em <em>Munique?</em></h1>
+      <p class="lede">Feiras de Natal, Flohmärkte e eventos de rua, em português, para planejar o rolê com a família.</p>
+      <div class="hero-btns">
+        <a class="go" href="#lista">Ver o que tem <i aria-hidden="true">↓</i></a>
+        <a class="go light" id="share-hero" href="#" target="_blank" rel="noopener">Mandar pro grupo <i aria-hidden="true">↗</i></a>
+      </div>
+      <span class="updated-chip" id="updated"></span>
+    </div>
+
+    <svg class="scene" viewBox="0 0 360 300" role="img" aria-label="Ilustração de uma barraquinha de feira de Natal com Glühwein e pretzel">
+      <ellipse cx="180" cy="268" rx="165" ry="26" fill="#7fbf4a"/>
+      <!-- balcão -->
+      <rect x="86" y="140" width="188" height="122" rx="10" fill="#f3e3c0"/>
+      <rect x="76" y="198" width="208" height="18" rx="8" fill="#c98f5b"/>
+      <rect x="96" y="216" width="168" height="46" rx="6" fill="#e5cfa0"/>
+      <!-- toldo listrado -->
+      <path d="M66 98L180 44 294 98z" fill="#2f6b3d"/>
+      <g>
+        <rect x="76" y="98" width="35" height="38" fill="#f58a74"/><rect x="111" y="98" width="35" height="38" fill="#fff"/>
+        <rect x="146" y="98" width="35" height="38" fill="#f58a74"/><rect x="181" y="98" width="35" height="38" fill="#fff"/>
+        <rect x="216" y="98" width="35" height="38" fill="#f58a74"/><rect x="251" y="98" width="33" height="38" fill="#fff"/>
+        <circle cx="93.500" cy="136" r="17.500" fill="#f58a74"/><circle cx="128.500" cy="136" r="17.500" fill="#fff"/>
+        <circle cx="163.500" cy="136" r="17.500" fill="#f58a74"/><circle cx="198.500" cy="136" r="17.500" fill="#fff"/>
+        <circle cx="233.500" cy="136" r="17.500" fill="#f58a74"/><circle cx="267.500" cy="136" r="16.500" fill="#fff"/>
+      </g>
+      <!-- luzinhas -->
+      <path d="M90 168Q180 196 270 168" fill="none" stroke="#1d2a1a" stroke-width="2"/>
+      <circle cx="112" cy="176" r="5" fill="#f7d84a"/><circle cx="146" cy="184" r="5" fill="#f58a74"/><circle cx="180" cy="186" r="5" fill="#f7d84a"/><circle cx="214" cy="184" r="5" fill="#8fbaf7"/><circle cx="248" cy="176" r="5" fill="#f7d84a"/>
+      <!-- placa -->
+      <rect x="118" y="206" width="124" height="38" rx="10" fill="#1d2a1a"/>
+      <text x="180" y="232" text-anchor="middle" font-family="Bricolage Grotesque, Arial, sans-serif" font-weight="800" font-size="22" fill="#f5f0e3">Glühwein</text>
+      <!-- caneca e pretzel -->
+      <rect x="222" y="168" width="28" height="30" rx="6" fill="#8fbaf7"/>
+      <path d="M250 175q14 0 14 10t-14 10" fill="none" stroke="#8fbaf7" stroke-width="5"/>
+      <g class="steam" fill="none" stroke="#fff" stroke-width="3.500" stroke-linecap="round"><path d="M229 160q-5-7 0-13"/><path d="M240 160q-5-7 0-13"/></g>
+      <path d="M96 190c0-14 12-20 22-20s22 6 22 20-12 6-22 6-22 8-22-6z" fill="none" stroke="#c9722e" stroke-width="7" stroke-linecap="round"/>
+      <!-- bonequinho de neve -->
+      <circle cx="318" cy="236" r="24" fill="#fff"/><circle cx="318" cy="200" r="17" fill="#fff"/>
+      <circle cx="313" cy="196" r="2.500" fill="#1d2a1a"/><circle cx="323" cy="196" r="2.500" fill="#1d2a1a"/>
+      <path d="M318 201l12 3-12 3z" fill="#f58a74"/>
+      <rect x="305" y="176" width="26" height="8" rx="3" fill="#1d2a1a"/><rect x="310" y="162" width="16" height="16" rx="3" fill="#1d2a1a"/>
+      <path d="M303 213q15 9 30 0" fill="none" stroke="#f58a74" stroke-width="6" stroke-linecap="round"/>
+      <!-- estrelinha -->
+      <path d="M44 70l4 10 10 1-8 7 3 10-9-6-9 6 3-10-8-7 10-1z" fill="#f7d84a"/>
+    </svg>
+  </div>
+</section>
+
+<main class="wrap" id="lista">
   <section class="now" id="now" aria-live="polite"></section>
+  <div class="stats" id="stats"></div>
 
   <div class="filters" role="group" aria-label="Filtrar por tipo">
     <button class="chip" id="f-all" data-filter="all" aria-pressed="true">Todos</button>
-    <button class="chip" id="f-natal" data-filter="natal" aria-pressed="false">Natal</button>
-    <button class="chip" id="f-floh" data-filter="floh" aria-pressed="false">Flohmarkt</button>
-    <button class="chip" id="f-rua" data-filter="rua" aria-pressed="false">Rua e tradição</button>
-    <button class="chip" id="f-kids" data-filter="kids" aria-pressed="false">Com crianças</button>
+    <button class="chip" id="f-natal" data-filter="natal" aria-pressed="false">🎄 Natal</button>
+    <button class="chip" id="f-floh" data-filter="floh" aria-pressed="false">🧺 Flohmarkt</button>
+    <button class="chip" id="f-rua" data-filter="rua" aria-pressed="false">🎭 Rua e tradição</button>
+    <button class="chip" id="f-kids" data-filter="kids" aria-pressed="false">🧒 Com crianças</button>
   </div>
 
   <div id="out"></div>
+</main>
 
-  <footer>
+<footer class="foot">
+  <div class="foot-in">
+    <h2>Boa feira! 🥨</h2>
     <p>Datas e horários conferidos no portal <a href="https://www.muenchen.de/veranstaltungen/weihnachtsmaerkte-christkindlmaerkte-2026" target="_blank" rel="noopener">muenchen.de</a> e no <a href="https://www.kindaling.de/weihnachtsmaerkte/muenchen" target="_blank" rel="noopener">Kindaling</a>, com apoio de sites de turismo da cidade. Horários variam por dia e feiras de Natal fecham no Totensonntag (22 de novembro). Confira a página do evento antes de sair. Os pontos do mapa são buscas pelo nome do local.</p>
     <p>Projeto pessoal e sem fins lucrativos, feito por um morador brasileiro em Munique, sem vínculo com os organizadores dos eventos. Esta página não usa cookies nem formulários, e as fontes são servidas pelo próprio site.</p>
-  </footer>
-  <!-- Para medir visitas depois de hospedar fora da Claude (por exemplo Cloudflare Pages), cole aqui o snippet de Web Analytics do Cloudflare. Ele não usa cookies. -->
-</div>
+  </div>
+  <!-- Para medir visitas, cole aqui o snippet de Web Analytics do Cloudflare. Ele não usa cookies. -->
+</footer>
 
 <script>
 var UPDATED = "2026-11-01";
+var SITE = "https://agendamunique.com/";
 var EVENTS = [
   { t: "Winterworld", type: "natal", s: "2026-11-07", e: "2026-12-20", place: "Motorworld München", q: "Motorworld München",
     d: "Mercado de inverno dentro da Motorworld. Sábado das 11h às 23h, domingo até 22h e, nos dias úteis, a partir das 15h." },
@@ -202,6 +348,9 @@ function shareUrl(ev, when) {
   var text = "Agenda Munique: " + ev.t + ", " + when + ". " + ev.place + ". Mapa: " + mapUrl(ev.q);
   return "https://wa.me/?text=" + encodeURIComponent(text);
 }
+function siteShareUrl() {
+  return "https://wa.me/?text=" + encodeURIComponent("Olha esse site com as feiras de Natal e eventos de rua de Munique, tudo em português: " + SITE);
+}
 function calUrl(ev) {
   var end = addDays(parse(ev.e), 1);
   return "https://calendar.google.com/calendar/render?action=TEMPLATE&text=" + encodeURIComponent(ev.t) +
@@ -216,7 +365,7 @@ function statusOf(ev, today) {
     var n = Math.round((s - today) / 86400000);
     return '<span class="status soon">' + (n === 1 ? "Abre amanhã" : "Abre em " + n + " dias") + "</span>";
   }
-  return '<span class="status plain">Encerrado</span>';
+  return '<span class="status">Encerrado</span>';
 }
 function tagsOf(ev) {
   var t = [];
@@ -228,18 +377,18 @@ function tagsOf(ev) {
 function row(ev, today, weekly) {
   var when = weekly ? ev.when : whenText(ev);
   var s = parse(ev.s || "2026-01-01");
-  var dateCol;
-  if (weekly) dateCol = '<div class="date alt"><b>Toda semana</b></div>';
-  else if (today >= parse(ev.s) && today <= parse(ev.e)) dateCol = '<div class="date alt"><b>Em cartaz</b></div>';
-  else dateCol = '<div class="date"><b>' + s.getDate() + "</b><i>" + MONTHS[s.getMonth()] + "</i></div>";
-  var st = weekly ? '<span class="status plain">Recorrente</span>' : statusOf(ev, today);
+  var sticker;
+  if (weekly) sticker = '<div class="sticker alt"><span aria-hidden="true">🔁</span><b>Toda semana</b></div>';
+  else if (today >= parse(ev.s) && today <= parse(ev.e)) sticker = '<div class="sticker alt"><span aria-hidden="true">✨</span><b>Em cartaz</b></div>';
+  else sticker = '<div class="sticker"><b>' + s.getDate() + "</b><i>" + MONTHS[s.getMonth()] + "</i></div>";
+  var st = weekly ? '<span class="status">Recorrente</span>' : statusOf(ev, today);
   var cal = (!weekly && (parse(ev.e) - parse(ev.s)) / 86400000 <= 2)
     ? '<a class="act" href="' + calUrl(ev) + '" target="_blank" rel="noopener">Calendário</a>' : "";
-  return '<li class="row">' + dateCol + '<div class="body"><div class="titleline"><h3>' + esc(ev.t) + "</h3>" + st + "</div>" +
+  return '<li class="card"><div class="head">' + sticker + '<div class="titles"><h3>' + esc(ev.t) + "</h3>" + st + "</div></div>" +
     '<p class="when">' + esc(when) + "</p><p class=\"desc\">" + esc(ev.d) + "</p>" +
-    '<p class="place">' + esc(ev.place) + "</p>" + tagsOf(ev) +
-    '<div class="acts"><a class="act main" href="' + mapUrl(ev.q) + '" target="_blank" rel="noopener">Abrir no mapa</a>' +
-    '<a class="act" href="' + shareUrl(ev, when) + '" target="_blank" rel="noopener">Enviar no WhatsApp</a>' + cal + "</div></div></li>";
+    '<p class="place">📍 ' + esc(ev.place) + "</p>" + tagsOf(ev) +
+    '<div class="acts"><a class="act main" href="' + mapUrl(ev.q) + '" target="_blank" rel="noopener">Abrir no mapa <i aria-hidden="true">↗</i></a>' +
+    '<a class="act" href="' + shareUrl(ev, when) + '" target="_blank" rel="noopener">Enviar no WhatsApp</a>' + cal + "</div></li>";
 }
 function weekendWindow(today) {
   var dow = today.getDay();
@@ -251,16 +400,27 @@ function buildNow(today) {
   var w = weekendWindow(today);
   var active = EVENTS.filter(function (e) { return parse(e.s) <= w.b && parse(e.e) >= w.a; });
   if (active.length) {
-    return "<h2>" + w.label + "</h2><ul>" + active.map(function (e) {
+    return "<h2>" + w.label + " 🎉</h2><ul>" + active.map(function (e) {
       return "<li><strong>" + esc(e.t) + "</strong><span>" + esc(whenText(e)) + ", " + esc(e.place) + "</span></li>";
     }).join("") + "</ul>";
   }
   var next = EVENTS.filter(function (e) { return parse(e.s) > today; })
     .sort(function (a, b) { return parse(a.s) - parse(b.s); }).slice(0, 3);
-  var head = "<h2>Próximas aberturas</h2><p>Nada de feira de Natal aberta " + (w.label === "Hoje" ? "hoje" : "neste fim de semana") + ". As primeiras abrem em breve.</p>";
-  return head + "<ul>" + next.map(function (e) {
+  if (!next.length) return "<h2>Por enquanto é só isso</h2><p>Nada com data marcada à vista. Os Flohmärkte semanais continuam rolando.</p>";
+  var n = Math.round((parse(next[0].s) - today) / 86400000);
+  var head = "<h2>Próximas aberturas</h2>";
+  var count = '<div class="count"><b>' + n + "</b><span>" + (n === 1 ? "dia" : "dias") + " para a primeira feira abrir</span></div>";
+  return head + count + "<ul>" + next.map(function (e) {
     return "<li><strong>" + esc(e.t) + "</strong><span>abre em " + esc(fmt(e.s)) + ", " + esc(e.place) + "</span></li>";
   }).join("") + "</ul>";
+}
+function buildStats(today) {
+  var open = EVENTS.filter(function (e) { return parse(e.e) >= today; });
+  if (!open.length) return "";
+  var last = open.reduce(function (m, e) { return parse(e.e) > m ? parse(e.e) : m; }, parse(open[0].e));
+  return '<div class="stat"><b>' + open.length + "</b><span>eventos com data</span></div>" +
+    '<div class="stat"><b>' + WEEKLY.length + "</b><span>feiras toda semana</span></div>" +
+    '<div class="stat"><b>' + last.getDate() + " " + MONTHS[last.getMonth()] + "</b><span>fim da temporada</span></div>";
 }
 function build(now) {
   var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -268,19 +428,22 @@ function build(now) {
     .sort(function (a, b) { return parse(a.s) - parse(b.s); });
   var weekly = WEEKLY.filter(matches);
   var html = "";
-  if (dated.length) html += "<h2>Com data marcada</h2><ul class=\"list\">" + dated.map(function (e) { return row(e, today, false); }).join("") + "</ul>";
-  if (weekly.length) html += "<h2>Toda semana</h2><ul class=\"list\">" + weekly.map(function (e) { return row(e, today, true); }).join("") + "</ul>";
+  if (dated.length) html += "<h2 class=\"sec\">Com data marcada</h2><ul class=\"list\">" + dated.map(function (e) { return row(e, today, false); }).join("") + "</ul>";
+  if (weekly.length) html += "<h2 class=\"sec\">Toda semana</h2><ul class=\"list\">" + weekly.map(function (e) { return row(e, today, true); }).join("") + "</ul>";
   if (!html) html = '<p class="empty">Nenhum evento neste filtro por enquanto.</p>';
-  return { list: html, now: buildNow(today) };
+  return { list: html, now: buildNow(today), stats: buildStats(today) };
 }
 function render() {
   var out = build(new Date());
   document.getElementById("out").innerHTML = out.list;
   document.getElementById("now").innerHTML = out.now;
+  document.getElementById("stats").innerHTML = out.stats;
 }
 (function () {
   var u = parse(UPDATED);
   document.getElementById("updated").textContent = "Atualizado em " + u.getDate() + " de " + MONTHS_LONG[u.getMonth()] + " de " + u.getFullYear();
+  document.getElementById("share-site").href = siteShareUrl();
+  document.getElementById("share-hero").href = siteShareUrl();
   Array.prototype.forEach.call(document.querySelectorAll(".chip"), function (b) {
     b.addEventListener("click", function () {
       filter = b.getAttribute("data-filter");

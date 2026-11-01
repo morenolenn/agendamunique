@@ -232,10 +232,6 @@ dialog::backdrop { background: rgba(29, 42, 26, .45); }
 .foot-in { max-width: 1040px; margin: 0 auto; display: grid; gap: 18px; }
 .foot h2 { font-family: var(--font-display); font-weight: 800; font-size: clamp(2.4rem, 10vw, 4.6rem); line-height: 0.95; letter-spacing: -0.05em; margin: 0; }
 .foot p { margin: 0; font-size: 0.95rem; }
-.maker { display: flex; align-items: center; gap: 16px; }
-.maker img { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; flex: none; border: 2px solid var(--ink); }
-.maker p { flex: 1; }
-@media (max-width: 600px) { .maker { align-items: flex-start; gap: 12px; } }
 .foot a { text-decoration-thickness: 2px; text-underline-offset: 3px; }
 
 @media (min-width: 720px) {
@@ -379,10 +375,7 @@ dialog::backdrop { background: rgba(29, 42, 26, .45); }
   <div class="foot-in">
     <h2 data-i18n="bye">Boa feira! 🥨</h2>
     <p data-i18n-html="sources">Datas e horários conferidos no portal <a href="https://www.muenchen.de/veranstaltungen/weihnachtsmaerkte-christkindlmaerkte-2026" target="_blank" rel="noopener">muenchen.de</a>, no guia de turismo <a href="https://www.munich.travel/en/topics/markets-festivals/christmas-markets-munich" target="_blank" rel="noopener">munich.travel</a>, no site do <a href="https://www.christkindlmarkt-muenchen.de/" target="_blank" rel="noopener">Christkindlmarkt</a> e no <a href="https://www.kindaling.de/weihnachtsmaerkte/muenchen" target="_blank" rel="noopener">Kindaling</a>. Horários variam por dia e a maioria das feiras de Natal fecha em 15 de novembro (Volkstrauertag) e no Totensonntag (22 de novembro). Confira a página do evento antes de sair. Os pontos do mapa são buscas pelo nome do local.</p>
-    <div class="maker">
-      <img src="moreno.webp" alt="Foto do criador da agenda" width="56" height="56" data-i18n-alt="photo">
-      <p data-i18n="about">Projeto independente, feito por um brasileiro morando em Munique, sem vínculo com os organizadores dos eventos. Esta página não usa cookies e serve as fontes pelo próprio site. As visitas são contadas de forma anônima pelo Cloudflare Web Analytics, sem cookies. O formulário de sugestões é do Google.</p>
-    </div>
+    <p data-i18n="about">Projeto independente, feito por um brasileiro morando em Munique, sem vínculo com os organizadores dos eventos. Esta página não usa cookies e serve as fontes pelo próprio site. As visitas são contadas de forma anônima pelo Cloudflare Web Analytics, sem cookies. O formulário de sugestões é do Google.</p>
   </div>
   <!-- Cloudflare Web Analytics (sem cookies) --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "fc814bea30b2451f9221f874394a64c0"}'></script><!-- End Cloudflare Web Analytics -->
 </footer>
@@ -525,7 +518,6 @@ var TEXT = {
     copy: "Copiar link", copied: "Link copiado!",
     bye: "Boa feira! 🥨",
     sources: 'Datas e horários conferidos no portal <a href="https://www.muenchen.de/veranstaltungen/weihnachtsmaerkte-christkindlmaerkte-2026" target="_blank" rel="noopener">muenchen.de</a>, no guia de turismo <a href="https://www.munich.travel/en/topics/markets-festivals/christmas-markets-munich" target="_blank" rel="noopener">munich.travel</a>, no site do <a href="https://www.christkindlmarkt-muenchen.de/" target="_blank" rel="noopener">Christkindlmarkt</a> e no <a href="https://www.kindaling.de/weihnachtsmaerkte/muenchen" target="_blank" rel="noopener">Kindaling</a>. Horários variam por dia e a maioria das feiras de Natal fecha em 15 de novembro (Volkstrauertag) e no Totensonntag (22 de novembro). Confira a página do evento antes de sair. Os pontos do mapa são buscas pelo nome do local.',
-    photo: "Foto do criador da agenda",
     about: "Projeto independente, feito por um brasileiro morando em Munique, sem vínculo com os organizadores dos eventos. Esta página não usa cookies e serve as fontes pelo próprio site. As visitas são contadas de forma anônima pelo Cloudflare Web Analytics, sem cookies. O formulário de sugestões é do Google.",
     openMap: "Abrir no mapa",
     range: function (a, b) { return a + " a " + b; },
@@ -570,7 +562,6 @@ var TEXT = {
     copy: "Link kopieren", copied: "Link kopiert!",
     bye: "Viel Spaß! 🥨",
     sources: 'Termine und Öffnungszeiten geprüft auf <a href="https://www.muenchen.de/veranstaltungen/weihnachtsmaerkte-christkindlmaerkte-2026" target="_blank" rel="noopener">muenchen.de</a>, im Tourismusportal <a href="https://www.munich.travel/en/topics/markets-festivals/christmas-markets-munich" target="_blank" rel="noopener">munich.travel</a>, auf der Seite des <a href="https://www.christkindlmarkt-muenchen.de/" target="_blank" rel="noopener">Christkindlmarkts</a> und bei <a href="https://www.kindaling.de/weihnachtsmaerkte/muenchen" target="_blank" rel="noopener">Kindaling</a>. Die Öffnungszeiten ändern sich je nach Tag, und die meisten Weihnachtsmärkte sind am Volkstrauertag (15. November) und am Totensonntag (22. November) geschlossen. Schau vor dem Losgehen auf die Seite der Veranstaltung. Die Kartenpunkte sind Suchen nach dem Namen des Ortes.',
-    photo: "Foto des Machers der Agenda",
     about: "Ein unabhängiges Projekt von einem Brasilianer, der in München lebt, ohne Verbindung zu den Veranstaltern. Die Seite setzt keine Cookies und lädt ihre Schriften vom eigenen Server. Besuche werden anonym und ohne Cookies mit Cloudflare Web Analytics gezählt. Das Vorschlagsformular ist von Google.",
     openMap: "Auf der Karte öffnen",
     range: function (a, b) { return a + " bis " + b; },

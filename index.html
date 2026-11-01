@@ -137,6 +137,9 @@ a { color: inherit; }
 .chip[aria-pressed="true"] { background: var(--ink); color: var(--cream); }
 
 h2.sec { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.8rem, 6vw, 2.6rem); letter-spacing: -0.04em; margin: 34px 0 14px; }
+.month-sep { display: flex; align-items: center; gap: 16px; margin: 36px 0 14px; font: 800 clamp(1.4rem, 4.5vw, 1.9rem) var(--font-display); letter-spacing: -0.03em; text-transform: capitalize; }
+.month-sep::after { content: ""; flex: 1; height: 3px; border-radius: 3px; background: var(--ink); opacity: .22; }
+h2.sec + .month-sep { margin-top: 0; }
 .list { padding: 0; margin: 0; list-style: none; display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; }
 .card h3, .desc, .place { overflow-wrap: anywhere; }
 .card {
@@ -571,7 +574,21 @@ function build(now) {
     .sort(function (a, b) { return parse(a.s) - parse(b.s); });
   var weekly = WEEKLY.filter(matches);
   var html = "";
-  if (dated.length) html += "<h2 class=\"sec\">Com data marcada</h2><ul class=\"list\">" + dated.map(function (e) { return row(e, today, false); }).join("") + "</ul>";
+  if (dated.length) {
+    // Um divisor por mês; eventos que já abriram entram no mês de hoje
+    html += "<h2 class=\"sec\">Com data marcada</h2>";
+    var groups = [];
+    dated.forEach(function (e) {
+      var d = parse(e.s) > today ? parse(e.s) : today, key = d.getFullYear() * 12 + d.getMonth();
+      if (!groups.length || groups[groups.length - 1].key !== key) groups.push({ key: key, date: d, items: [] });
+      groups[groups.length - 1].items.push(e);
+    });
+    groups.forEach(function (g) {
+      var name = MONTHS_LONG[g.date.getMonth()];
+      if (g.date.getFullYear() !== today.getFullYear()) name += " de " + g.date.getFullYear();
+      html += '<h3 class="month-sep">' + name + "</h3><ul class=\"list\">" + g.items.map(function (e) { return row(e, today, false); }).join("") + "</ul>";
+    });
+  }
   if (weekly.length) html += "<h2 class=\"sec\">Toda semana</h2><ul class=\"list\">" + weekly.map(function (e) { return row(e, today, true); }).join("") + "</ul>";
   if (!html) html = '<p class="empty">Nenhum evento neste filtro por enquanto.</p>';
   return { list: html, now: buildNow(today), stats: buildStats(today) };

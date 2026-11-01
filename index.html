@@ -29,9 +29,9 @@
 <meta name="theme-color" content="#a5d86a">
 <style>:root{color-scheme:light}body{margin:0}[hidden]{display:none!important}</style>
 <style>
-@font-face { font-family: "Bricolage Grotesque"; src: url("fonts/bricolage-grotesque.woff2") format("woff2"); font-weight: 200 800; font-style: normal; font-display: swap; }
-@font-face { font-family: "Source Sans 3"; src: url("fonts/source-sans-3-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
-@font-face { font-family: "Source Sans 3"; src: url("fonts/source-sans-3-600.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: "Bricolage Grotesque"; src: url("/fonts/bricolage-grotesque.woff2") format("woff2"); font-weight: 200 800; font-style: normal; font-display: swap; }
+@font-face { font-family: "Source Sans 3"; src: url("/fonts/source-sans-3-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Source Sans 3"; src: url("/fonts/source-sans-3-600.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: swap; }
 </style>
 <style>
 /* Visual: hero verde-limão com título gigante, doodles flutuando, fundo creme, cartões brancos arredondados e adesivos de data coloridos. */
@@ -276,15 +276,15 @@ dialog::backdrop { background: rgba(29, 42, 26, .45); }
 <body>
 
 <div class="top">
-  <a class="logo" href="./" aria-label="Agenda Munique, início" data-i18n-aria="home">
+  <a class="logo" href="/" aria-label="Agenda Munique, início" data-i18n-aria="home">
     <svg viewBox="12 -1 88 88" aria-hidden="true"><defs><filter id="logo-sombra" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="4" stdDeviation="3.5" flood-color="#1d2a1a" flood-opacity=".22"/></filter></defs><rect x="10.6163" y="13.3935" width="79.6215" height="73" rx="22" transform="rotate(-9.68402 10.6163 13.3935)" fill="#a6d86a"/><circle cx="70.1856" cy="27.0938" r="15.5" fill="#f7d84a" filter="url(#logo-sombra)"/></svg>
     Agenda Munique
   </a>
   <div class="top-r">
   <nav class="langs" aria-label="Idioma" data-i18n-aria="langLabel">
-    <a href="./" data-lang="pt" hreflang="pt-BR" lang="pt-BR" title="Português" aria-current="true">PT</a>
-    <a href="de/" data-lang="de" hreflang="de" lang="de" title="Deutsch">DE</a>
-    <a href="en/" data-lang="en" hreflang="en" lang="en" title="English">EN</a>
+    <a href="/" data-lang="pt" hreflang="pt-BR" lang="pt-BR" title="Português" aria-current="true">PT</a>
+    <a href="/de/" data-lang="de" hreflang="de" lang="de" title="Deutsch">DE</a>
+    <a href="/en/" data-lang="en" hreflang="en" lang="en" title="English">EN</a>
   </nav>
   <button class="pill" id="share-site" type="button" data-share="site"><span data-i18n="shareAll">Compartilhar programação</span> <i aria-hidden="true"><svg class="plane" viewBox="1 -1 24 24" aria-hidden="true"><path d="M14.54 21.69a.5.5 0 0 0 .94-.03l6.5-19a.5.5 0 0 0-.64-.63l-19 6.5a.5.5 0 0 0-.02.93l7.93 3.18a2 2 0 0 1 1.11 1.11zM21.85 2.15 10.91 13.09"/></svg></i></button>
   </div>
@@ -696,6 +696,8 @@ var L = TEXT[lang], MONTHS = L.months, MONTHS_LONG = L.monthsLong;
 // Campo do evento no idioma atual: em alemão usa ev.de.t / .d / .place / .when / .note quando existirem; em inglês, ev.en
 function tr(ev, k) { var x = ev[lang]; return lang !== "pt" && x && x[k] ? x[k] : ev[k]; }
 function siteUrl() { return lang === "pt" ? SITE : SITE + lang + "/"; }
+// Deixa na barra de endereço /de/ ou /en/ em vez de ?lang=, para quem copiar o link mandar a página com prévia no idioma certo
+function syncUrl() { if (history.replaceState) history.replaceState(null, "", (lang === "pt" ? "/" : "/" + lang + "/") + location.hash); }
 var filter = "all";
 
 function parse(s) { var p = s.split("-"); return new Date(+p[0], +p[1] - 1, +p[2]); }
@@ -915,12 +917,13 @@ document.getElementById("sh-more").addEventListener("click", function () {
     e.id = e.t.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
   });
   applyLang();
+  syncUrl();
   Array.prototype.forEach.call(document.querySelectorAll(".langs a"), function (a) { a.addEventListener("click", function (e) {
     e.preventDefault();
     lang = a.getAttribute("data-lang");
     L = TEXT[lang]; MONTHS = L.months; MONTHS_LONG = L.monthsLong;
     try { localStorage.setItem("lang", lang); } catch (err) {}
-    if (history.replaceState) history.replaceState(null, "", "?lang=" + lang + location.hash);
+    syncUrl();
     applyLang();
     render();
   }); });

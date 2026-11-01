@@ -349,6 +349,7 @@ dialog::backdrop { background: rgba(29, 42, 26, .45); }
 </footer>
 
 <script>
+// === DADOS DOS EVENTOS: INÍCIO (a rotina semanal edita só este bloco) ===
 var UPDATED = "2026-11-01";
 var SITE = "https://agendamunique.com/";
 var EVENTS = [
@@ -385,6 +386,7 @@ var WEEKLY = [
   { t: "Antik- & Flohmarkt Daglfing", type: "floh", when: "Sextas e sábados em datas selecionadas, 7h às 15h", place: "Trabrennbahn, Rennbahnstraße 35", q: "Trabrennbahn München-Daglfing", kids: true, dow: 6, note: "Datas selecionadas: confira o calendário do organizador antes de ir.",
     d: "Feira de antiguidades e pulgas no hipódromo. Veja o calendário do organizador para as datas." }
 ];
+// === DADOS DOS EVENTOS: FIM ===
 var MONTHS = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
 var MONTHS_LONG = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"];
 var filter = "all";
@@ -571,8 +573,10 @@ document.getElementById("sh-more").addEventListener("click", function () {
   if (navigator.share) navigator.share({ title: shareCtx.title, text: shareCtx.text, url: shareCtx.url }).catch(function () {});
 });
 (function () {
-  EVENTS.forEach(function (e, i) { e.id = "e" + i; });
-  WEEKLY.forEach(function (e, i) { e.id = "w" + i; });
+  // O id vem do nome, para os links compartilhados (#ev-...) não mudarem quando entra um evento novo na lista
+  EVENTS.concat(WEEKLY).forEach(function (e) {
+    e.id = e.t.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  });
   var u = parse(UPDATED);
   document.getElementById("updated").textContent = "Atualizado em " + u.getDate() + " de " + MONTHS_LONG[u.getMonth()] + " de " + u.getFullYear();
   Array.prototype.forEach.call(document.querySelectorAll(".chip"), function (b) {

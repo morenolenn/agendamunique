@@ -26,7 +26,7 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Agenda Munique: tá rolando o quê em Munique? Barraquinha de Glühwein ilustrada">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#38b1e6">
+<meta name="theme-color" content="#a5d86a">
 <style>:root{color-scheme:light}body{margin:0}[hidden]{display:none!important}</style>
 <style>
 @font-face { font-family: "Bricolage Grotesque"; src: url("/fonts/bricolage-grotesque.woff2") format("woff2"); font-weight: 200 800; font-style: normal; font-display: swap; }
@@ -34,7 +34,7 @@
 @font-face { font-family: "Source Sans 3"; src: url("/fonts/source-sans-3-600.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: swap; }
 </style>
 <style>
-/* Visual: hero azul com título gigante, doodles flutuando, fundo creme, cartões brancos arredondados e adesivos de data coloridos. */
+/* Visual: hero verde-limão com título gigante, doodles flutuando, fundo creme, cartões brancos arredondados e adesivos de data coloridos. */
 :root {
   --lime: #a5d86a;
   --lime-deep: #7fbf4a;
@@ -46,7 +46,6 @@
   --coral: #f58a74;
   --blue: #8fbaf7;
   --lilac: #cdb8f5;
-  --sky: #38b1e6;
   --font-display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
   --font-body: "Source Sans 3", "Helvetica Neue", Arial, sans-serif;
 }
@@ -62,28 +61,29 @@ a { color: inherit; }
 
 /* Topo flutuante */
 .top {
-  position: absolute; z-index: 5; top: 14px; left: 0; right: 0; max-width: 1080px; margin: 0 auto;
-  padding: 0 max(20px, env(safe-area-inset-right, 0px)) 0 max(20px, env(safe-area-inset-left, 0px));
+  position: absolute; z-index: 5; top: 12px; left: max(12px, env(safe-area-inset-left, 0px)); right: max(12px, env(safe-area-inset-right, 0px));
   display: flex; align-items: center; justify-content: space-between; gap: 10px;
 }
 .logo {
-  display: inline-flex; align-items: center; gap: 10px; padding: 8px 0;
+  display: inline-flex; align-items: center; gap: 10px; background: #fff; border-radius: 18px; padding: 10px 16px;
   font-family: var(--font-display); font-weight: 800; font-size: 1.1rem; letter-spacing: -0.02em; text-decoration: none;
 }
 .logo svg { width: 28px; height: 28px; flex: none; }
 .top-r { display: flex; align-items: center; gap: 8px; }
-.langs { display: inline-flex; gap: 2px; padding: 4px; background: rgba(255, 255, 255, .85); border-radius: 999px; }
-.langs a { display: inline-grid; place-items: center; min-width: 40px; min-height: 36px; padding: 0 8px; border-radius: 999px; font: 600 0.9rem var(--font-body); text-decoration: none; }
-.langs a:hover { background: rgba(29, 42, 26, .08); }
+.langs { display: inline-flex; gap: 2px; padding: 4px; background: #fff; border-radius: 18px; }
+/* Em telas largas o seletor fica no centro do topo; no celular não cabe entre o logo e a borda, então fica à direita */
+@media (min-width: 720px) { .langs { position: absolute; left: 50%; transform: translateX(-50%); } }
+.langs a { display: inline-grid; place-items: center; min-width: 40px; min-height: 36px; padding: 0 8px; border-radius: 14px; font: 600 0.9rem var(--font-body); text-decoration: none; }
+.langs a:hover { background: var(--cream); }
 .langs a[aria-current="true"] { background: var(--ink); color: var(--cream); }
 .logo { white-space: nowrap; }
 @media (max-width: 400px) {
-  .logo { gap: 8px; font-size: 1rem; }
+  .logo { padding: 10px 12px; gap: 8px; font-size: 1rem; }
   .langs a { min-width: 34px; padding: 0 6px; }
 }
 .pill {
   display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 8px 8px 8px 18px;
-  background: rgba(255, 255, 255, .85); border-radius: 999px; font: 600 0.95rem var(--font-body); text-decoration: none; border: 0; cursor: pointer;
+  background: #fff; border-radius: 18px; font: 600 0.95rem var(--font-body); text-decoration: none; border: 0; cursor: pointer;
 }
 .pill i, .go i {
   font-style: normal; display: inline-grid; place-items: center; width: 30px; height: 30px; border-radius: 50%;
@@ -107,23 +107,19 @@ svg.plane { width: 15px; height: 15px; stroke-width: 2.1; animation: plane-float
 
 /* Hero */
 .hero {
-  position: relative; background: var(--sky); border-radius: 0 0 44px 44px; overflow: hidden;
+  position: relative; background: var(--lime); border-radius: 0 0 44px 44px; overflow: hidden;
   padding: 112px max(20px, env(safe-area-inset-right, 0px)) 0 max(20px, env(safe-area-inset-left, 0px));
 }
 .hero-in { max-width: 1040px; margin: 0 auto; display: grid; grid-template-columns: 1fr; gap: 8px; position: relative; z-index: 2; }
 .hero h1 {
-  font-family: var(--font-display); font-weight: 800;
-  line-height: 0.92; letter-spacing: -0.05em; margin: 0;
+  font-family: var(--font-display); font-weight: 800; font-size: clamp(2.9rem, 12vw, 6.4rem);
+  line-height: 0.92; letter-spacing: -0.05em; margin: 0; text-wrap: balance;
 }
 .hero h1 em { font-style: normal; background: var(--yellow); border-radius: 18px; padding: 0 0.14em; display: inline-block; transform: rotate(-2deg); }
 .hero p.lede { font-size: 1.2rem; max-width: 34ch; margin: 18px 0 0; font-weight: 600; }
-/* Duas linhas em qualquer idioma: cada linha não quebra, e o tamanho da fonte acompanha a linha mais longa */
-.hero h1 .l { display: block; white-space: nowrap; }
-/* --r: largura da linha mais longa em em; --av: largura disponível para o título */
-.hero h1 { --r: 5.25; --av: min(1040px, 100vw - 40px); font-size: min(6.4rem, calc(var(--av) / var(--r))); }
-html[lang="de"] .hero h1 { --r: 6.1; }
-html[lang="pt-BR"] .hero h1 { --r: 7.45; }
+.br { display: none; }
 .hero-btns { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+.btn-break { flex-basis: 100%; height: 0; }
 .go {
   display: inline-flex; align-items: center; gap: 12px; min-height: 48px; padding: 8px 8px 8px 20px; border-radius: 999px;
   background: var(--ink); color: var(--cream); font: 600 1rem var(--font-body); text-decoration: none;
@@ -132,10 +128,7 @@ html[lang="pt-BR"] .hero h1 { --r: 7.45; }
 .go { border: 0; cursor: pointer; }
 .go:hover { filter: brightness(1.12); }
 .scene { width: min(100%, 520px); margin: 6px auto 0; display: block; position: relative; z-index: 2; }
-.meta { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 12px 28px; padding: 22px 16px 0; }
-.updated-chip { display: inline-block; font-size: 0.95rem; font-weight: 600; background: #fff; border-radius: 999px; padding: 7px 16px; }
-.textlink { font-weight: 600; text-decoration-thickness: 2px; text-underline-offset: 4px; }
-.textlink:hover { text-decoration-color: var(--sky); }
+.updated-chip { display: inline-block; margin-top: 18px; font-size: 0.9rem; font-weight: 600; background: rgba(255,255,255,.55); border-radius: 999px; padding: 4px 12px; }
 
 /* Doodles */
 .doodle { position: absolute; z-index: 1; pointer-events: none; }
@@ -254,9 +247,9 @@ dialog::backdrop { background: rgba(29, 42, 26, .45); }
 .foot a { text-decoration-thickness: 2px; text-underline-offset: 3px; }
 
 @media (min-width: 720px) {
-  .hero-in { grid-template-columns: 1.3fr 1fr; align-items: end; gap: 24px; }
-  .hero h1 { --av: calc((min(1040px, 100vw - 40px) - 24px) * 1.3 / 2.3); }
+  .hero-in { grid-template-columns: 1.15fr 1fr; align-items: end; gap: 24px; }
   .hero-text { padding-bottom: 56px; justify-self: start; width: fit-content; max-width: 100%; }
+  .br { display: inline; }
   .hero p.lede { width: 0; min-width: 100%; max-width: none; font-size: 1.1rem; text-align: justify; text-align-last: left; }
   .scene { margin: 0; }
   .card { display: grid; grid-template-columns: 84px minmax(0, 1fr) auto; column-gap: 22px; row-gap: 6px; align-items: start; padding: 22px 24px; }
@@ -284,16 +277,16 @@ dialog::backdrop { background: rgba(29, 42, 26, .45); }
 
 <div class="top">
   <a class="logo" href="/" aria-label="Agenda Munique, início" data-i18n-aria="home">
-    <svg viewBox="12 -1 88 88" aria-hidden="true"><defs><filter id="logo-sombra" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="4" stdDeviation="3.5" flood-color="#1d2a1a" flood-opacity=".22"/></filter></defs><rect x="10.6163" y="13.3935" width="79.6215" height="73" rx="22" transform="rotate(-9.68402 10.6163 13.3935)" fill="#1d2a1a"/><circle cx="70.1856" cy="27.0938" r="15.5" fill="#f7d84a" filter="url(#logo-sombra)"/></svg>
+    <svg viewBox="12 -1 88 88" aria-hidden="true"><defs><filter id="logo-sombra" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="4" stdDeviation="3.5" flood-color="#1d2a1a" flood-opacity=".22"/></filter></defs><rect x="10.6163" y="13.3935" width="79.6215" height="73" rx="22" transform="rotate(-9.68402 10.6163 13.3935)" fill="#a6d86a"/><circle cx="70.1856" cy="27.0938" r="15.5" fill="#f7d84a" filter="url(#logo-sombra)"/></svg>
     Agenda Munique
   </a>
   <div class="top-r">
-  <button class="pill" id="share-site" type="button" data-share="site"><span data-i18n="shareAll">Compartilhar programação</span> <i aria-hidden="true"><svg class="plane" viewBox="1 -1 24 24" aria-hidden="true"><path d="M14.54 21.69a.5.5 0 0 0 .94-.03l6.5-19a.5.5 0 0 0-.64-.63l-19 6.5a.5.5 0 0 0-.02.93l7.93 3.18a2 2 0 0 1 1.11 1.11zM21.85 2.15 10.91 13.09"/></svg></i></button>
   <nav class="langs" aria-label="Idioma" data-i18n-aria="langLabel">
     <a href="/" data-lang="pt" hreflang="pt-BR" lang="pt-BR" title="Português" aria-current="true">PT</a>
     <a href="/de/" data-lang="de" hreflang="de" lang="de" title="Deutsch">DE</a>
     <a href="/en/" data-lang="en" hreflang="en" lang="en" title="English">EN</a>
   </nav>
+  <button class="pill" id="share-site" type="button" data-share="site"><span data-i18n="shareAll">Compartilhar programação</span> <i aria-hidden="true"><svg class="plane" viewBox="1 -1 24 24" aria-hidden="true"><path d="M14.54 21.69a.5.5 0 0 0 .94-.03l6.5-19a.5.5 0 0 0-.64-.63l-19 6.5a.5.5 0 0 0-.02.93l7.93 3.18a2 2 0 0 1 1.11 1.11zM21.85 2.15 10.91 13.09"/></svg></i></button>
   </div>
 </div>
 
@@ -306,12 +299,15 @@ dialog::backdrop { background: rgba(29, 42, 26, .45); }
 
   <div class="hero-in">
     <div class="hero-text">
-      <h1 data-i18n-html="h1"><span class="l">O que tá rolando</span> <span class="l">em <em>Munique?</em></span></h1>
+      <h1 data-i18n-html="h1">Tá rolando<br class="br"> o quê em<br class="br"> <em>Munique?</em></h1>
       <p class="lede" data-i18n="lede">Feiras de Natal, Flohmärkte e eventos de rua, em português, para planejar o rolê com a família.</p>
       <div class="hero-btns">
         <a class="go" href="#lista"><span data-i18n="see">Ver o que tem</span> <i aria-hidden="true"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M3.5 8.5L8 13l4.5-4.5"/></svg></i></a>
+        <span class="btn-break" aria-hidden="true"></span>
         <button class="go light" id="share-hero" type="button" data-share="site"><span data-i18n="shareAll">Compartilhar programação</span> <i aria-hidden="true"><svg class="plane" viewBox="1 -1 24 24" aria-hidden="true"><path d="M14.54 21.69a.5.5 0 0 0 .94-.03l6.5-19a.5.5 0 0 0-.64-.63l-19 6.5a.5.5 0 0 0-.02.93l7.93 3.18a2 2 0 0 1 1.11 1.11zM21.85 2.15 10.91 13.09"/></svg></i></button>
+        <a class="go light" href="https://docs.google.com/forms/d/e/1FAIpQLSeyJaXOf153YXrO3_O6gTEmqLCWgu2sTzwYlIvb6d7Su5BKyg/viewform" target="_blank" rel="noopener"><span data-i18n="suggest">Sugerir um evento</span> <i aria-hidden="true"><svg class="plane" viewBox="1 -1 24 24" aria-hidden="true"><path d="M14.54 21.69a.5.5 0 0 0 .94-.03l6.5-19a.5.5 0 0 0-.64-.63l-19 6.5a.5.5 0 0 0-.02.93l7.93 3.18a2 2 0 0 1 1.11 1.11zM21.85 2.15 10.91 13.09"/></svg></i></a>
       </div>
+      <span class="updated-chip" id="updated"></span>
     </div>
 
     <svg class="scene" viewBox="0 0 360 300" role="img" aria-label="Ilustração de uma barraquinha de feira de Natal com Glühwein e pretzel" data-i18n-aria="scene">
@@ -352,11 +348,6 @@ dialog::backdrop { background: rgba(29, 42, 26, .45); }
     </svg>
   </div>
 </section>
-
-<div class="meta">
-  <span class="updated-chip" id="updated"></span>
-  <a class="textlink" href="https://docs.google.com/forms/d/e/1FAIpQLSeyJaXOf153YXrO3_O6gTEmqLCWgu2sTzwYlIvb6d7Su5BKyg/viewform" target="_blank" rel="noopener" data-i18n="suggest">Sugerir um evento</a>
-</div>
 
 <main class="wrap" id="lista">
   <section class="now" id="now" aria-live="polite"></section>
@@ -564,7 +555,7 @@ var TEXT = {
     langLabel: "Idioma",
     home: "Agenda Munique, início",
     shareAll: "Compartilhar programação",
-    h1: '<span class="l">O que tá rolando</span> <span class="l">em <em>Munique?</em></span>',
+    h1: 'Tá rolando<br class="br"> o quê em<br class="br"> <em>Munique?</em>',
     lede: "Feiras de Natal, Flohmärkte e eventos de rua, em português, para planejar o rolê com a família.",
     see: "Ver o que tem",
     suggest: "Sugerir um evento",
@@ -608,7 +599,7 @@ var TEXT = {
     langLabel: "Sprache",
     home: "Agenda Munique, Startseite",
     shareAll: "Programm teilen",
-    h1: '<span class="l">Was ist los</span> <span class="l">in <em>München?</em></span>',
+    h1: 'Was ist<br class="br"> los in<br class="br"> <em>München?</em>',
     lede: "Weihnachtsmärkte, Flohmärkte und Straßenfeste auf einen Blick, damit du den Ausflug mit der Familie planen kannst.",
     see: "Zum Programm",
     suggest: "Termin vorschlagen",
@@ -652,7 +643,7 @@ var TEXT = {
     langLabel: "Language",
     home: "Agenda Munique, home",
     shareAll: "Share the guide",
-    h1: '<span class="l">What\'s on</span> <span class="l">in <em>Munich?</em></span>',
+    h1: 'What\'s on<br class="br"> in<br class="br"> <em>Munich?</em>',
     lede: "Christmas markets, flea markets and street festivals at a glance, so you can plan a day out with the family.",
     see: "See what's on",
     suggest: "Suggest an event",

@@ -65,15 +65,15 @@ a { color: inherit; }
   display: flex; align-items: center; justify-content: space-between; gap: 10px;
 }
 .logo {
-  display: inline-flex; align-items: center; gap: 10px; background: #fff; border-radius: 18px; padding: 10px 16px;
+  display: inline-flex; align-items: center; gap: 10px; background: #fff; border-radius: 999px; padding: 10px 16px;
   font-family: var(--font-display); font-weight: 800; font-size: 1.1rem; letter-spacing: -0.02em; text-decoration: none;
 }
 .logo svg { width: 28px; height: 28px; flex: none; }
 .top-r { display: flex; align-items: center; gap: 8px; }
-.langs { display: inline-flex; gap: 2px; padding: 4px; background: #fff; border-radius: 18px; }
+.langs { display: inline-flex; gap: 2px; padding: 4px; background: #fff; border-radius: 999px; }
 /* Em telas largas o seletor fica no centro do topo; no celular não cabe entre o logo e a borda, então fica à direita */
 @media (min-width: 720px) { .langs { position: absolute; left: 50%; transform: translateX(-50%); } }
-.langs a { display: inline-grid; place-items: center; min-width: 40px; min-height: 36px; padding: 0 8px; border-radius: 14px; font: 600 0.9rem var(--font-body); text-decoration: none; }
+.langs a { display: inline-grid; place-items: center; min-width: 40px; min-height: 36px; padding: 0 8px; border-radius: 999px; font: 600 0.9rem var(--font-body); text-decoration: none; }
 .langs a:hover { background: var(--cream); }
 .langs a[aria-current="true"] { background: var(--ink); color: var(--cream); }
 .logo { white-space: nowrap; }
@@ -83,7 +83,7 @@ a { color: inherit; }
 }
 .pill {
   display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 8px 8px 8px 18px;
-  background: #fff; border-radius: 18px; font: 600 0.95rem var(--font-body); text-decoration: none; border: 0; cursor: pointer;
+  background: #fff; border-radius: 999px; font: 600 0.95rem var(--font-body); text-decoration: none; border: 0; cursor: pointer;
 }
 .pill i, .go i {
   font-style: normal; display: inline-grid; place-items: center; width: 30px; height: 30px; border-radius: 50%;

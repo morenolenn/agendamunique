@@ -77,12 +77,14 @@ a { color: inherit; }
 }
 .hero h1 em { font-style: normal; background: var(--yellow); border-radius: 18px; padding: 0 0.14em; display: inline-block; transform: rotate(-2deg); }
 .hero p.lede { font-size: 1.2rem; max-width: 34ch; margin: 18px 0 0; font-weight: 600; }
+.br { display: none; }
 .hero-btns { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
 .go {
   display: inline-flex; align-items: center; gap: 12px; min-height: 48px; padding: 8px 8px 8px 20px; border-radius: 999px;
   background: var(--ink); color: var(--cream); font: 600 1rem var(--font-body); text-decoration: none;
 }
 .go.light { background: #fff; color: var(--ink); }
+.go { border: 0; cursor: pointer; }
 .go:hover { filter: brightness(1.12); }
 .scene { width: min(100%, 520px); margin: 6px auto 0; display: block; position: relative; z-index: 2; }
 .updated-chip { display: inline-block; margin-top: 18px; font-size: 0.9rem; font-weight: 600; background: rgba(255,255,255,.55); border-radius: 999px; padding: 4px 12px; }
@@ -199,7 +201,9 @@ dialog::backdrop { background: rgba(29, 42, 26, .45); }
 
 @media (min-width: 720px) {
   .hero-in { grid-template-columns: 1.15fr 1fr; align-items: end; gap: 24px; }
-  .hero-text { padding-bottom: 56px; }
+  .hero-text { padding-bottom: 56px; justify-self: start; width: fit-content; max-width: 100%; }
+  .br { display: inline; }
+  .hero p.lede { width: 0; min-width: 100%; max-width: none; font-size: 1.1rem; text-align: justify; text-align-last: left; }
   .scene { margin: 0; }
   .card { display: grid; grid-template-columns: 84px minmax(0, 1fr) auto; column-gap: 22px; row-gap: 6px; align-items: start; padding: 22px 24px; }
   .head { display: contents; }
@@ -229,7 +233,7 @@ dialog::backdrop { background: rgba(29, 42, 26, .45); }
     <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M4 22c4-14 8-14 9-4 1 7 4 7 6-2 1-5 4-7 9-4" fill="none" stroke="#7fbf4a" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="26" cy="9" r="3" fill="#f58a74"/></svg>
     Agenda Munique
   </a>
-  <a class="pill" id="share-site" href="#" target="_blank" rel="noopener">Mandar pro grupo <i aria-hidden="true">↗</i></a>
+  <button class="pill" id="share-site" type="button" data-share="site">Compartilhar programação <i aria-hidden="true">↗</i></button>
 </div>
 
 <section class="hero">
@@ -241,11 +245,11 @@ dialog::backdrop { background: rgba(29, 42, 26, .45); }
 
   <div class="hero-in">
     <div class="hero-text">
-      <h1>Tá rolando o quê em <em>Munique?</em></h1>
+      <h1>Tá rolando<br class="br"> o quê em<br class="br"> <em>Munique?</em></h1>
       <p class="lede">Feiras de Natal, Flohmärkte e eventos de rua, em português, para planejar o rolê com a família.</p>
       <div class="hero-btns">
         <a class="go" href="#lista">Ver o que tem <i aria-hidden="true">↓</i></a>
-        <a class="go light" id="share-hero" href="#" target="_blank" rel="noopener">Mandar pro grupo <i aria-hidden="true">↗</i></a>
+        <button class="go light" id="share-hero" type="button" data-share="site">Compartilhar programação <i aria-hidden="true">↗</i></button>
       </div>
       <span class="updated-chip" id="updated"></span>
     </div>
@@ -388,9 +392,6 @@ function matches(ev) {
   if (filter === "kids") return !!ev.kids;
   return ev.type === filter;
 }
-function siteShareUrl() {
-  return "https://wa.me/?text=" + encodeURIComponent("Olha esse site com as feiras de Natal e eventos de rua de Munique, tudo em português: " + SITE);
-}
 function icsText(x) { return String(x).replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,").replace(/\r?\n/g, "\\n"); }
 function icsFold(line) {
   var out = [], i = 0;
@@ -509,16 +510,23 @@ function render() {
 var shareCtx = null;
 function findEv(id) { var r = null; EVENTS.concat(WEEKLY).forEach(function (x) { if (x.id === id) r = x; }); return r; }
 function openShare(id) {
-  var ev = findEv(id); if (!ev) return;
-  var when = ev.when ? ev.when : whenText(ev);
-  var url = SITE + "#ev-" + ev.id;
-  var text = ev.t + ", " + when + ". " + ev.place + ".\nMapa: " + googleUrl(ev.q) + "\nMais eventos em Munique: " + url;
-  shareCtx = { title: ev.t, text: text, url: url };
-  document.getElementById("share-sub").textContent = ev.t + ", " + when;
-  document.getElementById("sh-wa").href = "https://wa.me/?text=" + encodeURIComponent(text);
-  document.getElementById("sh-tg").href = "https://t.me/share/url?url=" + encodeURIComponent(url) + "&text=" + encodeURIComponent(ev.t + ", " + when + ". " + ev.place + ".");
-  document.getElementById("sh-mail").href = "mailto:?subject=" + encodeURIComponent(ev.t + " em Munique") + "&body=" + encodeURIComponent(text.replace(/\n/g, "\r\n"));
-  document.getElementById("sh-sms").href = "sms:?&body=" + encodeURIComponent(text);
+  var c;
+  if (id === "site") {
+    var msg = "Olha esse site com as feiras de Natal e eventos de rua de Munique, tudo em português: " + SITE;
+    c = { sub: "Feiras de Natal e eventos de rua em Munique", subject: "Agenda Munique: feiras e eventos de rua", text: msg, tg: "Feiras de Natal e eventos de rua em Munique, tudo em português.", url: SITE, title: "Agenda Munique" };
+  } else {
+    var ev = findEv(id); if (!ev) return;
+    var when = ev.when ? ev.when : whenText(ev);
+    var url = SITE + "#ev-" + ev.id;
+    c = { sub: ev.t + ", " + when, subject: ev.t + " em Munique", url: url, title: ev.t, tg: ev.t + ", " + when + ". " + ev.place + ".",
+      text: ev.t + ", " + when + ". " + ev.place + ".\nMapa: " + googleUrl(ev.q) + "\nMais eventos em Munique: " + url };
+  }
+  shareCtx = { title: c.title, text: c.text, url: c.url };
+  document.getElementById("share-sub").textContent = c.sub;
+  document.getElementById("sh-wa").href = "https://wa.me/?text=" + encodeURIComponent(c.text);
+  document.getElementById("sh-tg").href = "https://t.me/share/url?url=" + encodeURIComponent(c.url) + "&text=" + encodeURIComponent(c.tg);
+  document.getElementById("sh-mail").href = "mailto:?subject=" + encodeURIComponent(c.subject) + "&body=" + encodeURIComponent(c.text.replace(/\n/g, "\r\n"));
+  document.getElementById("sh-sms").href = "sms:?&body=" + encodeURIComponent(c.text);
   document.getElementById("sh-more").hidden = !navigator.share;
   document.getElementById("sh-copy-label").textContent = "Copiar link";
   var d = document.getElementById("share");
@@ -550,8 +558,6 @@ document.getElementById("sh-more").addEventListener("click", function () {
   WEEKLY.forEach(function (e, i) { e.id = "w" + i; });
   var u = parse(UPDATED);
   document.getElementById("updated").textContent = "Atualizado em " + u.getDate() + " de " + MONTHS_LONG[u.getMonth()] + " de " + u.getFullYear();
-  document.getElementById("share-site").href = siteShareUrl();
-  document.getElementById("share-hero").href = siteShareUrl();
   Array.prototype.forEach.call(document.querySelectorAll(".chip"), function (b) {
     b.addEventListener("click", function () {
       filter = b.getAttribute("data-filter");

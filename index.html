@@ -159,6 +159,23 @@ h2.sec { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.
 .when { margin: 0; color: var(--muted); font-size: 0.95rem; font-variant-numeric: tabular-nums; }
 .desc { margin: 0; }
 .place { margin: 0; font-weight: 600; font-size: 0.95rem; }
+.maplink { color: inherit; text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+.maplink:hover { color: var(--accent); }
+.card { scroll-margin-top: 16px; }
+.card:target { outline: 3px solid var(--ink); outline-offset: 3px; }
+.act.main { cursor: pointer; border: 0; }
+button.act { cursor: pointer; }
+/* Janela de compartilhar */
+dialog { border: 0; padding: 0; background: transparent; width: min(92vw, 440px); max-width: 92vw; }
+dialog::backdrop { background: rgba(29, 42, 26, .45); }
+.sheet { background: #fff; border-radius: 28px; padding: 22px; display: grid; gap: 8px; }
+.sheet h2 { font-family: var(--font-display); font-weight: 800; font-size: 1.5rem; letter-spacing: -0.03em; margin: 0; text-transform: none; color: var(--ink); }
+.sheet .sub { margin: 0 0 8px; color: var(--muted); font-size: 0.95rem; overflow-wrap: anywhere; }
+.opt { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 52px; padding: 10px 16px; border-radius: 16px;
+  background: var(--cream); color: var(--ink); font: 600 1rem var(--font-body); text-decoration: none; border: 0; cursor: pointer; width: 100%; text-align: left; }
+.opt:hover { background: var(--lime); }
+.opt small { font-weight: 400; color: var(--muted); }
+.sheet .close { justify-self: start; margin-top: 6px; background: transparent; border: 1px solid var(--line, #d3dae5); border-radius: 999px; min-height: 44px; padding: 8px 18px; font: 600 0.95rem var(--font-body); cursor: pointer; color: var(--ink); }
 .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
 .tag { font-size: 0.82rem; font-weight: 600; background: var(--cream); border-radius: 999px; padding: 3px 11px; }
 .acts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; padding-top: 6px; }
@@ -287,6 +304,20 @@ h2.sec { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.
   <div id="out"></div>
 </main>
 
+<dialog id="share" aria-labelledby="share-title">
+  <div class="sheet">
+    <h2 id="share-title">Compartilhar</h2>
+    <p class="sub" id="share-sub"></p>
+    <button class="opt" type="button" id="sh-copy"><span id="sh-copy-label">Copiar link</span><small>agendamunique.com</small></button>
+    <a class="opt" id="sh-wa" href="#" target="_blank" rel="noopener">WhatsApp</a>
+    <a class="opt" id="sh-tg" href="#" target="_blank" rel="noopener">Telegram</a>
+    <a class="opt" id="sh-mail" href="#">E-mail</a>
+    <a class="opt" id="sh-sms" href="#">Mensagem de texto (SMS)</a>
+    <button class="opt" type="button" id="sh-more" hidden>Mais opções</button>
+    <button class="close" type="button" id="sh-close">Fechar</button>
+  </div>
+</dialog>
+
 <footer class="foot">
   <div class="foot-in">
     <h2>Boa feira! 🥨</h2>
@@ -342,16 +373,20 @@ function addDays(d, n) { return new Date(d.getFullYear(), d.getMonth(), d.getDat
 function ymd(d) { return d.getFullYear() + ("0" + (d.getMonth() + 1)).slice(-2) + ("0" + d.getDate()).slice(-2); }
 function fmt(s) { var d = parse(s); return d.getDate() + " " + MONTHS[d.getMonth()]; }
 function esc(x) { return String(x).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
-function mapUrl(q) { return "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(q); }
+function googleUrl(q) { return "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(q); }
+function isApple() {
+  var ua = navigator.userAgent || "";
+  return /iPhone|iPad|iPod/.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+}
+function mapUrl(q) { return isApple() ? "https://maps.apple.com/?q=" + encodeURIComponent(q) : googleUrl(q); }
+function placeLink(ev, withPin) {
+  return '<a class="maplink" href="' + mapUrl(ev.q) + '" target="_blank" rel="noopener" title="Abrir no mapa">' + (withPin ? "📍 " : "") + esc(ev.place) + "</a>";
+}
 function whenText(ev) { return ev.s === ev.e ? fmt(ev.s) : fmt(ev.s) + " a " + fmt(ev.e); }
 function matches(ev) {
   if (filter === "all") return true;
   if (filter === "kids") return !!ev.kids;
   return ev.type === filter;
-}
-function shareUrl(ev, when) {
-  var text = "Agenda Munique: " + ev.t + ", " + when + ". " + ev.place + ". Mapa: " + mapUrl(ev.q);
-  return "https://wa.me/?text=" + encodeURIComponent(text);
 }
 function siteShareUrl() {
   return "https://wa.me/?text=" + encodeURIComponent("Olha esse site com as feiras de Natal e eventos de rua de Munique, tudo em português: " + SITE);
@@ -368,7 +403,7 @@ function icsFor(ev, today) {
   var weekly = !!ev.when, start, end, rule = "";
   if (weekly) { start = nextDow(today, ev.dow); end = addDays(start, 1); if (ev.rrule) rule = "RRULE:" + ev.rrule; }
   else { var s0 = parse(ev.s), e0 = parse(ev.e); start = s0 > today ? s0 : today; end = addDays(e0, 1); }
-  var desc = ev.d + (weekly ? " " + ev.when + "." : (ev.s === ev.e ? "" : " Aberto de " + fmt(ev.s) + " a " + fmt(ev.e) + ".")) + (ev.note ? " " + ev.note : "") + " Mapa: " + mapUrl(ev.q);
+  var desc = ev.d + (weekly ? " " + ev.when + "." : (ev.s === ev.e ? "" : " Aberto de " + fmt(ev.s) + " a " + fmt(ev.e) + ".")) + (ev.note ? " " + ev.note : "") + " Mapa: " + googleUrl(ev.q);
   var now = new Date();
   var stamp = now.getUTCFullYear() + ("0" + (now.getUTCMonth() + 1)).slice(-2) + ("0" + now.getUTCDate()).slice(-2) + "T" +
     ("0" + now.getUTCHours()).slice(-2) + ("0" + now.getUTCMinutes()).slice(-2) + "00Z";
@@ -417,11 +452,10 @@ function row(ev, today, weekly) {
   else sticker = '<div class="sticker"><b>' + s.getDate() + "</b><i>" + MONTHS[s.getMonth()] + "</i></div>";
   var st = weekly ? '<span class="status">Recorrente</span>' : statusOf(ev, today);
   var cal = '<button type="button" class="act" data-ics="' + ev.id + '">Adicionar na agenda</button>';
-  return '<li class="card"><div class="head">' + sticker + '<div class="titles"><h3>' + esc(ev.t) + "</h3>" + st + "</div></div>" +
+  return '<li class="card" id="ev-' + ev.id + '"><div class="head">' + sticker + '<div class="titles"><h3>' + esc(ev.t) + "</h3>" + st + "</div></div>" +
     '<p class="when">' + esc(when) + "</p><p class=\"desc\">" + esc(ev.d) + "</p>" +
-    '<p class="place">📍 ' + esc(ev.place) + "</p>" + tagsOf(ev) +
-    '<div class="acts"><a class="act main" href="' + mapUrl(ev.q) + '" target="_blank" rel="noopener">Abrir no mapa <i aria-hidden="true">↗</i></a>' +
-    '<a class="act" href="' + shareUrl(ev, when) + '" target="_blank" rel="noopener">Enviar no WhatsApp</a>' + cal + "</div></li>";
+    '<p class="place">' + placeLink(ev, true) + "</p>" + tagsOf(ev) +
+    '<div class="acts"><button type="button" class="act main" data-share="' + ev.id + '">Compartilhar <i aria-hidden="true">↗</i></button>' + cal + "</div></li>";
 }
 function weekendWindow(today) {
   var dow = today.getDay();
@@ -434,7 +468,7 @@ function buildNow(today) {
   var active = EVENTS.filter(function (e) { return parse(e.s) <= w.b && parse(e.e) >= w.a; });
   if (active.length) {
     return "<h2>" + w.label + " 🎉</h2><ul>" + active.map(function (e) {
-      return "<li><strong>" + esc(e.t) + "</strong><span>" + esc(whenText(e)) + ", " + esc(e.place) + "</span></li>";
+      return "<li><strong>" + esc(e.t) + "</strong><span>" + esc(whenText(e)) + ", " + placeLink(e, false) + "</span></li>";
     }).join("") + "</ul>";
   }
   var next = EVENTS.filter(function (e) { return parse(e.s) > today; })
@@ -444,7 +478,7 @@ function buildNow(today) {
   var head = "<h2>Próximas aberturas</h2>";
   var count = '<div class="count"><b>' + n + "</b><span>" + (n === 1 ? "dia" : "dias") + " para a primeira feira abrir</span></div>";
   return head + count + "<ul>" + next.map(function (e) {
-    return "<li><strong>" + esc(e.t) + "</strong><span>abre em " + esc(fmt(e.s)) + ", " + esc(e.place) + "</span></li>";
+    return "<li><strong>" + esc(e.t) + "</strong><span>abre em " + esc(fmt(e.s)) + ", " + placeLink(e, false) + "</span></li>";
   }).join("") + "</ul>";
 }
 function buildStats(today) {
@@ -472,9 +506,44 @@ function render() {
   document.getElementById("now").innerHTML = out.now;
   document.getElementById("stats").innerHTML = out.stats;
 }
+var shareCtx = null;
+function findEv(id) { var r = null; EVENTS.concat(WEEKLY).forEach(function (x) { if (x.id === id) r = x; }); return r; }
+function openShare(id) {
+  var ev = findEv(id); if (!ev) return;
+  var when = ev.when ? ev.when : whenText(ev);
+  var url = SITE + "#ev-" + ev.id;
+  var text = ev.t + ", " + when + ". " + ev.place + ".\nMapa: " + googleUrl(ev.q) + "\nMais eventos em Munique: " + url;
+  shareCtx = { title: ev.t, text: text, url: url };
+  document.getElementById("share-sub").textContent = ev.t + ", " + when;
+  document.getElementById("sh-wa").href = "https://wa.me/?text=" + encodeURIComponent(text);
+  document.getElementById("sh-tg").href = "https://t.me/share/url?url=" + encodeURIComponent(url) + "&text=" + encodeURIComponent(ev.t + ", " + when + ". " + ev.place + ".");
+  document.getElementById("sh-mail").href = "mailto:?subject=" + encodeURIComponent(ev.t + " em Munique") + "&body=" + encodeURIComponent(text.replace(/\n/g, "\r\n"));
+  document.getElementById("sh-sms").href = "sms:?&body=" + encodeURIComponent(text);
+  document.getElementById("sh-more").hidden = !navigator.share;
+  document.getElementById("sh-copy-label").textContent = "Copiar link";
+  var d = document.getElementById("share");
+  if (d.showModal) d.showModal(); else d.setAttribute("open", "");
+}
+function closeShare() { var d = document.getElementById("share"); if (d.close) d.close(); else d.removeAttribute("open"); }
+function copyText(t, done) {
+  function fallback() {
+    var ta = document.createElement("textarea"); ta.value = t; ta.setAttribute("readonly", ""); ta.style.position = "fixed"; ta.style.opacity = "0";
+    document.body.appendChild(ta); ta.select(); try { document.execCommand("copy"); } catch (e) {} document.body.removeChild(ta); done();
+  }
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(done, fallback); else fallback();
+}
 document.addEventListener("click", function (e) {
-  var b = e.target.closest ? e.target.closest("[data-ics]") : null;
-  if (b) downloadIcs(b.getAttribute("data-ics"));
+  var t = e.target.closest ? e.target : null; if (!t) return;
+  var b = t.closest("[data-ics]"); if (b) { downloadIcs(b.getAttribute("data-ics")); return; }
+  var sh = t.closest("[data-share]"); if (sh) { openShare(sh.getAttribute("data-share")); return; }
+  if (t.id === "share") closeShare();
+});
+document.getElementById("sh-close").addEventListener("click", closeShare);
+document.getElementById("sh-copy").addEventListener("click", function () {
+  copyText(shareCtx.url, function () { document.getElementById("sh-copy-label").textContent = "Link copiado!"; });
+});
+document.getElementById("sh-more").addEventListener("click", function () {
+  if (navigator.share) navigator.share({ title: shareCtx.title, text: shareCtx.text, url: shareCtx.url }).catch(function () {});
 });
 (function () {
   EVENTS.forEach(function (e, i) { e.id = "e" + i; });

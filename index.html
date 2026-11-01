@@ -136,6 +136,10 @@ h2.sec { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.
   background: var(--card); border-radius: 30px; padding: 20px; display: flex; flex-direction: column; gap: 10px;
   transition: transform .2s; --c: var(--yellow);
 }
+.card:nth-child(5n+2) { --c: var(--coral); }
+.card:nth-child(5n+3) { --c: var(--blue); }
+.card:nth-child(5n+4) { --c: var(--lilac); }
+.card:nth-child(5n+5) { --c: var(--lime); }
 .card:hover { transform: translateY(-4px); }
 .card:hover .sticker { transform: rotate(3deg) scale(1.05); }
 .head { display: flex; gap: 14px; align-items: flex-start; }

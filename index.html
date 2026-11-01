@@ -211,7 +211,7 @@ h2.sec + .month-sep { margin-top: 0; }
 .maplink { color: inherit; text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: 3px; }
 .maplink:hover { color: var(--accent); }
 .card { scroll-margin-top: 16px; }
-.card:target { outline: 3px solid var(--ink); outline-offset: 3px; }
+.card:target, .card.alvo { outline: 3px solid var(--ink); outline-offset: 3px; }
 .act.main { cursor: pointer; border: 0; }
 button.act { cursor: pointer; }
 /* Janela de compartilhar */
@@ -588,7 +588,7 @@ var TEXT = {
     shareSiteSub: "Feiras de Natal e eventos de rua em Munique",
     shareSiteSubject: "Agenda Munique: feiras e eventos de rua",
     shareSiteTg: "Feiras de Natal e eventos de rua em Munique, tudo em português.",
-    inCity: " em Munique", moreEvents: "Mais eventos em Munique: ",
+    inCity: " em Munique", moreEvents: "Detalhes e mapa: ",
     updated: function (d, m, y) { return "Atualizado em " + d + " de " + m + " de " + y; }
   },
   de: {
@@ -632,7 +632,7 @@ var TEXT = {
     shareSiteSub: "Weihnachtsmärkte und Straßenfeste in München",
     shareSiteSubject: "Agenda Munique: Märkte und Straßenfeste",
     shareSiteTg: "Weihnachtsmärkte und Straßenfeste in München auf einen Blick.",
-    inCity: " in München", moreEvents: "Mehr Termine in München: ",
+    inCity: " in München", moreEvents: "Details und Karte: ",
     updated: function (d, m, y) { return "Aktualisiert am " + d + ". " + m + " " + y; }
   },
   en: {
@@ -676,7 +676,7 @@ var TEXT = {
     shareSiteSub: "Christmas markets and street festivals in Munich",
     shareSiteSubject: "Agenda Munique: markets and street festivals",
     shareSiteTg: "Christmas markets and street festivals in Munich at a glance.",
-    inCity: " in Munich", moreEvents: "More events in Munich: ",
+    inCity: " in Munich", moreEvents: "Details and map: ",
     updated: function (d, m, y) { return "Updated " + d + " " + m + " " + y; }
   }
 };
@@ -850,6 +850,14 @@ function render() {
   document.getElementById("now").innerHTML = out.now;
   document.getElementById("stats").innerHTML = out.stats;
 }
+// Link compartilhado (#ev-...): os cards nascem pelo script, então o navegador não acha a âncora sozinho
+function goToHash() {
+  var h = decodeURIComponent(location.hash.slice(1)); if (h.indexOf("ev-") !== 0) return;
+  var el = document.getElementById(h); if (!el) return;
+  Array.prototype.forEach.call(document.querySelectorAll(".card.alvo"), function (c) { c.classList.remove("alvo"); });
+  el.classList.add("alvo");
+  el.scrollIntoView({ block: "center", behavior: "instant" });
+}
 function applyLang() {
   document.documentElement.lang = lang === "pt" ? "pt-BR" : lang;
   document.title = L.title;
@@ -877,7 +885,7 @@ function openShare(id) {
     var when = ev.when ? tr(ev, "when") : whenText(ev), t = tr(ev, "t"), place = tr(ev, "place");
     var url = siteUrl() + "#ev-" + ev.id;
     c = { sub: t + ", " + when, subject: t + L.inCity, url: url, title: t, tg: t + ", " + when + ". " + place + ".",
-      text: t + ", " + when + ". " + place + ".\n" + L.map + googleUrl(ev.q) + "\n" + L.moreEvents + url };
+      text: t + ", " + when + ". " + place + ".\n" + L.moreEvents + url };
   }
   shareCtx = { title: c.title, text: c.text, url: c.url };
   document.getElementById("share-sub").textContent = c.sub;
@@ -937,6 +945,13 @@ document.getElementById("sh-more").addEventListener("click", function () {
     });
   });
   render();
+  goToHash();
+  window.addEventListener("hashchange", goToHash);
+  // Fontes e imagens mudam a altura da página depois; rola de novo quando tudo carrega
+  if (location.hash.indexOf("#ev-") === 0) {
+    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+    window.addEventListener("load", function () { setTimeout(goToHash, 50); });
+  }
 })();
 </script>
 

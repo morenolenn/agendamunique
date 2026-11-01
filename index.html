@@ -71,6 +71,8 @@ a { color: inherit; }
 .logo svg { width: 28px; height: 28px; flex: none; }
 .top-r { display: flex; align-items: center; gap: 8px; }
 .langs { display: inline-flex; gap: 2px; padding: 4px; background: #fff; border-radius: 18px; }
+/* Em telas largas o seletor fica no centro do topo; no celular não cabe entre o logo e a borda, então fica à direita */
+@media (min-width: 720px) { .langs { position: absolute; left: 50%; transform: translateX(-50%); } }
 .langs a { display: inline-grid; place-items: center; min-width: 40px; min-height: 36px; padding: 0 8px; border-radius: 14px; font: 600 0.9rem var(--font-body); text-decoration: none; }
 .langs a:hover { background: var(--cream); }
 .langs a[aria-current="true"] { background: var(--ink); color: var(--cream); }

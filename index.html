@@ -159,24 +159,6 @@ h2.sec { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.
 .act.main:hover i { transform: rotate(45deg); }
 .empty { padding: 24px; background: #fff; border-radius: 24px; }
 
-/* Formulários */
-.suggest { margin-top: 10px; }
-.form { background: #fff; border: 1px solid var(--line); border-radius: 30px; padding: 24px; display: grid; gap: 14px; max-width: 640px; }
-.form h2 { font-family: var(--font-display); font-weight: 800; font-size: 1.6rem; letter-spacing: -0.03em; margin: 0; }
-.form label { display: grid; gap: 6px; font-weight: 600; font-size: 0.95rem; }
-.form input, .form textarea, .form select {
-  font: 400 1rem var(--font-body); color: var(--ink); background: var(--cream); border: 1px solid var(--line);
-  border-radius: 14px; padding: 12px 14px; width: 100%;
-}
-.form textarea { resize: vertical; }
-.form .go { justify-self: start; border: 0; cursor: pointer; }
-.hint { margin: 0; color: var(--muted); font-size: 0.875rem; }
-.dlg-acts { display: flex; flex-wrap: wrap; gap: 10px; }
-dialog { border: 0; padding: 0; background: transparent; width: min(92vw, 520px); max-width: 92vw; }
-dialog::backdrop { background: rgba(29, 42, 26, .45); }
-dialog .form { max-width: none; border: 0; }
-dialog .go.light { border: 1px solid var(--line); cursor: pointer; }
-
 /* Rodapé */
 .foot { background: var(--lime); border-radius: 44px 44px 0 0; margin-top: 40px; padding: 44px max(20px, env(safe-area-inset-left, 0px)) calc(40px + env(safe-area-inset-bottom, 0px)); }
 .foot-in { max-width: 1040px; margin: 0 auto; display: grid; gap: 18px; }
@@ -280,41 +262,14 @@ dialog .go.light { border: 1px solid var(--line); cursor: pointer; }
 
   <div id="out"></div>
 
-  <section class="suggest needs-contact" id="sugerir" hidden>
-    <h2 class="sec">Faltou algum evento?</h2>
-    <form class="form" id="form-event">
-      <label>Nome do evento<input name="nome" required maxlength="120" autocomplete="off"></label>
-      <label>Data ou período<input name="datas" required maxlength="120" placeholder="Ex.: 5 a 7 de dezembro" autocomplete="off"></label>
-      <label>Local<input name="local" required maxlength="160" autocomplete="off"></label>
-      <label>Link com mais informações (opcional)<input name="link" type="url" maxlength="300" placeholder="https://" autocomplete="off"></label>
-      <label>Observações (opcional)<textarea name="obs" rows="3" maxlength="600"></textarea></label>
-      <button class="go" type="submit">Enviar sugestão <i aria-hidden="true">↗</i></button>
-      <p class="hint">Ao enviar, abrimos o seu aplicativo de e-mail com a mensagem pronta. Este site não guarda nada do que você escreve.</p>
-    </form>
-  </section>
 </main>
 
-<dialog id="fb" aria-labelledby="fb-title">
-  <form class="form" id="form-fb">
-    <h2 id="fb-title">Sugestão ou bug</h2>
-    <label>O que você quer enviar?
-      <select name="tipo"><option>Sugestão</option><option>Bug</option></select>
-    </label>
-    <label>Mensagem<textarea name="msg" rows="5" required maxlength="1200"></textarea></label>
-    <p class="hint">Em caso de bug, incluímos a página, o modelo do navegador e o tamanho da tela para ajudar a achar o problema.</p>
-    <div class="dlg-acts">
-      <button class="go" type="submit">Enviar <i aria-hidden="true">↗</i></button>
-      <button class="go light" type="button" id="close-fb">Cancelar</button>
-    </div>
-  </form>
-</dialog>
 
 <footer class="foot">
   <div class="foot-in">
     <h2>Boa feira! 🥨</h2>
-    <div><button class="go light needs-contact" id="open-fb" type="button" hidden>Sugestões e bugs <i aria-hidden="true">✉</i></button></div>
     <p>Datas e horários conferidos no portal <a href="https://www.muenchen.de/veranstaltungen/weihnachtsmaerkte-christkindlmaerkte-2026" target="_blank" rel="noopener">muenchen.de</a> e no <a href="https://www.kindaling.de/weihnachtsmaerkte/muenchen" target="_blank" rel="noopener">Kindaling</a>, com apoio de sites de turismo da cidade. Horários variam por dia e feiras de Natal fecham no Totensonntag (22 de novembro). Confira a página do evento antes de sair. Os pontos do mapa são buscas pelo nome do local.</p>
-    <p>Projeto pessoal e sem fins lucrativos, feito por um morador brasileiro em Munique, sem vínculo com os organizadores dos eventos. Esta página não usa cookies, não guarda dados e serve as fontes pelo próprio site.</p>
+    <p>Projeto pessoal e sem fins lucrativos, feito por um morador brasileiro em Munique, sem vínculo com os organizadores dos eventos. Esta página não usa cookies nem formulários, e as fontes são servidas pelo próprio site.</p>
   </div>
   <!-- Para medir visitas, cole aqui o snippet de Web Analytics do Cloudflare. Ele não usa cookies. -->
 </footer>
@@ -322,8 +277,6 @@ dialog .go.light { border: 1px solid var(--line); cursor: pointer; }
 <script>
 var UPDATED = "2026-11-01";
 var SITE = "https://agendamunique.com/";
-// Endereço que recebe sugestões e bugs, partido em duas partes para não aparecer inteiro no código. Preencha as duas para ativar o formulário.
-var CONTACT = ["", ""];
 var EVENTS = [
   { t: "Winterworld", type: "natal", s: "2026-11-07", e: "2026-12-20", place: "Motorworld München", q: "Motorworld München",
     d: "Mercado de inverno dentro da Motorworld. Sábado das 11h às 23h, domingo até 22h e, nos dias úteis, a partir das 15h." },
@@ -497,34 +450,6 @@ function render() {
   document.getElementById("now").innerHTML = out.now;
   document.getElementById("stats").innerHTML = out.stats;
 }
-function mailTo(subject, body) {
-  return "mailto:" + CONTACT[0] + "@" + CONTACT[1] + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body.join("\r\n"));
-}
-function initContact() {
-  var ok = !!(CONTACT[0] && CONTACT[1]);
-  Array.prototype.forEach.call(document.querySelectorAll(".needs-contact"), function (el) { el.hidden = !ok; });
-}
-function field(form, name) { return (form.elements[name].value || "").trim(); }
-function initForms() {
-  var fe = document.getElementById("form-event"), fb = document.getElementById("form-fb"), dlg = document.getElementById("fb");
-  fe.addEventListener("submit", function (e) {
-    e.preventDefault();
-    var body = ["Sugestão de evento para a Agenda Munique", "", "Nome: " + field(fe, "nome"), "Data ou período: " + field(fe, "datas"),
-      "Local: " + field(fe, "local"), "Link: " + (field(fe, "link") || "não informado"), "Observações: " + (field(fe, "obs") || "nenhuma")];
-    window.location.href = mailTo("Sugestão de evento: " + field(fe, "nome"), body);
-  });
-  document.getElementById("open-fb").addEventListener("click", function () {
-    if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", "");
-  });
-  document.getElementById("close-fb").addEventListener("click", function () { if (dlg.close) dlg.close(); else dlg.removeAttribute("open"); });
-  fb.addEventListener("submit", function (e) {
-    e.preventDefault();
-    var tipo = field(fb, "tipo"), body = [field(fb, "msg"), ""];
-    if (tipo === "Bug") body.push("Página: " + location.href, "Navegador: " + navigator.userAgent, "Tela: " + innerWidth + "x" + innerHeight);
-    window.location.href = mailTo(tipo + " no site Agenda Munique", body);
-    if (dlg.close) dlg.close();
-  });
-}
 document.addEventListener("click", function (e) {
   var b = e.target.closest ? e.target.closest("[data-ics]") : null;
   if (b) downloadIcs(b.getAttribute("data-ics"));
@@ -532,8 +457,6 @@ document.addEventListener("click", function (e) {
 (function () {
   EVENTS.forEach(function (e, i) { e.id = "e" + i; });
   WEEKLY.forEach(function (e, i) { e.id = "w" + i; });
-  initContact();
-  initForms();
   var u = parse(UPDATED);
   document.getElementById("updated").textContent = "Atualizado em " + u.getDate() + " de " + MONTHS_LONG[u.getMonth()] + " de " + u.getFullYear();
   document.getElementById("share-site").href = siteShareUrl();

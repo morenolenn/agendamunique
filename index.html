@@ -229,10 +229,7 @@ dialog::backdrop { background: rgba(29, 42, 26, .45); }
 .maker { display: flex; align-items: center; gap: 16px; }
 .maker img { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; flex: none; border: 2px solid var(--ink); }
 .maker p { flex: 1; }
-.maker .linkedin { flex: none; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: var(--ink); color: #fff; }
-.maker .linkedin svg { width: 20px; height: 20px; fill: currentColor; }
-.maker .linkedin:hover { filter: brightness(1.25); }
-@media (max-width: 600px) { .maker { flex-wrap: wrap; gap: 12px; } .maker p { order: 3; flex-basis: 100%; } }
+@media (max-width: 600px) { .maker { align-items: flex-start; gap: 12px; } }
 .foot a { text-decoration-thickness: 2px; text-underline-offset: 3px; }
 
 @media (min-width: 720px) {
@@ -374,11 +371,8 @@ dialog::backdrop { background: rgba(29, 42, 26, .45); }
     <h2>Boa feira! 🥨</h2>
     <p>Datas e horários conferidos no portal <a href="https://www.muenchen.de/veranstaltungen/weihnachtsmaerkte-christkindlmaerkte-2026" target="_blank" rel="noopener">muenchen.de</a>, no guia de turismo <a href="https://www.munich.travel/en/topics/markets-festivals/christmas-markets-munich" target="_blank" rel="noopener">munich.travel</a>, no site do <a href="https://www.christkindlmarkt-muenchen.de/" target="_blank" rel="noopener">Christkindlmarkt</a> e no <a href="https://www.kindaling.de/weihnachtsmaerkte/muenchen" target="_blank" rel="noopener">Kindaling</a>. Horários variam por dia e a maioria das feiras de Natal fecha em 15 de novembro (Volkstrauertag) e no Totensonntag (22 de novembro). Confira a página do evento antes de sair. Os pontos do mapa são buscas pelo nome do local.</p>
     <div class="maker">
-      <img src="moreno.webp" alt="Foto do Moreno" width="56" height="56">
-      <p>Projeto pessoal e sem fins lucrativos, feito pelo Moreno, brasileiro morando em Munique, sem vínculo com os organizadores dos eventos. Esta página não usa cookies e serve as fontes pelo próprio site. As visitas são contadas de forma anônima pelo Cloudflare Web Analytics, sem cookies. O formulário de sugestões é do Google.</p>
-      <a class="linkedin" href="https://www.linkedin.com/in/morenolennertz/" target="_blank" rel="noopener" aria-label="LinkedIn do Moreno">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.5h4v11H3zM9.5 9.5h3.8v1.6h.06c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.77 2.65 4.77 6.1v5.36h-4v-4.75c0-1.13-.02-2.59-1.58-2.59-1.58 0-1.82 1.23-1.82 2.5v4.84h-4z"/></svg>
-      </a>
+      <img src="moreno.webp" alt="Foto do criador da agenda" width="56" height="56">
+      <p>Projeto independente, feito por um brasileiro morando em Munique, sem vínculo com os organizadores dos eventos. Esta página não usa cookies e serve as fontes pelo próprio site. As visitas são contadas de forma anônima pelo Cloudflare Web Analytics, sem cookies. O formulário de sugestões é do Google.</p>
     </div>
   </div>
   <!-- Cloudflare Web Analytics (sem cookies) --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "fc814bea30b2451f9221f874394a64c0"}'></script><!-- End Cloudflare Web Analytics -->

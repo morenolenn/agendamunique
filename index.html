@@ -8,6 +8,7 @@
 <link rel="canonical" href="https://agendamunique.com/">
 <link rel="alternate" hreflang="pt-BR" href="https://agendamunique.com/">
 <link rel="alternate" hreflang="de" href="https://agendamunique.com/de/">
+<link rel="alternate" hreflang="en" href="https://agendamunique.com/en/">
 <link rel="alternate" hreflang="x-default" href="https://agendamunique.com/">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
@@ -15,6 +16,7 @@
 <meta property="og:type" content="website">
 <meta property="og:locale" content="pt_BR">
 <meta property="og:locale:alternate" content="de_DE">
+<meta property="og:locale:alternate" content="en_GB">
 <meta property="og:site_name" content="Agenda Munique">
 <meta property="og:title" content="Agenda Munique: tá rolando o quê em Munique?">
 <meta property="og:description" content="Feiras de Natal, Flohmärkte e eventos de rua em Munique, em português, com mapa e envio por WhatsApp.">
@@ -68,7 +70,15 @@ a { color: inherit; }
 }
 .logo svg { width: 28px; height: 28px; flex: none; }
 .top-r { display: flex; align-items: center; gap: 8px; }
-.pill.lang { padding: 8px 16px; }
+.langs { display: inline-flex; gap: 2px; padding: 4px; background: #fff; border-radius: 18px; }
+.langs a { display: inline-grid; place-items: center; min-width: 40px; min-height: 36px; padding: 0 8px; border-radius: 14px; font: 600 0.9rem var(--font-body); text-decoration: none; }
+.langs a:hover { background: var(--cream); }
+.langs a[aria-current="true"] { background: var(--ink); color: var(--cream); }
+.logo { white-space: nowrap; }
+@media (max-width: 400px) {
+  .logo { padding: 10px 12px; gap: 8px; font-size: 1rem; }
+  .langs a { min-width: 34px; padding: 0 6px; }
+}
 .pill {
   display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 8px 8px 8px 18px;
   background: #fff; border-radius: 18px; font: 600 0.95rem var(--font-body); text-decoration: none; border: 0; cursor: pointer;
@@ -269,7 +279,11 @@ dialog::backdrop { background: rgba(29, 42, 26, .45); }
     Agenda Munique
   </a>
   <div class="top-r">
-  <a class="pill lang" id="lang" href="de/" hreflang="de" lang="de">Deutsch</a>
+  <nav class="langs" aria-label="Idioma" data-i18n-aria="langLabel">
+    <a href="./" data-lang="pt" hreflang="pt-BR" lang="pt-BR" title="Português" aria-current="true">PT</a>
+    <a href="de/" data-lang="de" hreflang="de" lang="de" title="Deutsch">DE</a>
+    <a href="en/" data-lang="en" hreflang="en" lang="en" title="English">EN</a>
+  </nav>
   <button class="pill" id="share-site" type="button" data-share="site"><span data-i18n="shareAll">Compartilhar programação</span> <i aria-hidden="true"><svg class="plane" viewBox="1 -1 24 24" aria-hidden="true"><path d="M14.54 21.69a.5.5 0 0 0 .94-.03l6.5-19a.5.5 0 0 0-.64-.63l-19 6.5a.5.5 0 0 0-.02.93l7.93 3.18a2 2 0 0 1 1.11 1.11zM21.85 2.15 10.91 13.09"/></svg></i></button>
   </div>
 </div>
@@ -387,121 +401,156 @@ var SITE = "https://agendamunique.com/";
 var EVENTS = [
   { t: "Winterworld", type: "natal", s: "2026-11-07", e: "2026-12-18", place: "Motorworld München, Freimann", q: "Motorworld München",
     d: "O primeiro mercado da temporada, dentro da Motorworld, com música ao vivo todos os dias e a cabana Motorworld Alm. Sábado das 11h às 23h, domingo até 22h e, nos dias úteis, a partir das 15h.",
-    de: { d: "Der erste Markt der Saison, drinnen in der Motorworld, mit Livemusik an jedem Tag und der Motorworld Alm. Samstag 11 bis 23 Uhr, Sonntag bis 22 Uhr, unter der Woche ab 15 Uhr." } },
+    de: { d: "Der erste Markt der Saison, drinnen in der Motorworld, mit Livemusik an jedem Tag und der Motorworld Alm. Samstag 11 bis 23 Uhr, Sonntag bis 22 Uhr, unter der Woche ab 15 Uhr." },
+    en: { d: "The first market of the season, indoors at Motorworld, with live music every day and the Motorworld Alm hut. Saturday 11am to 11pm, Sunday until 10pm, weekdays from 3pm." } },
   { t: "Herzlmarkt", type: "natal", s: "2026-11-08", e: "2026-11-09", place: "Deutsches Museum", q: "Deutsches Museum München",
     d: "Feira de dois dias dentro do museu. Domingo das 11h às 18h e segunda das 10h às 17h.",
-    de: { d: "Zweitägiger Markt im Museum. Sonntag 11 bis 18 Uhr, Montag 10 bis 17 Uhr." } },
+    de: { d: "Zweitägiger Markt im Museum. Sonntag 11 bis 18 Uhr, Montag 10 bis 17 Uhr." },
+    en: { d: "Two-day market inside the museum. Sunday 11am to 6pm, Monday 10am to 5pm." } },
   { t: "Weihnachtszauberwald", type: "natal", s: "2026-11-12", e: "2027-01-06", place: "Festplatz em frente ao Cosimabad, Bogenhausen", q: "Cosimabad München", kids: true,
     d: "Glühwein-Festival com mais de 30 tipos de vinho quente em duas tendas, artesãos num bosque de pinheiros iluminado, trenzinho, carrossel e teatro de bonecos. Vai até o Dia de Reis.",
-    de: { place: "Festplatz vor dem Cosimabad, Bogenhausen", d: "Glühweinfestival mit über 30 Glühweinsorten in zwei Zelten, Kunsthandwerk in einem beleuchteten Tannenwald, Bimmelbahn, Karussell und Kasperltheater. Geht bis Heilige Drei Könige." } },
+    de: { place: "Festplatz vor dem Cosimabad, Bogenhausen", d: "Glühweinfestival mit über 30 Glühweinsorten in zwei Zelten, Kunsthandwerk in einem beleuchteten Tannenwald, Bimmelbahn, Karussell und Kasperltheater. Geht bis Heilige Drei Könige." },
+    en: { place: "Fairground in front of Cosimabad, Bogenhausen", d: "Glühwein festival with more than 30 kinds of mulled wine in two tents, craftspeople in a lit-up pine forest, a little train, a carousel and a puppet theatre. Runs until Epiphany." } },
   { t: "Winterrausch im Hexenhaus", type: "natal", s: "2026-11-12", e: "2026-12-23", place: "Kulturcafé Gans Woanders, Pilgersheimer Straße 13", q: "Gans Woanders München", kids: true,
     d: "Mercado de Natal no café cultural Gans Woanders, com música local, leituras, oficinas, shows de fogo e programação infantil.",
-    de: { d: "Weihnachtsmarkt im Kulturcafé Gans Woanders mit Musik aus der Gegend, Lesungen, Workshops, Feuershows und Kinderprogramm." } },
+    de: { d: "Weihnachtsmarkt im Kulturcafé Gans Woanders mit Musik aus der Gegend, Lesungen, Workshops, Feuershows und Kinderprogramm." },
+    en: { d: "Christmas market at the Gans Woanders cultural café, with local music, readings, workshops, fire shows and a kids' programme." } },
   { t: "Mercado de Natal do Werksviertel", type: "natal", s: "2026-11-12", e: "2026-12-20", place: "Knödelplatz, Werksviertel-Mitte", q: "Knödelplatz Werksviertel München",
     d: "WinterWunderWerk: pista de patinação de verdade na Knödelplatz, cinco pistas de curling, artesanato e barracas de comida e Glühwein. Sexta das 16h às 22h e sábado das 11h às 22h.",
-    de: { t: "Weihnachtsmarkt im Werksviertel", d: "WinterWunderWerk: echte Eisbahn auf dem Knödelplatz, fünf Eisstockbahnen, Kunsthandwerk sowie Essens- und Glühweinstände. Freitag 16 bis 22 Uhr, Samstag 11 bis 22 Uhr." } },
+    de: { t: "Weihnachtsmarkt im Werksviertel", d: "WinterWunderWerk: echte Eisbahn auf dem Knödelplatz, fünf Eisstockbahnen, Kunsthandwerk sowie Essens- und Glühweinstände. Freitag 16 bis 22 Uhr, Samstag 11 bis 22 Uhr." },
+    en: { t: "Werksviertel Christmas market", d: "WinterWunderWerk: a real ice rink on Knödelplatz, five curling lanes, crafts and food and Glühwein stalls. Friday 4pm to 10pm, Saturday 11am to 10pm." } },
   { t: "Alpenwahn", type: "natal", s: "2026-11-12", e: "2027-01-01", place: "Der Pschorr", q: "Der Pschorr München",
     d: "Mercado de Natal com tema alpino. Funciona até o Ano Novo.",
-    de: { d: "Weihnachtsmarkt im Alpen-Look. Geöffnet bis Neujahr." } },
+    de: { d: "Weihnachtsmarkt im Alpen-Look. Geöffnet bis Neujahr." },
+    en: { d: "Alpine-themed Christmas market. Open until New Year's Day." } },
   { t: "Münchner Eiszauber", type: "natal", s: "2026-11-13", e: "2027-01-10", place: "Karlsplatz (Stachus)", q: "Karlsplatz Stachus München",
     d: "A maior pista de gelo móvel da Baviera, todos os dias das 10h30 às 22h. Segunda tem entrada grátis para quem vai de Dirndl ou Lederhosen; domingo, duas pessoas patinam pelo preço de uma.",
-    de: { d: "Die größte mobile Eisfläche Bayerns, täglich 10:30 bis 22 Uhr. Montags freier Eintritt in Dirndl oder Lederhosen, sonntags laufen zwei zum Preis von einem." } },
+    de: { d: "Die größte mobile Eisfläche Bayerns, täglich 10:30 bis 22 Uhr. Montags freier Eintritt in Dirndl oder Lederhosen, sonntags laufen zwei zum Preis von einem." },
+    en: { d: "Bavaria's largest mobile ice rink, daily 10:30am to 10pm. Free entry on Mondays if you come in Dirndl or Lederhosen; on Sundays two skate for the price of one." } },
   { t: "Mercado de Natal do aeroporto", type: "natal", s: "2026-11-13", e: "2026-12-27", place: "MAC-Forum, Aeroporto de Munique", q: "MAC-Forum Flughafen München",
     d: "Mercado de Natal e inverno em volta de uma pista de gelo, com área coberta e música ao vivo. Das 11h às 21h; em 24 de dezembro, até 16h.",
-    de: { t: "Weihnachtsmarkt am Flughafen", place: "MAC-Forum, Flughafen München", d: "Weihnachts- und Wintermarkt rund um eine Eisbahn, mit überdachtem Bereich und Livemusik. 11 bis 21 Uhr, am 24. Dezember bis 16 Uhr." } },
+    de: { t: "Weihnachtsmarkt am Flughafen", place: "MAC-Forum, Flughafen München", d: "Weihnachts- und Wintermarkt rund um eine Eisbahn, mit überdachtem Bereich und Livemusik. 11 bis 21 Uhr, am 24. Dezember bis 16 Uhr." },
+    en: { t: "Munich Airport Christmas market", place: "MAC-Forum, Munich Airport", d: "Christmas and winter market around an ice rink, with a covered area and live music. 11am to 9pm; until 4pm on 24 December." } },
   { t: "Weihnachtsdorf na Residenz", type: "natal", s: "2026-11-16", e: "2026-12-22", place: "Kaiserhof da Residenz, entrada pela Residenzstraße", q: "Residenz München Kaiserhof", kids: true,
     d: "Vilarejo de Natal no maior pátio da Residenz, das 11h às 21h, com floresta de João e Maria, teatro de bonecos e ourives, peleteiros e sopradores de vidro trabalhando. Fechado em 22 de novembro.",
-    de: { t: "Weihnachtsdorf in der Residenz", place: "Kaiserhof der Residenz, Eingang Residenzstraße", d: "Weihnachtsdorf im größten Hof der Residenz, 11 bis 21 Uhr, mit Hänsel-und-Gretel-Wald, Kasperltheater und Goldschmieden, Kürschnern und Glasbläsern bei der Arbeit. Am 22. November geschlossen." } },
+    de: { t: "Weihnachtsdorf in der Residenz", place: "Kaiserhof der Residenz, Eingang Residenzstraße", d: "Weihnachtsdorf im größten Hof der Residenz, 11 bis 21 Uhr, mit Hänsel-und-Gretel-Wald, Kasperltheater und Goldschmieden, Kürschnern und Glasbläsern bei der Arbeit. Am 22. November geschlossen." },
+    en: { t: "Christmas village at the Residenz", place: "Kaiserhof of the Residenz, entrance on Residenzstraße", d: "Christmas village in the Residenz's largest courtyard, 11am to 9pm, with a Hansel and Gretel forest, puppet theatre and goldsmiths, furriers and glassblowers at work. Closed on 22 November." } },
   { t: "Moosacher Hüttenzauber", type: "natal", s: "2026-11-16", e: "2026-12-22", place: "St.-Martins-Platz, Moosach", q: "St.-Martins-Platz Moosach München", kids: true,
     d: "Mercado pequeno e romântico de bairro, com programação infantil que muda todo dia e carrossel.",
-    de: { d: "Kleiner, romantischer Viertelmarkt mit täglich wechselndem Kinderprogramm und Karussell." } },
+    de: { d: "Kleiner, romantischer Viertelmarkt mit täglich wechselndem Kinderprogramm und Karussell." },
+    en: { d: "Small, romantic neighbourhood market with a kids' programme that changes every day and a carousel." } },
   { t: "Sternenflotte na Alte Utting", type: "natal", s: "2026-11-17", e: "2026-12-23", place: "Alte Utting, Lagerhausstraße 15", q: "Alte Utting München",
     d: "O antigo barco a vapor do Ammersee, parado numa ponte perto do Großmarkthalle, vira porto de Natal com Glühwein, comida e música.",
-    de: { t: "Sternenflotte auf der Alten Utting", d: "Der alte Ammersee-Dampfer auf einer Brücke nahe der Großmarkthalle wird zum Weihnachtshafen mit Glühwein, Essen und Musik." } },
+    de: { t: "Sternenflotte auf der Alten Utting", d: "Der alte Ammersee-Dampfer auf einer Brücke nahe der Großmarkthalle wird zum Weihnachtshafen mit Glühwein, Essen und Musik." },
+    en: { t: "Sternenflotte on the Alte Utting", d: "The old Ammersee steamboat, parked on a bridge near the Großmarkthalle, becomes a Christmas harbour with Glühwein, food and music." } },
   { t: "Weihnachtsmacherei", type: "natal", s: "2026-11-19", e: "2026-12-19", place: "Die Macherei, Berg-am-Laim-Straße 103", q: "Die Macherei München", kids: true,
     d: "Mercado urbano e moderno, de quinta a domingo, com duas pistas de curling (reserva online), gôndolas de esqui aquecidas, shows e visita de São Nicolau em 6 de dezembro.",
-    de: { d: "Moderner Stadtmarkt von Donnerstag bis Sonntag mit zwei Eisstockbahnen (online reservieren), beheizten Skigondeln, Konzerten und Besuch vom Nikolaus am 6. Dezember." } },
+    de: { d: "Moderner Stadtmarkt von Donnerstag bis Sonntag mit zwei Eisstockbahnen (online reservieren), beheizten Skigondeln, Konzerten und Besuch vom Nikolaus am 6. Dezember." },
+    en: { d: "Modern urban market, Thursday to Sunday, with two curling lanes (book online), heated ski gondolas, concerts and a visit from St Nicholas on 6 December." } },
   { t: "Mercado de Natal da Torre Chinesa", type: "natal", s: "2026-11-19", e: "2026-12-23", place: "Chinesischer Turm, Englischer Garten", q: "Chinesischer Turm München", kids: true,
     d: "Vilarejo de Natal em volta do pagode, de quarta a domingo, com carrossel, a vovó que lê histórias, passeios de carruagem pelo Englischer Garten e cantos de Advento no fim de semana.",
-    de: { t: "Weihnachtsmarkt am Chinesischen Turm", d: "Weihnachtsdorf rund um die Pagode, Mittwoch bis Sonntag, mit Karussell, Märchenoma, Kutschfahrten durch den Englischen Garten und Adventssingen am Wochenende." } },
+    de: { t: "Weihnachtsmarkt am Chinesischen Turm", d: "Weihnachtsdorf rund um die Pagode, Mittwoch bis Sonntag, mit Karussell, Märchenoma, Kutschfahrten durch den Englischen Garten und Adventssingen am Wochenende." },
+    en: { t: "Chinese Tower Christmas market", d: "Christmas village around the pagoda, Wednesday to Sunday, with a carousel, a storytelling granny, carriage rides through the Englischer Garten and Advent singing at weekends." } },
   { t: "Mondscheinexpress", type: "natal", s: "2026-11-19", e: "2026-12-23", place: "Bahnwärter Thiel, Tumblingerstraße 45", q: "Bahnwärter Thiel München",
     d: "Mercado alternativo no Schlachthofviertel, com ateliês de artistas, fogueiras, Glühwein orgânico e shows diários num palco de cabaré.",
-    de: { d: "Alternativer Markt im Schlachthofviertel mit Künstlerateliers, Feuerstellen, Bio-Glühwein und täglichen Auftritten auf einer Kabarettbühne." } },
+    de: { d: "Alternativer Markt im Schlachthofviertel mit Künstlerateliers, Feuerstellen, Bio-Glühwein und täglichen Auftritten auf einer Kabarettbühne." },
+    en: { d: "Alternative market in the Schlachthofviertel with artists' studios, fire pits, organic Glühwein and daily shows on a cabaret stage." } },
   { t: "Christkindlmarkt do Marienplatz", type: "natal", s: "2026-11-20", e: "2026-12-24", place: "Marienplatz e zona de pedestres", q: "Marienplatz München", free: true, kids: true,
     d: "O mercado principal da cidade, com o Kripperlmarkt em St. Peter, música na sacada da prefeitura (domingo a quinta, 17h15) e a Himmelswerkstatt, oficina grátis para crianças de 6 a 12 anos. Segunda a sábado das 10h às 21h, domingo até 20h e, em 24 de dezembro, até 14h. Fechado em 22 de novembro.",
-    de: { t: "Christkindlmarkt am Marienplatz", place: "Marienplatz und Fußgängerzone", d: "Der Hauptmarkt der Stadt mit dem Kripperlmarkt an St. Peter, Musik vom Rathausbalkon (Sonntag bis Donnerstag, 17:15 Uhr) und der Himmelswerkstatt, einer kostenlosen Werkstatt für Kinder von 6 bis 12 Jahren. Montag bis Samstag 10 bis 21 Uhr, Sonntag bis 20 Uhr, am 24. Dezember bis 14 Uhr. Am 22. November geschlossen." } },
+    de: { t: "Christkindlmarkt am Marienplatz", place: "Marienplatz und Fußgängerzone", d: "Der Hauptmarkt der Stadt mit dem Kripperlmarkt an St. Peter, Musik vom Rathausbalkon (Sonntag bis Donnerstag, 17:15 Uhr) und der Himmelswerkstatt, einer kostenlosen Werkstatt für Kinder von 6 bis 12 Jahren. Montag bis Samstag 10 bis 21 Uhr, Sonntag bis 20 Uhr, am 24. Dezember bis 14 Uhr. Am 22. November geschlossen." },
+    en: { t: "Marienplatz Christkindlmarkt", place: "Marienplatz and the pedestrian zone", d: "The city's main market, with the nativity market at St. Peter, music from the town hall balcony (Sunday to Thursday, 5:15pm) and the Himmelswerkstatt, a free workshop for kids aged 6 to 12. Monday to Saturday 10am to 9pm, Sunday until 8pm, 24 December until 2pm. Closed on 22 November." } },
   { t: "Mercado de Natal do Viktualienmarkt", type: "natal", s: "2026-11-20", e: "2027-01-05", place: "Viktualienmarkt", q: "Viktualienmarkt München",
     d: "O mercado de alimentos ganha luzes de Advento, Glühwein e petiscos. Vale ver o presépio ao lado do Biergarten.",
-    de: { t: "Weihnachtsmarkt am Viktualienmarkt", d: "Der Lebensmittelmarkt bekommt Adventslichter, Glühwein und Schmankerl. Die Krippe neben dem Biergarten lohnt einen Blick." } },
+    de: { t: "Weihnachtsmarkt am Viktualienmarkt", d: "Der Lebensmittelmarkt bekommt Adventslichter, Glühwein und Schmankerl. Die Krippe neben dem Biergarten lohnt einen Blick." },
+    en: { t: "Viktualienmarkt Christmas market", d: "The food market gets Advent lights, Glühwein and snacks. The nativity scene next to the beer garden is worth a look." } },
   { t: "Christkindlmarkt am Sendlinger Tor", type: "natal", s: "2026-11-20", e: "2026-12-22", place: "Sendlinger-Tor-Platz", q: "Sendlinger Tor München",
     d: "Mercado pequeno e charmoso diante do portão medieval, com presépios do Tirol e do Peru, velas, cerâmica, Feuerzangenbowle e música de Natal todos os dias.",
-    de: { d: "Kleiner, charmanter Markt vor dem mittelalterlichen Tor, mit Krippen aus Tirol und Peru, Kerzen, Keramik, Feuerzangenbowle und täglich Weihnachtsmusik." } },
+    de: { d: "Kleiner, charmanter Markt vor dem mittelalterlichen Tor, mit Krippen aus Tirol und Peru, Kerzen, Keramik, Feuerzangenbowle und täglich Weihnachtsmusik." },
+    en: { d: "Small, charming market in front of the medieval gate, with nativity scenes from Tyrol and Peru, candles, ceramics, Feuerzangenbowle and Christmas music every day." } },
   { t: "Mercado de Natal medieval", type: "natal", s: "2026-11-20", e: "2026-12-23", place: "Wittelsbacher Platz, Brienner Straße", q: "Wittelsbacher Platz München",
     d: "Münchner Adventsspektakel: cabanas de madeira, comerciantes com roupas de época, ofícios antigos, Flammkuchen e linguiça no fogo de lenha.",
-    de: { t: "Mittelalterlicher Weihnachtsmarkt", d: "Münchner Adventsspektakel: Holzhütten, Händler in historischen Gewändern, altes Handwerk, Flammkuchen und Würstl vom Holzfeuer." } },
+    de: { t: "Mittelalterlicher Weihnachtsmarkt", d: "Münchner Adventsspektakel: Holzhütten, Händler in historischen Gewändern, altes Handwerk, Flammkuchen und Würstl vom Holzfeuer." },
+    en: { t: "Medieval Christmas market", d: "Münchner Adventsspektakel: wooden huts, traders in period costume, old crafts, Flammkuchen and sausages cooked over a wood fire." } },
   { t: "Pink Christmas", type: "natal", s: "2026-11-20", e: "2026-12-20", place: "Stephansplatz", q: "Stephansplatz München",
     d: "O mercado de Natal da comunidade LGBTIQ*, perto do Sendlinger Tor, com palco para drag queens e cantores.",
-    de: { d: "Der Weihnachtsmarkt der LGBTIQ*-Community nahe dem Sendlinger Tor, mit Bühne für Dragqueens und Sänger." } },
+    de: { d: "Der Weihnachtsmarkt der LGBTIQ*-Community nahe dem Sendlinger Tor, mit Bühne für Dragqueens und Sänger." },
+    en: { d: "The LGBTIQ* community's Christmas market near Sendlinger Tor, with a stage for drag queens and singers." } },
   { t: "Neuhauser Weihnachtsmarkt", type: "natal", s: "2026-11-20", e: "2026-12-23", place: "Rotkreuzplatz, Neuhausen", q: "Rotkreuzplatz München", kids: true,
     d: "Mercado de bairro, todos os dias das 11h às 20h30, com enfeites, presépios, brinquedos de madeira, teatro de bonecos e música.",
-    de: { d: "Viertelmarkt, täglich 11 bis 20:30 Uhr, mit Christbaumschmuck, Krippen, Holzspielzeug, Kasperltheater und Musik." } },
+    de: { d: "Viertelmarkt, täglich 11 bis 20:30 Uhr, mit Christbaumschmuck, Krippen, Holzspielzeug, Kasperltheater und Musik." },
+    en: { d: "Neighbourhood market, daily 11am to 8:30pm, with decorations, nativity figures, wooden toys, puppet theatre and music." } },
   { t: "Haidhauser Weihnachtsmarkt", type: "natal", s: "2026-11-20", e: "2026-12-24", place: "Weißenburger Platz, Haidhausen", q: "Weißenburger Platz München", kids: true,
     d: "Mercado tranquilo em volta da fonte, há 40 anos no bairro, com música ao vivo e programação infantil quase todos os dias e um presépio do Tirol do Sul.",
-    de: { d: "Ruhiger Markt rund um den Brunnen, seit 40 Jahren im Viertel, mit fast täglich Livemusik und Kinderprogramm und einer Krippe aus Südtirol." } },
+    de: { d: "Ruhiger Markt rund um den Brunnen, seit 40 Jahren im Viertel, mit fast täglich Livemusik und Kinderprogramm und einer Krippe aus Südtirol." },
+    en: { d: "Quiet market around the fountain, in the neighbourhood for 40 years, with live music and kids' activities almost every day and a nativity scene from South Tyrol." } },
   { t: "Sendlinger Bergweihnacht", type: "natal", s: "2026-11-20", e: "2026-12-23", place: "Harras, Sendling", q: "Harras München", kids: true,
     d: "Mercado diário junto à maior coroa de Advento de Munique, com corais no palco, carrossel e visita de São Nicolau.",
-    de: { d: "Täglicher Markt am größten Adventskranz Münchens, mit Chören auf der Bühne, Karussell und Besuch vom Nikolaus." } },
+    de: { d: "Täglicher Markt am größten Adventskranz Münchens, mit Chören auf der Bühne, Karussell und Besuch vom Nikolaus." },
+    en: { d: "Daily market next to Munich's biggest Advent wreath, with choirs on stage, a carousel and a visit from St Nicholas." } },
   { t: "Christkindlmarkt unterm Maibaum", type: "natal", s: "2026-11-20", e: "2027-01-06", place: "Luise-Kiesselbach-Platz", q: "Luise-Kiesselbach-Platz München",
     d: "Vilarejo de cabanas sob o Maibaum, com pista de gelo, curling, gôndolas de esqui e a maior pirâmide de Glühwein da Baviera. Fechado em 24 e 31 de dezembro.",
-    de: { d: "Hüttendorf unter dem Maibaum mit Eisbahn, Eisstockschießen, Skigondeln und der größten Glühweinpyramide Bayerns. Am 24. und 31. Dezember geschlossen." } },
+    de: { d: "Hüttendorf unter dem Maibaum mit Eisbahn, Eisstockschießen, Skigondeln und der größten Glühweinpyramide Bayerns. Am 24. und 31. Dezember geschlossen." },
+    en: { d: "Hut village under the maypole with an ice rink, curling, ski gondolas and Bavaria's largest Glühwein pyramid. Closed on 24 and 31 December." } },
   { t: "Münchner Feuerzangenbowle", type: "natal", s: "2026-11-23", e: "2027-01-06", place: "Blumenstraße 22, atrás da Schrannenhalle", q: "Münchner Feuerzangenbowle Blumenstraße 22",
     d: "O ponche flamejante servido de um caldeirão gigante, com comida e uma exposição. No Réveillon fica aberto sem hora para fechar.",
-    de: { place: "Blumenstraße 22, hinter der Schrannenhalle", d: "Feuerzangenbowle aus einem Riesenkessel, dazu Essen und eine Ausstellung. An Silvester open end." } },
+    de: { place: "Blumenstraße 22, hinter der Schrannenhalle", d: "Feuerzangenbowle aus einem Riesenkessel, dazu Essen und eine Ausstellung. An Silvester open end." },
+    en: { place: "Blumenstraße 22, behind the Schrannenhalle", d: "Flaming rum punch served from a giant cauldron, plus food and an exhibition. Open late with no closing time on New Year's Eve." } },
   { t: "Tollwood Winterfestival", type: "natal", s: "2026-11-24", e: "2026-12-23", place: "Theresienwiese", q: "Tollwood Winterfestival München", kids: true,
     d: "Festival de inverno alternativo com comida orgânica, o Markt der Ideen e programação cultural quase toda gratuita. O Kindaling indica para a família a partir de 4 anos. Festa de Réveillon em 31 de dezembro.",
-    de: { d: "Alternatives Winterfestival mit Bio-Essen, dem Markt der Ideen und einem fast komplett kostenlosen Kulturprogramm. Kindaling empfiehlt es für Familien mit Kindern ab 4 Jahren. Silvesterparty am 31. Dezember." } },
+    de: { d: "Alternatives Winterfestival mit Bio-Essen, dem Markt der Ideen und einem fast komplett kostenlosen Kulturprogramm. Kindaling empfiehlt es für Familien mit Kindern ab 4 Jahren. Silvesterparty am 31. Dezember." },
+    en: { d: "Alternative winter festival with organic food, the Markt der Ideen and a cultural programme that is almost entirely free. Kindaling recommends it for families with kids aged 4 and up. New Year's Eve party on 31 December." } },
   { t: "Schwabinger Weihnachtsmarkt", type: "natal", s: "2026-11-25", e: "2026-12-24", place: "Münchner Freiheit, Schwabing", q: "Münchner Freiheit München", kids: true,
     d: "Mercado de artistas, há mais de 40 anos, com tenda de arte, trilha de esculturas, shows gratuitos e atividades para crianças.",
-    de: { d: "Künstlermarkt, seit über 40 Jahren, mit Kunstzelt, Skulpturenpfad, kostenlosen Konzerten und Aktionen für Kinder." } },
+    de: { d: "Künstlermarkt, seit über 40 Jahren, mit Kunstzelt, Skulpturenpfad, kostenlosen Konzerten und Aktionen für Kinder." },
+    en: { d: "Artists' market, running for over 40 years, with an art tent, a sculpture trail, free concerts and activities for kids." } },
   { t: "Märchenbazar", type: "natal", s: "2026-11-26", e: "2026-12-28", place: "Olympiapark Süd, Spiridon-Louis-Ring 100", q: "Märchenbazar Olympiapark München", kids: true,
     d: "Tendas de circo nostálgicas, bar num cenário de cinema, arte e música, e para as crianças oficina de velas, teatro de bonecos e histórias. Fechado em 24 de dezembro.",
-    de: { d: "Nostalgische Zirkuszelte, eine Bar in Filmkulisse, Kunst und Musik, für Kinder Kerzenziehen, Kasperltheater und Märchen. Am 24. Dezember geschlossen." } },
+    de: { d: "Nostalgische Zirkuszelte, eine Bar in Filmkulisse, Kunst und Musik, für Kinder Kerzenziehen, Kasperltheater und Märchen. Am 24. Dezember geschlossen." },
+    en: { d: "Nostalgic circus tents, a bar on a film set, art and music, and for kids candle-making, puppet theatre and fairy tales. Closed on 24 December." } },
   { t: "Winterzauber Gans am Wasser", type: "natal", s: "2026-11-27", e: "2027-01-01", place: "Café Gans am Wasser, Westpark", q: "Gans am Wasser Westpark München", kids: true,
     d: "Recanto tranquilo à beira do lago no Westpark, com braseiros, música ao vivo e atividades para todas as idades. Fechado em 24 de dezembro.",
-    de: { d: "Ruhiges Plätzchen am See im Westpark, mit Feuerschalen, Livemusik und Programm für alle Altersgruppen. Am 24. Dezember geschlossen." } },
+    de: { d: "Ruhiges Plätzchen am See im Westpark, mit Feuerschalen, Livemusik und Programm für alle Altersgruppen. Am 24. Dezember geschlossen." },
+    en: { d: "Peaceful lakeside spot in the Westpark, with fire bowls, live music and activities for all ages. Closed on 24 December." } },
   { t: "Pasinger Christkindlmarkt", type: "natal", s: "2026-11-28", e: "2026-12-20", place: "Schererplatz, Pasing", q: "Schererplatz Pasing München",
     d: "Mercado tradicional em frente à igreja Maria Schutz, com muito artesanato feito à mão, presépios, crepes e castanhas.",
-    de: { d: "Traditioneller Markt vor der Kirche Maria Schutz, mit viel Handgemachtem, Krippen, Crêpes und Maroni." } },
+    de: { d: "Traditioneller Markt vor der Kirche Maria Schutz, mit viel Handgemachtem, Krippen, Crêpes und Maroni." },
+    en: { d: "Traditional market in front of the Maria Schutz church, with lots of handmade crafts, nativity scenes, crêpes and roasted chestnuts." } },
   { t: "Truderinger Christkindlmarkt", type: "natal", s: "2026-11-28", e: "2026-11-29", place: "Trudering", q: "Truderinger Christkindlmarkt",
     d: "Mercado de bairro de um fim de semana só, no primeiro Advento.",
-    de: { d: "Viertelmarkt an nur einem Wochenende, dem ersten Advent." } },
+    de: { d: "Viertelmarkt an nur einem Wochenende, dem ersten Advent." },
+    en: { d: "Neighbourhood market on a single weekend, the first of Advent." } },
   { t: "Blutenburger Weihnacht", type: "natal", s: "2026-12-03", e: "2026-12-06", place: "Schloss Blutenburg, Obermenzing", q: "Schloss Blutenburg München",
     d: "Quatro dias no pátio do castelo com fosso, iluminado em cores, com artesanato, Feuerzangenbowle e música ao vivo. Combina com uma visita ao Schloss Nymphenburg.",
-    de: { d: "Vier Tage im bunt beleuchteten Hof des Wasserschlosses, mit Kunsthandwerk, Feuerzangenbowle und Livemusik. Passt gut zu einem Besuch im Schloss Nymphenburg." } },
+    de: { d: "Vier Tage im bunt beleuchteten Hof des Wasserschlosses, mit Kunsthandwerk, Feuerzangenbowle und Livemusik. Passt gut zu einem Besuch im Schloss Nymphenburg." },
+    en: { d: "Four days in the courtyard of the moated castle, lit up in colour, with crafts, Feuerzangenbowle and live music. Pairs well with a visit to Schloss Nymphenburg." } },
   { t: "Krampuslauf", type: "rua", s: "2026-12-13", e: "2026-12-13", place: "Altstadt, saída na Augustinerstraße", q: "Augustinerstraße München",
     d: "Desfile tradicional de Krampus pelo Christkindlmarkt, das 15h às 17h. Pode assustar crianças pequenas.",
-    de: { place: "Altstadt, Start in der Augustinerstraße", d: "Traditioneller Krampuslauf über den Christkindlmarkt, 15 bis 17 Uhr. Kann kleine Kinder erschrecken." } },
+    de: { place: "Altstadt, Start in der Augustinerstraße", d: "Traditioneller Krampuslauf über den Christkindlmarkt, 15 bis 17 Uhr. Kann kleine Kinder erschrecken." },
+    en: { place: "Old town, starting on Augustinerstraße", d: "Traditional Krampus parade through the Christkindlmarkt, 3pm to 5pm. It can scare small children." } },
   { t: "Allacher Christkindlmarkt", type: "natal", s: "2026-12-17", e: "2026-12-20", place: "Allach", q: "Allacher Christkindlmarkt",
     d: "Mercado de bairro nos quatro dias antes do último fim de semana de Advento.",
-    de: { d: "Viertelmarkt an den vier Tagen vor dem letzten Adventswochenende." } }
+    de: { d: "Viertelmarkt an den vier Tagen vor dem letzten Adventswochenende." },
+    en: { d: "Neighbourhood market on the four days before the last Advent weekend." } }
 ];
 var WEEKLY = [
   { t: "Flohmarkt München-Riem", type: "floh", when: "Todo sábado, a partir das 7h", place: "Riem", q: "Flohmarkt München-Riem", kids: true, dow: 6, rrule: "FREQ=WEEKLY;BYDAY=SA",
     d: "Feira de pulgas semanal, indicada para toda a família.",
-    de: { when: "Jeden Samstag, ab 7 Uhr", d: "Wöchentlicher Flohmarkt, für die ganze Familie geeignet." } },
+    de: { when: "Jeden Samstag, ab 7 Uhr", d: "Wöchentlicher Flohmarkt, für die ganze Familie geeignet." },
+    en: { when: "Every Saturday, from 7am", d: "Weekly flea market, good for the whole family." } },
   { t: "Antik- & Flohmarkt Daglfing", type: "floh", when: "Sextas e sábados em datas selecionadas, 7h às 15h", place: "Trabrennbahn, Rennbahnstraße 35", q: "Trabrennbahn München-Daglfing", kids: true, dow: 6, note: "Datas selecionadas: confira o calendário do organizador antes de ir.",
     d: "Feira de antiguidades e pulgas no hipódromo. Veja o calendário do organizador para as datas.",
-    de: { when: "Freitags und samstags an ausgewählten Terminen, 7 bis 15 Uhr", note: "Ausgewählte Termine: vor dem Besuch den Kalender des Veranstalters prüfen.", d: "Antik- und Flohmarkt auf der Trabrennbahn. Die Termine stehen im Kalender des Veranstalters." } }
+    de: { when: "Freitags und samstags an ausgewählten Terminen, 7 bis 15 Uhr", note: "Ausgewählte Termine: vor dem Besuch den Kalender des Veranstalters prüfen.", d: "Antik- und Flohmarkt auf der Trabrennbahn. Die Termine stehen im Kalender des Veranstalters." },
+    en: { when: "Selected Fridays and Saturdays, 7am to 3pm", note: "Selected dates only: check the organiser's calendar before you go.", d: "Antiques and flea market at the trotting track. See the organiser's calendar for dates." } }
 ];
 // === DADOS DOS EVENTOS: FIM ===
-// Textos da página em português e alemão. O HTML já vem em português; em alemão, applyLang troca os elementos marcados com data-i18n.
+// Textos da página em português, alemão e inglês. O HTML já vem em português; em alemão, applyLang troca os elementos marcados com data-i18n.
 var TEXT = {
   pt: {
     months: ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"],
     monthsLong: ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"],
     title: "Agenda Munique",
     metaDesc: "Feiras de Natal, Flohmärkte e eventos de rua em Munique, em português, com mapa e envio por WhatsApp.",
-    other: "Deutsch", otherLang: "de", otherHref: "de/",
+    langLabel: "Idioma",
     home: "Agenda Munique, início",
     shareAll: "Compartilhar programação",
     h1: 'Tá rolando<br class="br"> o quê em<br class="br"> <em>Munique?</em>',
@@ -545,7 +594,7 @@ var TEXT = {
     monthsLong: ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
     title: "Agenda Munique – Was ist los in München?",
     metaDesc: "Weihnachtsmärkte, Flohmärkte und Straßenfeste in München auf einen Blick, mit Karte und zum Teilen per WhatsApp.",
-    other: "Português", otherLang: "pt-BR", otherHref: "./",
+    langLabel: "Sprache",
     home: "Agenda Munique, Startseite",
     shareAll: "Programm teilen",
     h1: 'Was ist<br class="br"> los in<br class="br"> <em>München?</em>',
@@ -583,23 +632,68 @@ var TEXT = {
     shareSiteTg: "Weihnachtsmärkte und Straßenfeste in München auf einen Blick.",
     inCity: " in München", moreEvents: "Mehr Termine in München: ",
     updated: function (d, m, y) { return "Aktualisiert am " + d + ". " + m + " " + y; }
+  },
+  en: {
+    months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    monthsLong: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+    title: "Agenda Munique – What's on in Munich?",
+    metaDesc: "Christmas markets, flea markets and street festivals in Munich at a glance, with maps and WhatsApp sharing.",
+    langLabel: "Language",
+    home: "Agenda Munique, home",
+    shareAll: "Share the guide",
+    h1: 'What\'s on<br class="br"> in<br class="br"> <em>Munich?</em>',
+    lede: "Christmas markets, flea markets and street festivals at a glance, so you can plan a day out with the family.",
+    see: "See what's on",
+    suggest: "Suggest an event",
+    scene: "Illustration of a Christmas market stall with Glühwein and a pretzel",
+    filterBy: "Filter by type",
+    fAll: "All", fNatal: "🎄 Christmas", fFloh: "🧺 Flea market", fRua: "🎭 Street & tradition", fKids: "🧒 With kids",
+    missing: "Missing an event?",
+    missingText: "Know a market or street festival that isn't listed here? Let us know. We don't ask for your name or email.",
+    formHint: "The form opens on a Google page and is in Portuguese, but you can fill it in in English.",
+    share: "Share", sms: "Text message (SMS)", more: "More options", close: "Close",
+    copy: "Copy link", copied: "Link copied!",
+    bye: "Enjoy the markets! 🥨",
+    sources: 'Dates and opening hours checked on <a href="https://www.muenchen.de/veranstaltungen/weihnachtsmaerkte-christkindlmaerkte-2026" target="_blank" rel="noopener">muenchen.de</a>, the tourism site <a href="https://www.munich.travel/en/topics/markets-festivals/christmas-markets-munich" target="_blank" rel="noopener">munich.travel</a>, the <a href="https://www.christkindlmarkt-muenchen.de/" target="_blank" rel="noopener">Christkindlmarkt</a> website and <a href="https://www.kindaling.de/weihnachtsmaerkte/muenchen" target="_blank" rel="noopener">Kindaling</a>. Opening hours vary by day, and most Christmas markets close on 15 November (Volkstrauertag) and on Totensonntag (22 November). Check the event\'s page before you go. Map pins are searches for the venue name.',
+    about: "An independent project by a Brazilian living in Munich, not affiliated with any of the organisers. This page sets no cookies and serves its fonts from its own server. Visits are counted anonymously, without cookies, by Cloudflare Web Analytics. The suggestion form is run by Google.",
+    openMap: "Open in maps",
+    range: function (a, b) { return a + " to " + b; },
+    openFromTo: function (a, b) { return " Open from " + a + " to " + b + "."; },
+    map: "Map: ", checkDate: " (check the date)",
+    live: "Open now", tomorrow: "Opens tomorrow", inDays: function (n) { return "Opens in " + n + " days"; }, closed: "Over",
+    free: "Free entry", kids: "Good with kids",
+    everyWeek: "Every week", running: "On now", recurring: "Recurring", addCal: "Add to calendar",
+    weekend: "This weekend", today: "Today",
+    nothing: "<h2>That's all for now</h2><p>Nothing with a fixed date coming up. The weekly flea markets carry on.</p>",
+    nextOpen: "Opening soon",
+    daysTo: function (n) { return (n === 1 ? "day" : "days") + " until the first market opens"; },
+    opensOn: "opens ",
+    statDated: "dated events", statWeekly: "weekly markets", statEnd: "end of season",
+    dated: "With a fixed date", ofYear: " ", empty: "No events in this filter right now.",
+    shareSiteText: "Check out this guide to Munich's Christmas markets and street festivals: ",
+    shareSiteSub: "Christmas markets and street festivals in Munich",
+    shareSiteSubject: "Agenda Munique: markets and street festivals",
+    shareSiteTg: "Christmas markets and street festivals in Munich at a glance.",
+    inCity: " in Munich", moreEvents: "More events in Munich: ",
+    updated: function (d, m, y) { return "Updated " + d + " " + m + " " + y; }
   }
 };
-// Idioma: ?lang= na URL (a página /de/ redireciona com ?lang=de), depois a escolha guardada, depois o navegador.
-// Só abre em alemão sozinho se o navegador estiver em alemão e não tiver português na lista.
+// Idioma: ?lang= na URL (as páginas /de/ e /en/ redirecionam com ?lang=), depois a escolha guardada, depois o navegador.
+// Com português em qualquer posição da lista do navegador abre em português; senão em alemão se o navegador estiver em alemão, e em inglês nos demais casos.
 function pickLang() {
-  var m = /[?&]lang=(pt|de)/.exec(location.search);
+  var m = /[?&]lang=(pt|de|en)/.exec(location.search);
   if (m) return m[1];
-  try { var saved = localStorage.getItem("lang"); if (saved === "pt" || saved === "de") return saved; } catch (e) {}
+  try { var saved = localStorage.getItem("lang"); if (TEXT[saved]) return saved; } catch (e) {}
   var langs = navigator.languages || [navigator.language || ""];
   var hasPt = langs.some(function (l) { return /^pt/i.test(l); });
-  return !hasPt && /^de/i.test(langs[0] || "") ? "de" : "pt";
+  if (hasPt) return "pt";
+  return /^de/i.test(langs[0] || "") ? "de" : "en";
 }
 var lang = pickLang();
 var L = TEXT[lang], MONTHS = L.months, MONTHS_LONG = L.monthsLong;
-// Campo do evento no idioma atual: em alemão usa ev.de.t / ev.de.d / ev.de.place / ev.de.when / ev.de.note quando existirem
-function tr(ev, k) { return lang === "de" && ev.de && ev.de[k] ? ev.de[k] : ev[k]; }
-function siteUrl() { return lang === "de" ? SITE + "de/" : SITE; }
+// Campo do evento no idioma atual: em alemão usa ev.de.t / .d / .place / .when / .note quando existirem; em inglês, ev.en
+function tr(ev, k) { var x = ev[lang]; return lang !== "pt" && x && x[k] ? x[k] : ev[k]; }
+function siteUrl() { return lang === "pt" ? SITE : SITE + lang + "/"; }
 var filter = "all";
 
 function parse(s) { var p = s.split("-"); return new Date(+p[0], +p[1] - 1, +p[2]); }
@@ -753,7 +847,7 @@ function render() {
   document.getElementById("stats").innerHTML = out.stats;
 }
 function applyLang() {
-  document.documentElement.lang = lang === "de" ? "de" : "pt-BR";
+  document.documentElement.lang = lang === "pt" ? "pt-BR" : lang;
   document.title = L.title;
   document.querySelector('meta[name="description"]').setAttribute("content", L.metaDesc);
   function each(attr, fn) { Array.prototype.forEach.call(document.querySelectorAll("[" + attr + "]"), function (el) { fn(el, L[el.getAttribute(attr)]); }); }
@@ -761,8 +855,9 @@ function applyLang() {
   each("data-i18n-html", function (el, v) { el.innerHTML = v; });
   each("data-i18n-aria", function (el, v) { el.setAttribute("aria-label", v); });
   each("data-i18n-alt", function (el, v) { el.setAttribute("alt", v); });
-  var sw = document.getElementById("lang");
-  sw.textContent = L.other; sw.setAttribute("href", L.otherHref); sw.setAttribute("hreflang", L.otherLang); sw.setAttribute("lang", L.otherLang);
+  Array.prototype.forEach.call(document.querySelectorAll(".langs a"), function (a) {
+    if (a.getAttribute("data-lang") === lang) a.setAttribute("aria-current", "true"); else a.removeAttribute("aria-current");
+  });
   var u = parse(UPDATED);
   document.getElementById("updated").textContent = L.updated(u.getDate(), MONTHS_LONG[u.getMonth()], u.getFullYear());
 }
@@ -818,15 +913,15 @@ document.getElementById("sh-more").addEventListener("click", function () {
     e.id = e.t.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
   });
   applyLang();
-  document.getElementById("lang").addEventListener("click", function (e) {
+  Array.prototype.forEach.call(document.querySelectorAll(".langs a"), function (a) { a.addEventListener("click", function (e) {
     e.preventDefault();
-    lang = lang === "de" ? "pt" : "de";
+    lang = a.getAttribute("data-lang");
     L = TEXT[lang]; MONTHS = L.months; MONTHS_LONG = L.monthsLong;
     try { localStorage.setItem("lang", lang); } catch (err) {}
     if (history.replaceState) history.replaceState(null, "", "?lang=" + lang + location.hash);
     applyLang();
     render();
-  });
+  }); });
   Array.prototype.forEach.call(document.querySelectorAll(".chip"), function (b) {
     b.addEventListener("click", function () {
       filter = b.getAttribute("data-filter");

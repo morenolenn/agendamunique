@@ -161,6 +161,9 @@ h2.sec { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.
 .when { margin: 0; color: var(--muted); font-size: 0.95rem; font-variant-numeric: tabular-nums; }
 .desc { margin: 0; }
 .place { margin: 0; font-weight: 600; font-size: 0.95rem; }
+.suggest-card { background: #fff; border-radius: 30px; padding: 24px; display: grid; gap: 14px; justify-items: start; max-width: 640px; }
+.suggest-card p { margin: 0; }
+.suggest-card .hint { color: var(--muted); font-size: 0.875rem; }
 .maplink { color: inherit; text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: 3px; }
 .maplink:hover { color: var(--accent); }
 .card { scroll-margin-top: 16px; }
@@ -306,6 +309,15 @@ dialog::backdrop { background: rgba(29, 42, 26, .45); }
   </div>
 
   <div id="out"></div>
+
+  <section class="suggest" id="sugerir">
+    <h2 class="sec">Faltou algum evento?</h2>
+    <div class="suggest-card">
+      <p>Conhece uma feira, um mercado ou um evento de rua que não está aqui? Conta pra gente. Não pedimos nome nem e-mail.</p>
+      <a class="go" href="https://docs.google.com/forms/d/e/1FAIpQLSeyJaXOf153YXrO3_O6gTEmqLCWgu2sTzwYlIvb6d7Su5BKyg/viewform" target="_blank" rel="noopener">Sugerir um evento <i aria-hidden="true">↗</i></a>
+      <p class="hint">O formulário abre numa página do Google.</p>
+    </div>
+  </section>
 </main>
 
 <dialog id="share" aria-labelledby="share-title">
@@ -326,7 +338,7 @@ dialog::backdrop { background: rgba(29, 42, 26, .45); }
   <div class="foot-in">
     <h2>Boa feira! 🥨</h2>
     <p>Datas e horários conferidos no portal <a href="https://www.muenchen.de/veranstaltungen/weihnachtsmaerkte-christkindlmaerkte-2026" target="_blank" rel="noopener">muenchen.de</a> e no <a href="https://www.kindaling.de/weihnachtsmaerkte/muenchen" target="_blank" rel="noopener">Kindaling</a>, com apoio de sites de turismo da cidade. Horários variam por dia e feiras de Natal fecham no Totensonntag (22 de novembro). Confira a página do evento antes de sair. Os pontos do mapa são buscas pelo nome do local.</p>
-    <p>Projeto pessoal e sem fins lucrativos, feito por um morador brasileiro em Munique, sem vínculo com os organizadores dos eventos. Esta página não usa cookies nem formulários, e as fontes são servidas pelo próprio site.</p>
+    <p>Projeto pessoal e sem fins lucrativos, feito por um morador brasileiro em Munique, sem vínculo com os organizadores dos eventos. Esta página não usa cookies e serve as fontes pelo próprio site. O formulário de sugestões é do Google.</p>
   </div>
   <!-- Para medir visitas, cole aqui o snippet de Web Analytics do Cloudflare. Ele não usa cookies. -->
 </footer>

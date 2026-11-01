@@ -130,7 +130,9 @@ svg.plane { width: 15px; height: 15px; stroke-width: 2.1; animation: plane-float
 .scene { width: min(100%, 520px); margin: 6px auto 0; display: block; position: relative; z-index: 2; }
 /* A data saiu do hero; esse espaço abaixo dos botões fica no lugar dela, para o hero manter a altura */
 .hero-btns { margin-bottom: 47px; }
-.updated-row { text-align: center; margin: -12px 0 18px; }
+.updated-row { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px 22px; margin: -12px 0 18px; }
+.textlink { font-weight: 600; font-size: 0.95rem; text-decoration-thickness: 2px; text-underline-offset: 4px; }
+.textlink:hover { text-decoration-color: var(--lime-deep); }
 .updated-chip { display: inline-block; font-size: 0.9rem; font-weight: 600; background: #fff; border-radius: 999px; padding: 4px 12px; }
 
 /* Doodles */
@@ -308,7 +310,6 @@ dialog::backdrop { background: rgba(29, 42, 26, .45); }
         <a class="go" href="#lista"><span data-i18n="see">Ver o que tem</span> <i aria-hidden="true"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M3.5 8.5L8 13l4.5-4.5"/></svg></i></a>
         <span class="btn-break" aria-hidden="true"></span>
         <button class="go light" id="share-hero" type="button" data-share="site"><span data-i18n="shareAll">Compartilhar programação</span> <i aria-hidden="true"><svg class="plane" viewBox="1 -1 24 24" aria-hidden="true"><path d="M14.54 21.69a.5.5 0 0 0 .94-.03l6.5-19a.5.5 0 0 0-.64-.63l-19 6.5a.5.5 0 0 0-.02.93l7.93 3.18a2 2 0 0 1 1.11 1.11zM21.85 2.15 10.91 13.09"/></svg></i></button>
-        <a class="go light" href="https://docs.google.com/forms/d/e/1FAIpQLSeyJaXOf153YXrO3_O6gTEmqLCWgu2sTzwYlIvb6d7Su5BKyg/viewform" target="_blank" rel="noopener"><span data-i18n="suggest">Sugerir um evento</span> <i aria-hidden="true"><svg class="plane" viewBox="1 -1 24 24" aria-hidden="true"><path d="M14.54 21.69a.5.5 0 0 0 .94-.03l6.5-19a.5.5 0 0 0-.64-.63l-19 6.5a.5.5 0 0 0-.02.93l7.93 3.18a2 2 0 0 1 1.11 1.11zM21.85 2.15 10.91 13.09"/></svg></i></a>
       </div>
     </div>
 
@@ -352,7 +353,7 @@ dialog::backdrop { background: rgba(29, 42, 26, .45); }
 </section>
 
 <main class="wrap" id="lista">
-  <div class="updated-row"><span class="updated-chip" id="updated"></span></div>
+  <div class="updated-row"><span class="updated-chip" id="updated"></span> <a class="textlink" href="https://docs.google.com/forms/d/e/1FAIpQLSeyJaXOf153YXrO3_O6gTEmqLCWgu2sTzwYlIvb6d7Su5BKyg/viewform" target="_blank" rel="noopener" data-i18n="suggest">Sugerir um evento</a></div>
   <section class="now" id="now" aria-live="polite"></section>
   <div class="stats" id="stats"></div>
 

@@ -328,9 +328,9 @@ var EVENTS = [
     d: "Desfile tradicional de Krampus pelo centro histórico. Pode assustar crianças pequenas." }
 ];
 var WEEKLY = [
-  { t: "Flohmarkt München-Riem", type: "floh", when: "Todo sábado, a partir das 7h", place: "Riem", q: "Flohmarkt München-Riem", kids: true,
+  { t: "Flohmarkt München-Riem", type: "floh", when: "Todo sábado, a partir das 7h", place: "Riem", q: "Flohmarkt München-Riem", kids: true, dow: 6, rrule: "FREQ=WEEKLY;BYDAY=SA",
     d: "Feira de pulgas semanal, indicada para toda a família." },
-  { t: "Antik- & Flohmarkt Daglfing", type: "floh", when: "Sextas e sábados em datas selecionadas, 7h às 15h", place: "Trabrennbahn, Rennbahnstraße 35", q: "Trabrennbahn München-Daglfing", kids: true,
+  { t: "Antik- & Flohmarkt Daglfing", type: "floh", when: "Sextas e sábados em datas selecionadas, 7h às 15h", place: "Trabrennbahn, Rennbahnstraße 35", q: "Trabrennbahn München-Daglfing", kids: true, dow: 6, note: "Datas selecionadas: confira o calendário do organizador antes de ir.",
     d: "Feira de antiguidades e pulgas no hipódromo. Veja o calendário do organizador para as datas." }
 ];
 var MONTHS = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
@@ -356,12 +356,41 @@ function shareUrl(ev, when) {
 function siteShareUrl() {
   return "https://wa.me/?text=" + encodeURIComponent("Olha esse site com as feiras de Natal e eventos de rua de Munique, tudo em português: " + SITE);
 }
-function calUrl(ev) {
-  var end = addDays(parse(ev.e), 1);
-  return "https://calendar.google.com/calendar/render?action=TEMPLATE&text=" + encodeURIComponent(ev.t) +
-    "&dates=" + ymd(parse(ev.s)) + "/" + ymd(end) +
-    "&location=" + encodeURIComponent(ev.place + ", München") +
-    "&details=" + encodeURIComponent(ev.d);
+function icsText(x) { return String(x).replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,").replace(/\r?\n/g, "\\n"); }
+function icsFold(line) {
+  var out = [], i = 0;
+  while (line.length - i > 60) { out.push(line.substr(i, 60)); i += 60; }
+  out.push(line.substr(i));
+  return out.join("\r\n ");
+}
+function nextDow(today, dow) { return addDays(today, (dow - today.getDay() + 7) % 7); }
+function icsFor(ev, today) {
+  var weekly = !!ev.when, start, end, rule = "";
+  if (weekly) { start = nextDow(today, ev.dow); end = addDays(start, 1); if (ev.rrule) rule = "RRULE:" + ev.rrule; }
+  else { var s0 = parse(ev.s), e0 = parse(ev.e); start = s0 > today ? s0 : today; end = addDays(e0, 1); }
+  var desc = ev.d + (weekly ? " " + ev.when + "." : (ev.s === ev.e ? "" : " Aberto de " + fmt(ev.s) + " a " + fmt(ev.e) + ".")) + (ev.note ? " " + ev.note : "") + " Mapa: " + mapUrl(ev.q);
+  var now = new Date();
+  var stamp = now.getUTCFullYear() + ("0" + (now.getUTCMonth() + 1)).slice(-2) + ("0" + now.getUTCDate()).slice(-2) + "T" +
+    ("0" + now.getUTCHours()).slice(-2) + ("0" + now.getUTCMinutes()).slice(-2) + "00Z";
+  var lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Agenda Munique//PT", "CALSCALE:GREGORIAN", "BEGIN:VEVENT",
+    "UID:" + ev.id + "-" + ymd(start) + "@agendamunique.com", "DTSTAMP:" + stamp,
+    "DTSTART;VALUE=DATE:" + ymd(start), "DTEND;VALUE=DATE:" + ymd(end)];
+  if (rule) lines.push(rule);
+  lines.push("SUMMARY:" + icsText(ev.t + (ev.note ? " (confirme a data)" : "")), "LOCATION:" + icsText(ev.place + ", München"),
+    "DESCRIPTION:" + icsText(desc), "END:VEVENT", "END:VCALENDAR");
+  return lines.map(icsFold).join("\r\n") + "\r\n";
+}
+function downloadIcs(id) {
+  var ev = null;
+  EVENTS.concat(WEEKLY).forEach(function (x) { if (x.id === id) ev = x; });
+  if (!ev) return;
+  var n = new Date(), today = new Date(n.getFullYear(), n.getMonth(), n.getDate());
+  var blob = new Blob([icsFor(ev, today)], { type: "text/calendar;charset=utf-8" });
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = ev.t.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") + ".ics";
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  setTimeout(function () { URL.revokeObjectURL(a.href); }, 2000);
 }
 function statusOf(ev, today) {
   var s = parse(ev.s), e = parse(ev.e);
@@ -387,8 +416,7 @@ function row(ev, today, weekly) {
   else if (today >= parse(ev.s) && today <= parse(ev.e)) sticker = '<div class="sticker alt"><span aria-hidden="true">✨</span><b>Em cartaz</b></div>';
   else sticker = '<div class="sticker"><b>' + s.getDate() + "</b><i>" + MONTHS[s.getMonth()] + "</i></div>";
   var st = weekly ? '<span class="status">Recorrente</span>' : statusOf(ev, today);
-  var cal = (!weekly && (parse(ev.e) - parse(ev.s)) / 86400000 <= 2)
-    ? '<a class="act" href="' + calUrl(ev) + '" target="_blank" rel="noopener">Calendário</a>' : "";
+  var cal = '<button type="button" class="act" data-ics="' + ev.id + '">Adicionar na agenda</button>';
   return '<li class="card"><div class="head">' + sticker + '<div class="titles"><h3>' + esc(ev.t) + "</h3>" + st + "</div></div>" +
     '<p class="when">' + esc(when) + "</p><p class=\"desc\">" + esc(ev.d) + "</p>" +
     '<p class="place">📍 ' + esc(ev.place) + "</p>" + tagsOf(ev) +
@@ -444,7 +472,13 @@ function render() {
   document.getElementById("now").innerHTML = out.now;
   document.getElementById("stats").innerHTML = out.stats;
 }
+document.addEventListener("click", function (e) {
+  var b = e.target.closest ? e.target.closest("[data-ics]") : null;
+  if (b) downloadIcs(b.getAttribute("data-ics"));
+});
 (function () {
+  EVENTS.forEach(function (e, i) { e.id = "e" + i; });
+  WEEKLY.forEach(function (e, i) { e.id = "w" + i; });
   var u = parse(UPDATED);
   document.getElementById("updated").textContent = "Atualizado em " + u.getDate() + " de " + MONTHS_LONG[u.getMonth()] + " de " + u.getFullYear();
   document.getElementById("share-site").href = siteShareUrl();

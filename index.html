@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Agenda Munique</title>
+<meta name="description" content="Feiras de Natal, Flohmärkte e eventos de rua em Munique, em português, com mapa e envio por WhatsApp.">
+<link rel="canonical" href="https://agendamunique.com/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="Agenda Munique">
+<meta property="og:title" content="Agenda Munique: feiras e eventos de rua em Munique">
+<meta property="og:description" content="Feiras de Natal, Flohmärkte e eventos de rua em Munique, em português, com mapa e envio por WhatsApp.">
+<meta property="og:url" content="https://agendamunique.com/">
+<meta name="theme-color" content="#8c1d3b">
+<style>:root{color-scheme:light}body{margin:0}[hidden]{display:none!important}</style>
+<style>
+@font-face { font-family: "Bricolage Grotesque"; src: url("fonts/bricolage-grotesque.woff2") format("woff2"); font-weight: 200 800; font-style: normal; font-display: swap; }
+@font-face { font-family: "Source Sans 3"; src: url("fonts/source-sans-3-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Source Sans 3"; src: url("fonts/source-sans-3-600.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: swap; }
+</style>
+<style>
+/* Layout: cabeçalho curto, bloco "agora", lista em linhas com data à esquerda e ações embaixo. Rodapé com fontes dos dados. */
+:root {
+  --bg: #eef1f5;
+  --surface: #ffffff;
+  --tint: #e3e8f0;
+  --fg: #1b2230;
+  --muted: #566073;
+  --line: #d3dae5;
+  --accent: #8c1d3b;
+  --accent-fg: #ffffff;
+  --live: #1b6f46;
+  --live-bg: #dcf0e5;
+  --soon: #6e4f0c;
+  --soon-bg: #f4e8c8;
+  --warn-bg: #fbeed3;
+  --font-display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Source Sans 3", "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #11151c; --surface: #1a202b; --tint: #202838; --fg: #e8ecf3; --muted: #9aa5b8; --line: #2c3544;
+    --accent: #e5738f; --accent-fg: #11151c;
+    --live: #6fd6a0; --live-bg: #17342a; --soon: #e6c36a; --soon-bg: #352c14; --warn-bg: #3a2f17;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #11151c; --surface: #1a202b; --tint: #202838; --fg: #e8ecf3; --muted: #9aa5b8; --line: #2c3544;
+  --accent: #e5738f; --accent-fg: #11151c;
+  --live: #6fd6a0; --live-bg: #17342a; --soon: #e6c36a; --soon-bg: #352c14; --warn-bg: #3a2f17;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--fg);
+  font-family: var(--font-body); font-size: 16px; line-height: 1.45;
+  padding-block: 32px 56px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.wrap { max-width: 740px; margin: 0 auto; }
+header { margin-bottom: 22px; }
+.brand { font-family: var(--font-display); font-weight: 800; font-size: clamp(2.2rem, 9vw, 3.4rem); line-height: 0.98; letter-spacing: -0.02em; margin: 0 0 10px; text-wrap: balance; }
+.brand span { color: var(--accent); }
+.lede { color: var(--muted); margin: 0 0 6px; max-width: 56ch; font-size: 1.0625rem; }
+.updated { color: var(--muted); font-size: 0.875rem; margin: 0; font-variant-numeric: tabular-nums; }
+.now { background: var(--tint); border-radius: 12px; padding: 16px; margin-bottom: 22px; }
+.now h2 { margin: 0 0 4px; color: var(--fg); }
+.now p { margin: 0; color: var(--muted); }
+.now ul { list-style: none; padding: 0; margin: 10px 0 0; display: flex; flex-direction: column; gap: 6px; }
+.now li { display: flex; flex-wrap: wrap; gap: 2px 10px; align-items: baseline; }
+.now strong { font-family: var(--font-display); }
+.filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+.chip {
+  font: 600 0.875rem var(--font-body); color: var(--fg); background: var(--surface);
+  border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px; cursor: pointer; min-height: 40px;
+}
+.chip[aria-pressed="true"] { background: var(--accent); color: var(--accent-fg); border-color: var(--accent); }
+.chip:focus-visible, .act:focus-visible, a:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+h2 { font-family: var(--font-display); font-size: 0.8125rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin: 26px 0 4px; }
+.list { padding: 0; margin: 0; list-style: none; }
+.row { display: grid; grid-template-columns: 62px minmax(0, 1fr); gap: 0 14px; padding: 16px 0; border-top: 1px solid var(--line); }
+.date { text-align: center; font-family: var(--font-display); line-height: 1; padding-top: 2px; }
+.date b { display: block; font-size: 1.9rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+.date i { display: block; font-style: normal; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-top: 3px; }
+.date.alt b { font-size: 1.05rem; line-height: 1.1; padding-top: 6px; }
+.body { min-width: 0; }
+.titleline { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; }
+.row h3 { font-family: var(--font-display); font-weight: 700; font-size: 1.1875rem; line-height: 1.2; margin: 0; }
+.status { font-size: 0.8125rem; font-weight: 600; border-radius: 999px; padding: 2px 10px; white-space: nowrap; }
+.status.live { color: var(--live); background: var(--live-bg); }
+.status.soon { color: var(--soon); background: var(--soon-bg); }
+.status.plain { color: var(--muted); border: 1px solid var(--line); }
+.when { margin: 2px 0 0; color: var(--muted); font-size: 0.9375rem; font-variant-numeric: tabular-nums; }
+.desc { margin: 6px 0 0; }
+.place { margin: 6px 0 0; font-size: 0.9375rem; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 0; padding: 0; list-style: none; }
+.tag { font-size: 0.8125rem; color: var(--fg); background: var(--tint); border-radius: 6px; padding: 2px 8px; }
+.acts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.act {
+  display: inline-flex; align-items: center; min-height: 40px; padding: 8px 14px; border-radius: 8px;
+  font: 600 0.9375rem var(--font-body); text-decoration: none; color: var(--accent); border: 1px solid var(--accent); background: transparent;
+}
+.act:hover { background: var(--accent); color: var(--accent-fg); }
+.act.main { background: var(--accent); color: var(--accent-fg); }
+.act.main:hover { filter: brightness(1.08); }
+.empty { color: var(--muted); padding: 16px 0; }
+footer { margin-top: 40px; border-top: 1px solid var(--line); padding-top: 20px; color: var(--muted); font-size: 0.9375rem; display: flex; flex-direction: column; gap: 14px; }
+footer p { margin: 0; max-width: 64ch; }
+footer a { color: var(--accent); }
+@media (max-width: 480px) {
+  .row { grid-template-columns: 48px minmax(0, 1fr); gap: 0 12px; }
+  .date b { font-size: 1.6rem; }
+  .acts .act { flex: 1 1 auto; justify-content: center; }
+}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <header>
+    <h1 class="brand">Agenda <span>Munique</span></h1>
+    <p class="lede">Feiras de Natal, Flohmärkte e eventos de rua, em português, para planejar o fim de semana com a família.</p>
+    <p class="updated" id="updated"></p>
+  </header>
+
+  <section class="now" id="now" aria-live="polite"></section>
+
+  <div class="filters" role="group" aria-label="Filtrar por tipo">
+    <button class="chip" id="f-all" data-filter="all" aria-pressed="true">Todos</button>
+    <button class="chip" id="f-natal" data-filter="natal" aria-pressed="false">Natal</button>
+    <button class="chip" id="f-floh" data-filter="floh" aria-pressed="false">Flohmarkt</button>
+    <button class="chip" id="f-rua" data-filter="rua" aria-pressed="false">Rua e tradição</button>
+    <button class="chip" id="f-kids" data-filter="kids" aria-pressed="false">Com crianças</button>
+  </div>
+
+  <div id="out"></div>
+
+  <footer>
+    <p>Datas e horários conferidos no portal <a href="https://www.muenchen.de/veranstaltungen/weihnachtsmaerkte-christkindlmaerkte-2026" target="_blank" rel="noopener">muenchen.de</a> e no <a href="https://www.kindaling.de/weihnachtsmaerkte/muenchen" target="_blank" rel="noopener">Kindaling</a>, com apoio de sites de turismo da cidade. Horários variam por dia e feiras de Natal fecham no Totensonntag (22 de novembro). Confira a página do evento antes de sair. Os pontos do mapa são buscas pelo nome do local.</p>
+    <p>Projeto pessoal e sem fins lucrativos, feito por um morador brasileiro em Munique, sem vínculo com os organizadores dos eventos. Esta página não usa cookies nem formulários, e as fontes são servidas pelo próprio site.</p>
+  </footer>
+  <!-- Para medir visitas depois de hospedar fora da Claude (por exemplo Cloudflare Pages), cole aqui o snippet de Web Analytics do Cloudflare. Ele não usa cookies. -->
+</div>
+
+<script>
+var UPDATED = "2026-11-01";
+var EVENTS = [
+  { t: "Winterworld", type: "natal", s: "2026-11-07", e: "2026-12-20", place: "Motorworld München", q: "Motorworld München",
+    d: "Mercado de inverno dentro da Motorworld. Sábado das 11h às 23h, domingo até 22h e, nos dias úteis, a partir das 15h." },
+  { t: "Herzlmarkt", type: "natal", s: "2026-11-08", e: "2026-11-09", place: "Deutsches Museum", q: "Deutsches Museum München",
+    d: "Feira de dois dias dentro do museu. Domingo das 11h às 18h e segunda das 10h às 17h." },
+  { t: "Weihnachtszauberwald", type: "natal", s: "2026-11-12", e: "2026-12-23", place: "Bogenhausen", q: "Weihnachtszauberwald München-Bogenhausen",
+    d: "Mercado de Natal em Bogenhausen, todos os dias das 12h às 20h. Confirme o endereço exato na página do evento." },
+  { t: "Winterrausch im Hexenhaus", type: "natal", s: "2026-11-12", e: "2026-12-23", place: "Café cultural Gans Woanders, Untergiesing", q: "Gans Woanders München", kids: true,
+    d: "Mercado de Natal no café cultural Gans Woanders, com programação infantil de teatro, leitura e oficinas ao longo da temporada." },
+  { t: "Mercado de Natal do Werksviertel", type: "natal", s: "2026-11-12", e: "2026-12-20", place: "Knödelplatz, Werksviertel-Mitte", q: "Knödelplatz Werksviertel München",
+    d: "Mercado na praça Knödelplatz. Sexta das 16h às 22h e sábado das 11h às 22h." },
+  { t: "Alpenwahn", type: "natal", s: "2026-11-12", e: "2027-01-01", place: "Der Pschorr", q: "Der Pschorr München",
+    d: "Mercado de Natal com tema alpino. Funciona até o Ano Novo." },
+  { t: "Münchner Eiszauber", type: "natal", s: "2026-11-13", e: "2027-01-10", place: "Karlsplatz (Stachus)", q: "Karlsplatz Stachus München",
+    d: "Pista de gelo no Stachus, todos os dias das 10h30 às 22h. Mais pista do que feira." },
+  { t: "Mercado de Natal do aeroporto", type: "natal", s: "2026-11-13", e: "2026-12-27", place: "MAC-Forum, Aeroporto de Munique", q: "MAC-Forum Flughafen München",
+    d: "Weihnachts- und Wintermarkt no MAC-Forum, das 11h às 21h." },
+  { t: "Weihnachtsdorf na Residenz", type: "natal", s: "2026-11-16", e: "2026-12-22", place: "Kaiserhof da Residenz", q: "Residenz München Kaiserhof",
+    d: "Vilarejo de Natal no pátio Kaiserhof da Residenz, das 11h às 21h." },
+  { t: "Christkindlmarkt do Marienplatz", type: "natal", s: "2026-11-20", e: "2026-12-24", place: "Marienplatz", q: "Marienplatz München", free: true,
+    d: "O mercado principal da cidade, com Kripperlmarkt no Alter Peter e programação de Advento. Fechado em 22 de novembro." },
+  { t: "Pink Christmas", type: "natal", s: "2026-11-20", e: "2026-12-20", place: "Stephansplatz", q: "Stephansplatz München",
+    d: "Mercado de Natal alternativo, perto do Sendlinger Tor." },
+  { t: "Tollwood Winterfestival", type: "natal", s: "2026-11-24", e: "2026-12-23", place: "Tollwood, Ludwigsvorstadt", q: "Tollwood Winterfestival München", kids: true,
+    d: "Festival de inverno com mercado e programação cultural. O Kindaling indica para a família a partir de 4 anos." },
+  { t: "Krampuslauf", type: "rua", s: "2026-12-13", e: "2026-12-13", place: "Altstadt", q: "Altstadt München Marienplatz",
+    d: "Desfile tradicional de Krampus pelo centro histórico. Pode assustar crianças pequenas." }
+];
+var WEEKLY = [
+  { t: "Flohmarkt München-Riem", type: "floh", when: "Todo sábado, a partir das 7h", place: "Riem", q: "Flohmarkt München-Riem", kids: true,
+    d: "Feira de pulgas semanal, indicada para toda a família." },
+  { t: "Antik- & Flohmarkt Daglfing", type: "floh", when: "Sextas e sábados em datas selecionadas, 7h às 15h", place: "Trabrennbahn, Rennbahnstraße 35", q: "Trabrennbahn München-Daglfing", kids: true,
+    d: "Feira de antiguidades e pulgas no hipódromo. Veja o calendário do organizador para as datas." }
+];
+var MONTHS = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
+var MONTHS_LONG = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"];
+var filter = "all";
+
+function parse(s) { var p = s.split("-"); return new Date(+p[0], +p[1] - 1, +p[2]); }
+function addDays(d, n) { return new Date(d.getFullYear(), d.getMonth(), d.getDate() + n); }
+function ymd(d) { return d.getFullYear() + ("0" + (d.getMonth() + 1)).slice(-2) + ("0" + d.getDate()).slice(-2); }
+function fmt(s) { var d = parse(s); return d.getDate() + " " + MONTHS[d.getMonth()]; }
+function esc(x) { return String(x).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
+function mapUrl(q) { return "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(q); }
+function whenText(ev) { return ev.s === ev.e ? fmt(ev.s) : fmt(ev.s) + " a " + fmt(ev.e); }
+function matches(ev) {
+  if (filter === "all") return true;
+  if (filter === "kids") return !!ev.kids;
+  return ev.type === filter;
+}
+function shareUrl(ev, when) {
+  var text = "Agenda Munique: " + ev.t + ", " + when + ". " + ev.place + ". Mapa: " + mapUrl(ev.q);
+  return "https://wa.me/?text=" + encodeURIComponent(text);
+}
+function calUrl(ev) {
+  var end = addDays(parse(ev.e), 1);
+  return "https://calendar.google.com/calendar/render?action=TEMPLATE&text=" + encodeURIComponent(ev.t) +
+    "&dates=" + ymd(parse(ev.s)) + "/" + ymd(end) +
+    "&location=" + encodeURIComponent(ev.place + ", München") +
+    "&details=" + encodeURIComponent(ev.d);
+}
+function statusOf(ev, today) {
+  var s = parse(ev.s), e = parse(ev.e);
+  if (today >= s && today <= e) return '<span class="status live">Aberto agora</span>';
+  if (today < s) {
+    var n = Math.round((s - today) / 86400000);
+    return '<span class="status soon">' + (n === 1 ? "Abre amanhã" : "Abre em " + n + " dias") + "</span>";
+  }
+  return '<span class="status plain">Encerrado</span>';
+}
+function tagsOf(ev) {
+  var t = [];
+  if (ev.free) t.push("Entrada gratuita");
+  if (ev.kids) t.push("Bom com crianças");
+  if (!t.length) return "";
+  return '<ul class="tags">' + t.map(function (x) { return '<li class="tag">' + x + "</li>"; }).join("") + "</ul>";
+}
+function row(ev, today, weekly) {
+  var when = weekly ? ev.when : whenText(ev);
+  var s = parse(ev.s || "2026-01-01");
+  var dateCol;
+  if (weekly) dateCol = '<div class="date alt"><b>Toda semana</b></div>';
+  else if (today >= parse(ev.s) && today <= parse(ev.e)) dateCol = '<div class="date alt"><b>Em cartaz</b></div>';
+  else dateCol = '<div class="date"><b>' + s.getDate() + "</b><i>" + MONTHS[s.getMonth()] + "</i></div>";
+  var st = weekly ? '<span class="status plain">Recorrente</span>' : statusOf(ev, today);
+  var cal = (!weekly && (parse(ev.e) - parse(ev.s)) / 86400000 <= 2)
+    ? '<a class="act" href="' + calUrl(ev) + '" target="_blank" rel="noopener">Calendário</a>' : "";
+  return '<li class="row">' + dateCol + '<div class="body"><div class="titleline"><h3>' + esc(ev.t) + "</h3>" + st + "</div>" +
+    '<p class="when">' + esc(when) + "</p><p class=\"desc\">" + esc(ev.d) + "</p>" +
+    '<p class="place">' + esc(ev.place) + "</p>" + tagsOf(ev) +
+    '<div class="acts"><a class="act main" href="' + mapUrl(ev.q) + '" target="_blank" rel="noopener">Abrir no mapa</a>' +
+    '<a class="act" href="' + shareUrl(ev, when) + '" target="_blank" rel="noopener">Enviar no WhatsApp</a>' + cal + "</div></div></li>";
+}
+function weekendWindow(today) {
+  var dow = today.getDay();
+  if (dow >= 1 && dow <= 5) { var sat = addDays(today, 6 - dow); return { a: sat, b: addDays(sat, 1), label: "Neste fim de semana" }; }
+  if (dow === 6) return { a: today, b: addDays(today, 1), label: "Neste fim de semana" };
+  return { a: today, b: today, label: "Hoje" };
+}
+function buildNow(today) {
+  var w = weekendWindow(today);
+  var active = EVENTS.filter(function (e) { return parse(e.s) <= w.b && parse(e.e) >= w.a; });
+  if (active.length) {
+    return "<h2>" + w.label + "</h2><ul>" + active.map(function (e) {
+      return "<li><strong>" + esc(e.t) + "</strong><span>" + esc(whenText(e)) + ", " + esc(e.place) + "</span></li>";
+    }).join("") + "</ul>";
+  }
+  var next = EVENTS.filter(function (e) { return parse(e.s) > today; })
+    .sort(function (a, b) { return parse(a.s) - parse(b.s); }).slice(0, 3);
+  var head = "<h2>Próximas aberturas</h2><p>Nada de feira de Natal aberta " + (w.label === "Hoje" ? "hoje" : "neste fim de semana") + ". As primeiras abrem em breve.</p>";
+  return head + "<ul>" + next.map(function (e) {
+    return "<li><strong>" + esc(e.t) + "</strong><span>abre em " + esc(fmt(e.s)) + ", " + esc(e.place) + "</span></li>";
+  }).join("") + "</ul>";
+}
+function build(now) {
+  var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  var dated = EVENTS.filter(function (e) { return matches(e) && parse(e.e) >= today; })
+    .sort(function (a, b) { return parse(a.s) - parse(b.s); });
+  var weekly = WEEKLY.filter(matches);
+  var html = "";
+  if (dated.length) html += "<h2>Com data marcada</h2><ul class=\"list\">" + dated.map(function (e) { return row(e, today, false); }).join("") + "</ul>";
+  if (weekly.length) html += "<h2>Toda semana</h2><ul class=\"list\">" + weekly.map(function (e) { return row(e, today, true); }).join("") + "</ul>";
+  if (!html) html = '<p class="empty">Nenhum evento neste filtro por enquanto.</p>';
+  return { list: html, now: buildNow(today) };
+}
+function render() {
+  var out = build(new Date());
+  document.getElementById("out").innerHTML = out.list;
+  document.getElementById("now").innerHTML = out.now;
+}
+(function () {
+  var u = parse(UPDATED);
+  document.getElementById("updated").textContent = "Atualizado em " + u.getDate() + " de " + MONTHS_LONG[u.getMonth()] + " de " + u.getFullYear();
+  Array.prototype.forEach.call(document.querySelectorAll(".chip"), function (b) {
+    b.addEventListener("click", function () {
+      filter = b.getAttribute("data-filter");
+      Array.prototype.forEach.call(document.querySelectorAll(".chip"), function (c) {
+        c.setAttribute("aria-pressed", c === b ? "true" : "false");
+      });
+      render();
+    });
+  });
+  render();
+})();
+</script>
+
+</body>
+</html>

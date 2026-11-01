@@ -6,11 +6,15 @@
 <title>Agenda Munique</title>
 <meta name="description" content="Feiras de Natal, Flohmärkte e eventos de rua em Munique, em português, com mapa e envio por WhatsApp.">
 <link rel="canonical" href="https://agendamunique.com/">
+<link rel="alternate" hreflang="pt-BR" href="https://agendamunique.com/">
+<link rel="alternate" hreflang="de" href="https://agendamunique.com/de/">
+<link rel="alternate" hreflang="x-default" href="https://agendamunique.com/">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="pt_BR">
+<meta property="og:locale:alternate" content="de_DE">
 <meta property="og:site_name" content="Agenda Munique">
 <meta property="og:title" content="Agenda Munique: tá rolando o quê em Munique?">
 <meta property="og:description" content="Feiras de Natal, Flohmärkte e eventos de rua em Munique, em português, com mapa e envio por WhatsApp.">
@@ -63,6 +67,8 @@ a { color: inherit; }
   font-family: var(--font-display); font-weight: 800; font-size: 1.1rem; letter-spacing: -0.02em; text-decoration: none;
 }
 .logo svg { width: 28px; height: 28px; flex: none; }
+.top-r { display: flex; align-items: center; gap: 8px; }
+.pill.lang { padding: 8px 16px; }
 .pill {
   display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 8px 8px 8px 18px;
   background: #fff; border-radius: 18px; font: 600 0.95rem var(--font-body); text-decoration: none; border: 0; cursor: pointer;
@@ -262,11 +268,14 @@ dialog::backdrop { background: rgba(29, 42, 26, .45); }
 <body>
 
 <div class="top">
-  <a class="logo" href="./" aria-label="Agenda Munique, início">
+  <a class="logo" href="./" aria-label="Agenda Munique, início" data-i18n-aria="home">
     <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M4 22c4-14 8-14 9-4 1 7 4 7 6-2 1-5 4-7 9-4" fill="none" stroke="#7fbf4a" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="26" cy="9" r="3" fill="#f58a74"/></svg>
     Agenda Munique
   </a>
-  <button class="pill" id="share-site" type="button" data-share="site">Compartilhar programação <i aria-hidden="true"><svg class="plane" viewBox="1 -1 24 24" aria-hidden="true"><path d="M14.54 21.69a.5.5 0 0 0 .94-.03l6.5-19a.5.5 0 0 0-.64-.63l-19 6.5a.5.5 0 0 0-.02.93l7.93 3.18a2 2 0 0 1 1.11 1.11zM21.85 2.15 10.91 13.09"/></svg></i></button>
+  <div class="top-r">
+  <a class="pill lang" id="lang" href="de/" hreflang="de" lang="de">Deutsch</a>
+  <button class="pill" id="share-site" type="button" data-share="site"><span data-i18n="shareAll">Compartilhar programação</span> <i aria-hidden="true"><svg class="plane" viewBox="1 -1 24 24" aria-hidden="true"><path d="M14.54 21.69a.5.5 0 0 0 .94-.03l6.5-19a.5.5 0 0 0-.64-.63l-19 6.5a.5.5 0 0 0-.02.93l7.93 3.18a2 2 0 0 1 1.11 1.11zM21.85 2.15 10.91 13.09"/></svg></i></button>
+  </div>
 </div>
 
 <section class="hero">
@@ -278,18 +287,18 @@ dialog::backdrop { background: rgba(29, 42, 26, .45); }
 
   <div class="hero-in">
     <div class="hero-text">
-      <h1>Tá rolando<br class="br"> o quê em<br class="br"> <em>Munique?</em></h1>
-      <p class="lede">Feiras de Natal, Flohmärkte e eventos de rua, em português, para planejar o rolê com a família.</p>
+      <h1 data-i18n-html="h1">Tá rolando<br class="br"> o quê em<br class="br"> <em>Munique?</em></h1>
+      <p class="lede" data-i18n="lede">Feiras de Natal, Flohmärkte e eventos de rua, em português, para planejar o rolê com a família.</p>
       <div class="hero-btns">
-        <a class="go" href="#lista">Ver o que tem <i aria-hidden="true"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M3.5 8.5L8 13l4.5-4.5"/></svg></i></a>
+        <a class="go" href="#lista"><span data-i18n="see">Ver o que tem</span> <i aria-hidden="true"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M3.5 8.5L8 13l4.5-4.5"/></svg></i></a>
         <span class="btn-break" aria-hidden="true"></span>
-        <button class="go light" id="share-hero" type="button" data-share="site">Compartilhar programação <i aria-hidden="true"><svg class="plane" viewBox="1 -1 24 24" aria-hidden="true"><path d="M14.54 21.69a.5.5 0 0 0 .94-.03l6.5-19a.5.5 0 0 0-.64-.63l-19 6.5a.5.5 0 0 0-.02.93l7.93 3.18a2 2 0 0 1 1.11 1.11zM21.85 2.15 10.91 13.09"/></svg></i></button>
-        <a class="go light" href="https://docs.google.com/forms/d/e/1FAIpQLSeyJaXOf153YXrO3_O6gTEmqLCWgu2sTzwYlIvb6d7Su5BKyg/viewform" target="_blank" rel="noopener">Sugerir um evento <i aria-hidden="true"><svg class="plane" viewBox="1 -1 24 24" aria-hidden="true"><path d="M14.54 21.69a.5.5 0 0 0 .94-.03l6.5-19a.5.5 0 0 0-.64-.63l-19 6.5a.5.5 0 0 0-.02.93l7.93 3.18a2 2 0 0 1 1.11 1.11zM21.85 2.15 10.91 13.09"/></svg></i></a>
+        <button class="go light" id="share-hero" type="button" data-share="site"><span data-i18n="shareAll">Compartilhar programação</span> <i aria-hidden="true"><svg class="plane" viewBox="1 -1 24 24" aria-hidden="true"><path d="M14.54 21.69a.5.5 0 0 0 .94-.03l6.5-19a.5.5 0 0 0-.64-.63l-19 6.5a.5.5 0 0 0-.02.93l7.93 3.18a2 2 0 0 1 1.11 1.11zM21.85 2.15 10.91 13.09"/></svg></i></button>
+        <a class="go light" href="https://docs.google.com/forms/d/e/1FAIpQLSeyJaXOf153YXrO3_O6gTEmqLCWgu2sTzwYlIvb6d7Su5BKyg/viewform" target="_blank" rel="noopener"><span data-i18n="suggest">Sugerir um evento</span> <i aria-hidden="true"><svg class="plane" viewBox="1 -1 24 24" aria-hidden="true"><path d="M14.54 21.69a.5.5 0 0 0 .94-.03l6.5-19a.5.5 0 0 0-.64-.63l-19 6.5a.5.5 0 0 0-.02.93l7.93 3.18a2 2 0 0 1 1.11 1.11zM21.85 2.15 10.91 13.09"/></svg></i></a>
       </div>
       <span class="updated-chip" id="updated"></span>
     </div>
 
-    <svg class="scene" viewBox="0 0 360 300" role="img" aria-label="Ilustração de uma barraquinha de feira de Natal com Glühwein e pretzel">
+    <svg class="scene" viewBox="0 0 360 300" role="img" aria-label="Ilustração de uma barraquinha de feira de Natal com Glühwein e pretzel" data-i18n-aria="scene">
       <ellipse cx="180" cy="268" rx="165" ry="26" fill="#7fbf4a"/>
       <!-- balcão -->
       <rect x="86" y="140" width="188" height="122" rx="10" fill="#f3e3c0"/>
@@ -332,47 +341,47 @@ dialog::backdrop { background: rgba(29, 42, 26, .45); }
   <section class="now" id="now" aria-live="polite"></section>
   <div class="stats" id="stats"></div>
 
-  <div class="filters" role="group" aria-label="Filtrar por tipo">
-    <button class="chip" id="f-all" data-filter="all" aria-pressed="true">Todos</button>
-    <button class="chip" id="f-natal" data-filter="natal" aria-pressed="false">🎄 Natal</button>
-    <button class="chip" id="f-floh" data-filter="floh" aria-pressed="false">🧺 Flohmarkt</button>
-    <button class="chip" id="f-rua" data-filter="rua" aria-pressed="false">🎭 Rua e tradição</button>
-    <button class="chip" id="f-kids" data-filter="kids" aria-pressed="false">🧒 Com crianças</button>
+  <div class="filters" role="group" aria-label="Filtrar por tipo" data-i18n-aria="filterBy">
+    <button class="chip" id="f-all" data-filter="all" aria-pressed="true" data-i18n="fAll">Todos</button>
+    <button class="chip" id="f-natal" data-filter="natal" aria-pressed="false" data-i18n="fNatal">🎄 Natal</button>
+    <button class="chip" id="f-floh" data-filter="floh" aria-pressed="false" data-i18n="fFloh">🧺 Flohmarkt</button>
+    <button class="chip" id="f-rua" data-filter="rua" aria-pressed="false" data-i18n="fRua">🎭 Rua e tradição</button>
+    <button class="chip" id="f-kids" data-filter="kids" aria-pressed="false" data-i18n="fKids">🧒 Com crianças</button>
   </div>
 
   <div id="out"></div>
 
   <section class="suggest" id="sugerir">
-    <h2 class="sec">Faltou algum evento?</h2>
+    <h2 class="sec" data-i18n="missing">Faltou algum evento?</h2>
     <div class="suggest-card">
-      <p>Conhece uma feira, um mercado ou um evento de rua que não está aqui? Conta pra gente. Não pedimos nome nem e-mail.</p>
-      <a class="go" href="https://docs.google.com/forms/d/e/1FAIpQLSeyJaXOf153YXrO3_O6gTEmqLCWgu2sTzwYlIvb6d7Su5BKyg/viewform" target="_blank" rel="noopener">Sugerir um evento <i aria-hidden="true"><svg class="plane" viewBox="1 -1 24 24" aria-hidden="true"><path d="M14.54 21.69a.5.5 0 0 0 .94-.03l6.5-19a.5.5 0 0 0-.64-.63l-19 6.5a.5.5 0 0 0-.02.93l7.93 3.18a2 2 0 0 1 1.11 1.11zM21.85 2.15 10.91 13.09"/></svg></i></a>
-      <p class="hint">O formulário abre numa página do Google.</p>
+      <p data-i18n="missingText">Conhece uma feira, um mercado ou um evento de rua que não está aqui? Conta pra gente. Não pedimos nome nem e-mail.</p>
+      <a class="go" href="https://docs.google.com/forms/d/e/1FAIpQLSeyJaXOf153YXrO3_O6gTEmqLCWgu2sTzwYlIvb6d7Su5BKyg/viewform" target="_blank" rel="noopener"><span data-i18n="suggest">Sugerir um evento</span> <i aria-hidden="true"><svg class="plane" viewBox="1 -1 24 24" aria-hidden="true"><path d="M14.54 21.69a.5.5 0 0 0 .94-.03l6.5-19a.5.5 0 0 0-.64-.63l-19 6.5a.5.5 0 0 0-.02.93l7.93 3.18a2 2 0 0 1 1.11 1.11zM21.85 2.15 10.91 13.09"/></svg></i></a>
+      <p class="hint" data-i18n="formHint">O formulário abre numa página do Google.</p>
     </div>
   </section>
 </main>
 
 <dialog id="share" aria-labelledby="share-title">
   <div class="sheet">
-    <h2 id="share-title">Compartilhar</h2>
+    <h2 id="share-title" data-i18n="share">Compartilhar</h2>
     <p class="sub" id="share-sub"></p>
     <button class="opt" type="button" id="sh-copy"><span id="sh-copy-label">Copiar link</span><small>agendamunique.com</small></button>
     <a class="opt" id="sh-wa" href="#" target="_blank" rel="noopener">WhatsApp</a>
     <a class="opt" id="sh-tg" href="#" target="_blank" rel="noopener">Telegram</a>
     <a class="opt" id="sh-mail" href="#">E-mail</a>
-    <a class="opt" id="sh-sms" href="#">Mensagem de texto (SMS)</a>
-    <button class="opt" type="button" id="sh-more" hidden>Mais opções</button>
-    <button class="close" type="button" id="sh-close">Fechar</button>
+    <a class="opt" id="sh-sms" href="#" data-i18n="sms">Mensagem de texto (SMS)</a>
+    <button class="opt" type="button" id="sh-more" hidden data-i18n="more">Mais opções</button>
+    <button class="close" type="button" id="sh-close" data-i18n="close">Fechar</button>
   </div>
 </dialog>
 
 <footer class="foot">
   <div class="foot-in">
-    <h2>Boa feira! 🥨</h2>
-    <p>Datas e horários conferidos no portal <a href="https://www.muenchen.de/veranstaltungen/weihnachtsmaerkte-christkindlmaerkte-2026" target="_blank" rel="noopener">muenchen.de</a>, no guia de turismo <a href="https://www.munich.travel/en/topics/markets-festivals/christmas-markets-munich" target="_blank" rel="noopener">munich.travel</a>, no site do <a href="https://www.christkindlmarkt-muenchen.de/" target="_blank" rel="noopener">Christkindlmarkt</a> e no <a href="https://www.kindaling.de/weihnachtsmaerkte/muenchen" target="_blank" rel="noopener">Kindaling</a>. Horários variam por dia e a maioria das feiras de Natal fecha em 15 de novembro (Volkstrauertag) e no Totensonntag (22 de novembro). Confira a página do evento antes de sair. Os pontos do mapa são buscas pelo nome do local.</p>
+    <h2 data-i18n="bye">Boa feira! 🥨</h2>
+    <p data-i18n-html="sources">Datas e horários conferidos no portal <a href="https://www.muenchen.de/veranstaltungen/weihnachtsmaerkte-christkindlmaerkte-2026" target="_blank" rel="noopener">muenchen.de</a>, no guia de turismo <a href="https://www.munich.travel/en/topics/markets-festivals/christmas-markets-munich" target="_blank" rel="noopener">munich.travel</a>, no site do <a href="https://www.christkindlmarkt-muenchen.de/" target="_blank" rel="noopener">Christkindlmarkt</a> e no <a href="https://www.kindaling.de/weihnachtsmaerkte/muenchen" target="_blank" rel="noopener">Kindaling</a>. Horários variam por dia e a maioria das feiras de Natal fecha em 15 de novembro (Volkstrauertag) e no Totensonntag (22 de novembro). Confira a página do evento antes de sair. Os pontos do mapa são buscas pelo nome do local.</p>
     <div class="maker">
-      <img src="moreno.webp" alt="Foto do criador da agenda" width="56" height="56">
-      <p>Projeto independente, feito por um brasileiro morando em Munique, sem vínculo com os organizadores dos eventos. Esta página não usa cookies e serve as fontes pelo próprio site. As visitas são contadas de forma anônima pelo Cloudflare Web Analytics, sem cookies. O formulário de sugestões é do Google.</p>
+      <img src="moreno.webp" alt="Foto do criador da agenda" width="56" height="56" data-i18n-alt="photo">
+      <p data-i18n="about">Projeto independente, feito por um brasileiro morando em Munique, sem vínculo com os organizadores dos eventos. Esta página não usa cookies e serve as fontes pelo próprio site. As visitas são contadas de forma anônima pelo Cloudflare Web Analytics, sem cookies. O formulário de sugestões é do Google.</p>
     </div>
   </div>
   <!-- Cloudflare Web Analytics (sem cookies) --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "fc814bea30b2451f9221f874394a64c0"}'></script><!-- End Cloudflare Web Analytics -->
@@ -384,87 +393,229 @@ var UPDATED = "2026-11-01";
 var SITE = "https://agendamunique.com/";
 var EVENTS = [
   { t: "Winterworld", type: "natal", s: "2026-11-07", e: "2026-12-18", place: "Motorworld München, Freimann", q: "Motorworld München",
-    d: "O primeiro mercado da temporada, dentro da Motorworld, com música ao vivo todos os dias e a cabana Motorworld Alm. Sábado das 11h às 23h, domingo até 22h e, nos dias úteis, a partir das 15h." },
+    d: "O primeiro mercado da temporada, dentro da Motorworld, com música ao vivo todos os dias e a cabana Motorworld Alm. Sábado das 11h às 23h, domingo até 22h e, nos dias úteis, a partir das 15h.",
+    de: { d: "Der erste Markt der Saison, drinnen in der Motorworld, mit Livemusik an jedem Tag und der Motorworld Alm. Samstag 11 bis 23 Uhr, Sonntag bis 22 Uhr, unter der Woche ab 15 Uhr." } },
   { t: "Herzlmarkt", type: "natal", s: "2026-11-08", e: "2026-11-09", place: "Deutsches Museum", q: "Deutsches Museum München",
-    d: "Feira de dois dias dentro do museu. Domingo das 11h às 18h e segunda das 10h às 17h." },
+    d: "Feira de dois dias dentro do museu. Domingo das 11h às 18h e segunda das 10h às 17h.",
+    de: { d: "Zweitägiger Markt im Museum. Sonntag 11 bis 18 Uhr, Montag 10 bis 17 Uhr." } },
   { t: "Weihnachtszauberwald", type: "natal", s: "2026-11-12", e: "2027-01-06", place: "Festplatz em frente ao Cosimabad, Bogenhausen", q: "Cosimabad München", kids: true,
-    d: "Glühwein-Festival com mais de 30 tipos de vinho quente em duas tendas, artesãos num bosque de pinheiros iluminado, trenzinho, carrossel e teatro de bonecos. Vai até o Dia de Reis." },
+    d: "Glühwein-Festival com mais de 30 tipos de vinho quente em duas tendas, artesãos num bosque de pinheiros iluminado, trenzinho, carrossel e teatro de bonecos. Vai até o Dia de Reis.",
+    de: { place: "Festplatz vor dem Cosimabad, Bogenhausen", d: "Glühweinfestival mit über 30 Glühweinsorten in zwei Zelten, Kunsthandwerk in einem beleuchteten Tannenwald, Bimmelbahn, Karussell und Kasperltheater. Geht bis Heilige Drei Könige." } },
   { t: "Winterrausch im Hexenhaus", type: "natal", s: "2026-11-12", e: "2026-12-23", place: "Kulturcafé Gans Woanders, Pilgersheimer Straße 13", q: "Gans Woanders München", kids: true,
-    d: "Mercado de Natal no café cultural Gans Woanders, com música local, leituras, oficinas, shows de fogo e programação infantil." },
+    d: "Mercado de Natal no café cultural Gans Woanders, com música local, leituras, oficinas, shows de fogo e programação infantil.",
+    de: { d: "Weihnachtsmarkt im Kulturcafé Gans Woanders mit Musik aus der Gegend, Lesungen, Workshops, Feuershows und Kinderprogramm." } },
   { t: "Mercado de Natal do Werksviertel", type: "natal", s: "2026-11-12", e: "2026-12-20", place: "Knödelplatz, Werksviertel-Mitte", q: "Knödelplatz Werksviertel München",
-    d: "WinterWunderWerk: pista de patinação de verdade na Knödelplatz, cinco pistas de curling, artesanato e barracas de comida e Glühwein. Sexta das 16h às 22h e sábado das 11h às 22h." },
+    d: "WinterWunderWerk: pista de patinação de verdade na Knödelplatz, cinco pistas de curling, artesanato e barracas de comida e Glühwein. Sexta das 16h às 22h e sábado das 11h às 22h.",
+    de: { t: "Weihnachtsmarkt im Werksviertel", d: "WinterWunderWerk: echte Eisbahn auf dem Knödelplatz, fünf Eisstockbahnen, Kunsthandwerk sowie Essens- und Glühweinstände. Freitag 16 bis 22 Uhr, Samstag 11 bis 22 Uhr." } },
   { t: "Alpenwahn", type: "natal", s: "2026-11-12", e: "2027-01-01", place: "Der Pschorr", q: "Der Pschorr München",
-    d: "Mercado de Natal com tema alpino. Funciona até o Ano Novo." },
+    d: "Mercado de Natal com tema alpino. Funciona até o Ano Novo.",
+    de: { d: "Weihnachtsmarkt im Alpen-Look. Geöffnet bis Neujahr." } },
   { t: "Münchner Eiszauber", type: "natal", s: "2026-11-13", e: "2027-01-10", place: "Karlsplatz (Stachus)", q: "Karlsplatz Stachus München",
-    d: "A maior pista de gelo móvel da Baviera, todos os dias das 10h30 às 22h. Segunda tem entrada grátis para quem vai de Dirndl ou Lederhosen; domingo, duas pessoas patinam pelo preço de uma." },
+    d: "A maior pista de gelo móvel da Baviera, todos os dias das 10h30 às 22h. Segunda tem entrada grátis para quem vai de Dirndl ou Lederhosen; domingo, duas pessoas patinam pelo preço de uma.",
+    de: { d: "Die größte mobile Eisfläche Bayerns, täglich 10:30 bis 22 Uhr. Montags freier Eintritt in Dirndl oder Lederhosen, sonntags laufen zwei zum Preis von einem." } },
   { t: "Mercado de Natal do aeroporto", type: "natal", s: "2026-11-13", e: "2026-12-27", place: "MAC-Forum, Aeroporto de Munique", q: "MAC-Forum Flughafen München",
-    d: "Mercado de Natal e inverno em volta de uma pista de gelo, com área coberta e música ao vivo. Das 11h às 21h; em 24 de dezembro, até 16h." },
+    d: "Mercado de Natal e inverno em volta de uma pista de gelo, com área coberta e música ao vivo. Das 11h às 21h; em 24 de dezembro, até 16h.",
+    de: { t: "Weihnachtsmarkt am Flughafen", place: "MAC-Forum, Flughafen München", d: "Weihnachts- und Wintermarkt rund um eine Eisbahn, mit überdachtem Bereich und Livemusik. 11 bis 21 Uhr, am 24. Dezember bis 16 Uhr." } },
   { t: "Weihnachtsdorf na Residenz", type: "natal", s: "2026-11-16", e: "2026-12-22", place: "Kaiserhof da Residenz, entrada pela Residenzstraße", q: "Residenz München Kaiserhof", kids: true,
-    d: "Vilarejo de Natal no maior pátio da Residenz, das 11h às 21h, com floresta de João e Maria, teatro de bonecos e ourives, peleteiros e sopradores de vidro trabalhando. Fechado em 22 de novembro." },
+    d: "Vilarejo de Natal no maior pátio da Residenz, das 11h às 21h, com floresta de João e Maria, teatro de bonecos e ourives, peleteiros e sopradores de vidro trabalhando. Fechado em 22 de novembro.",
+    de: { t: "Weihnachtsdorf in der Residenz", place: "Kaiserhof der Residenz, Eingang Residenzstraße", d: "Weihnachtsdorf im größten Hof der Residenz, 11 bis 21 Uhr, mit Hänsel-und-Gretel-Wald, Kasperltheater und Goldschmieden, Kürschnern und Glasbläsern bei der Arbeit. Am 22. November geschlossen." } },
   { t: "Moosacher Hüttenzauber", type: "natal", s: "2026-11-16", e: "2026-12-22", place: "St.-Martins-Platz, Moosach", q: "St.-Martins-Platz Moosach München", kids: true,
-    d: "Mercado pequeno e romântico de bairro, com programação infantil que muda todo dia e carrossel." },
+    d: "Mercado pequeno e romântico de bairro, com programação infantil que muda todo dia e carrossel.",
+    de: { d: "Kleiner, romantischer Viertelmarkt mit täglich wechselndem Kinderprogramm und Karussell." } },
   { t: "Sternenflotte na Alte Utting", type: "natal", s: "2026-11-17", e: "2026-12-23", place: "Alte Utting, Lagerhausstraße 15", q: "Alte Utting München",
-    d: "O antigo barco a vapor do Ammersee, parado numa ponte perto do Großmarkthalle, vira porto de Natal com Glühwein, comida e música." },
+    d: "O antigo barco a vapor do Ammersee, parado numa ponte perto do Großmarkthalle, vira porto de Natal com Glühwein, comida e música.",
+    de: { t: "Sternenflotte auf der Alten Utting", d: "Der alte Ammersee-Dampfer auf einer Brücke nahe der Großmarkthalle wird zum Weihnachtshafen mit Glühwein, Essen und Musik." } },
   { t: "Weihnachtsmacherei", type: "natal", s: "2026-11-19", e: "2026-12-19", place: "Die Macherei, Berg-am-Laim-Straße 103", q: "Die Macherei München", kids: true,
-    d: "Mercado urbano e moderno, de quinta a domingo, com duas pistas de curling (reserva online), gôndolas de esqui aquecidas, shows e visita de São Nicolau em 6 de dezembro." },
+    d: "Mercado urbano e moderno, de quinta a domingo, com duas pistas de curling (reserva online), gôndolas de esqui aquecidas, shows e visita de São Nicolau em 6 de dezembro.",
+    de: { d: "Moderner Stadtmarkt von Donnerstag bis Sonntag mit zwei Eisstockbahnen (online reservieren), beheizten Skigondeln, Konzerten und Besuch vom Nikolaus am 6. Dezember." } },
   { t: "Mercado de Natal da Torre Chinesa", type: "natal", s: "2026-11-19", e: "2026-12-23", place: "Chinesischer Turm, Englischer Garten", q: "Chinesischer Turm München", kids: true,
-    d: "Vilarejo de Natal em volta do pagode, de quarta a domingo, com carrossel, a vovó que lê histórias, passeios de carruagem pelo Englischer Garten e cantos de Advento no fim de semana." },
+    d: "Vilarejo de Natal em volta do pagode, de quarta a domingo, com carrossel, a vovó que lê histórias, passeios de carruagem pelo Englischer Garten e cantos de Advento no fim de semana.",
+    de: { t: "Weihnachtsmarkt am Chinesischen Turm", d: "Weihnachtsdorf rund um die Pagode, Mittwoch bis Sonntag, mit Karussell, Märchenoma, Kutschfahrten durch den Englischen Garten und Adventssingen am Wochenende." } },
   { t: "Mondscheinexpress", type: "natal", s: "2026-11-19", e: "2026-12-23", place: "Bahnwärter Thiel, Tumblingerstraße 45", q: "Bahnwärter Thiel München",
-    d: "Mercado alternativo no Schlachthofviertel, com ateliês de artistas, fogueiras, Glühwein orgânico e shows diários num palco de cabaré." },
+    d: "Mercado alternativo no Schlachthofviertel, com ateliês de artistas, fogueiras, Glühwein orgânico e shows diários num palco de cabaré.",
+    de: { d: "Alternativer Markt im Schlachthofviertel mit Künstlerateliers, Feuerstellen, Bio-Glühwein und täglichen Auftritten auf einer Kabarettbühne." } },
   { t: "Christkindlmarkt do Marienplatz", type: "natal", s: "2026-11-20", e: "2026-12-24", place: "Marienplatz e zona de pedestres", q: "Marienplatz München", free: true, kids: true,
-    d: "O mercado principal da cidade, com o Kripperlmarkt em St. Peter, música na sacada da prefeitura (domingo a quinta, 17h15) e a Himmelswerkstatt, oficina grátis para crianças de 6 a 12 anos. Segunda a sábado das 10h às 21h, domingo até 20h e, em 24 de dezembro, até 14h. Fechado em 22 de novembro." },
+    d: "O mercado principal da cidade, com o Kripperlmarkt em St. Peter, música na sacada da prefeitura (domingo a quinta, 17h15) e a Himmelswerkstatt, oficina grátis para crianças de 6 a 12 anos. Segunda a sábado das 10h às 21h, domingo até 20h e, em 24 de dezembro, até 14h. Fechado em 22 de novembro.",
+    de: { t: "Christkindlmarkt am Marienplatz", place: "Marienplatz und Fußgängerzone", d: "Der Hauptmarkt der Stadt mit dem Kripperlmarkt an St. Peter, Musik vom Rathausbalkon (Sonntag bis Donnerstag, 17:15 Uhr) und der Himmelswerkstatt, einer kostenlosen Werkstatt für Kinder von 6 bis 12 Jahren. Montag bis Samstag 10 bis 21 Uhr, Sonntag bis 20 Uhr, am 24. Dezember bis 14 Uhr. Am 22. November geschlossen." } },
   { t: "Mercado de Natal do Viktualienmarkt", type: "natal", s: "2026-11-20", e: "2027-01-05", place: "Viktualienmarkt", q: "Viktualienmarkt München",
-    d: "O mercado de alimentos ganha luzes de Advento, Glühwein e petiscos. Vale ver o presépio ao lado do Biergarten." },
+    d: "O mercado de alimentos ganha luzes de Advento, Glühwein e petiscos. Vale ver o presépio ao lado do Biergarten.",
+    de: { t: "Weihnachtsmarkt am Viktualienmarkt", d: "Der Lebensmittelmarkt bekommt Adventslichter, Glühwein und Schmankerl. Die Krippe neben dem Biergarten lohnt einen Blick." } },
   { t: "Christkindlmarkt am Sendlinger Tor", type: "natal", s: "2026-11-20", e: "2026-12-22", place: "Sendlinger-Tor-Platz", q: "Sendlinger Tor München",
-    d: "Mercado pequeno e charmoso diante do portão medieval, com presépios do Tirol e do Peru, velas, cerâmica, Feuerzangenbowle e música de Natal todos os dias." },
+    d: "Mercado pequeno e charmoso diante do portão medieval, com presépios do Tirol e do Peru, velas, cerâmica, Feuerzangenbowle e música de Natal todos os dias.",
+    de: { d: "Kleiner, charmanter Markt vor dem mittelalterlichen Tor, mit Krippen aus Tirol und Peru, Kerzen, Keramik, Feuerzangenbowle und täglich Weihnachtsmusik." } },
   { t: "Mercado de Natal medieval", type: "natal", s: "2026-11-20", e: "2026-12-23", place: "Wittelsbacher Platz, Brienner Straße", q: "Wittelsbacher Platz München",
-    d: "Münchner Adventsspektakel: cabanas de madeira, comerciantes com roupas de época, ofícios antigos, Flammkuchen e linguiça no fogo de lenha." },
+    d: "Münchner Adventsspektakel: cabanas de madeira, comerciantes com roupas de época, ofícios antigos, Flammkuchen e linguiça no fogo de lenha.",
+    de: { t: "Mittelalterlicher Weihnachtsmarkt", d: "Münchner Adventsspektakel: Holzhütten, Händler in historischen Gewändern, altes Handwerk, Flammkuchen und Würstl vom Holzfeuer." } },
   { t: "Pink Christmas", type: "natal", s: "2026-11-20", e: "2026-12-20", place: "Stephansplatz", q: "Stephansplatz München",
-    d: "O mercado de Natal da comunidade LGBTIQ*, perto do Sendlinger Tor, com palco para drag queens e cantores." },
+    d: "O mercado de Natal da comunidade LGBTIQ*, perto do Sendlinger Tor, com palco para drag queens e cantores.",
+    de: { d: "Der Weihnachtsmarkt der LGBTIQ*-Community nahe dem Sendlinger Tor, mit Bühne für Dragqueens und Sänger." } },
   { t: "Neuhauser Weihnachtsmarkt", type: "natal", s: "2026-11-20", e: "2026-12-23", place: "Rotkreuzplatz, Neuhausen", q: "Rotkreuzplatz München", kids: true,
-    d: "Mercado de bairro, todos os dias das 11h às 20h30, com enfeites, presépios, brinquedos de madeira, teatro de bonecos e música." },
+    d: "Mercado de bairro, todos os dias das 11h às 20h30, com enfeites, presépios, brinquedos de madeira, teatro de bonecos e música.",
+    de: { d: "Viertelmarkt, täglich 11 bis 20:30 Uhr, mit Christbaumschmuck, Krippen, Holzspielzeug, Kasperltheater und Musik." } },
   { t: "Haidhauser Weihnachtsmarkt", type: "natal", s: "2026-11-20", e: "2026-12-24", place: "Weißenburger Platz, Haidhausen", q: "Weißenburger Platz München", kids: true,
-    d: "Mercado tranquilo em volta da fonte, há 40 anos no bairro, com música ao vivo e programação infantil quase todos os dias e um presépio do Tirol do Sul." },
+    d: "Mercado tranquilo em volta da fonte, há 40 anos no bairro, com música ao vivo e programação infantil quase todos os dias e um presépio do Tirol do Sul.",
+    de: { d: "Ruhiger Markt rund um den Brunnen, seit 40 Jahren im Viertel, mit fast täglich Livemusik und Kinderprogramm und einer Krippe aus Südtirol." } },
   { t: "Sendlinger Bergweihnacht", type: "natal", s: "2026-11-20", e: "2026-12-23", place: "Harras, Sendling", q: "Harras München", kids: true,
-    d: "Mercado diário junto à maior coroa de Advento de Munique, com corais no palco, carrossel e visita de São Nicolau." },
+    d: "Mercado diário junto à maior coroa de Advento de Munique, com corais no palco, carrossel e visita de São Nicolau.",
+    de: { d: "Täglicher Markt am größten Adventskranz Münchens, mit Chören auf der Bühne, Karussell und Besuch vom Nikolaus." } },
   { t: "Christkindlmarkt unterm Maibaum", type: "natal", s: "2026-11-20", e: "2027-01-06", place: "Luise-Kiesselbach-Platz", q: "Luise-Kiesselbach-Platz München",
-    d: "Vilarejo de cabanas sob o Maibaum, com pista de gelo, curling, gôndolas de esqui e a maior pirâmide de Glühwein da Baviera. Fechado em 24 e 31 de dezembro." },
+    d: "Vilarejo de cabanas sob o Maibaum, com pista de gelo, curling, gôndolas de esqui e a maior pirâmide de Glühwein da Baviera. Fechado em 24 e 31 de dezembro.",
+    de: { d: "Hüttendorf unter dem Maibaum mit Eisbahn, Eisstockschießen, Skigondeln und der größten Glühweinpyramide Bayerns. Am 24. und 31. Dezember geschlossen." } },
   { t: "Münchner Feuerzangenbowle", type: "natal", s: "2026-11-23", e: "2027-01-06", place: "Blumenstraße 22, atrás da Schrannenhalle", q: "Münchner Feuerzangenbowle Blumenstraße 22",
-    d: "O ponche flamejante servido de um caldeirão gigante, com comida e uma exposição. No Réveillon fica aberto sem hora para fechar." },
+    d: "O ponche flamejante servido de um caldeirão gigante, com comida e uma exposição. No Réveillon fica aberto sem hora para fechar.",
+    de: { place: "Blumenstraße 22, hinter der Schrannenhalle", d: "Feuerzangenbowle aus einem Riesenkessel, dazu Essen und eine Ausstellung. An Silvester open end." } },
   { t: "Tollwood Winterfestival", type: "natal", s: "2026-11-24", e: "2026-12-23", place: "Theresienwiese", q: "Tollwood Winterfestival München", kids: true,
-    d: "Festival de inverno alternativo com comida orgânica, o Markt der Ideen e programação cultural quase toda gratuita. O Kindaling indica para a família a partir de 4 anos. Festa de Réveillon em 31 de dezembro." },
+    d: "Festival de inverno alternativo com comida orgânica, o Markt der Ideen e programação cultural quase toda gratuita. O Kindaling indica para a família a partir de 4 anos. Festa de Réveillon em 31 de dezembro.",
+    de: { d: "Alternatives Winterfestival mit Bio-Essen, dem Markt der Ideen und einem fast komplett kostenlosen Kulturprogramm. Kindaling empfiehlt es für Familien mit Kindern ab 4 Jahren. Silvesterparty am 31. Dezember." } },
   { t: "Schwabinger Weihnachtsmarkt", type: "natal", s: "2026-11-25", e: "2026-12-24", place: "Münchner Freiheit, Schwabing", q: "Münchner Freiheit München", kids: true,
-    d: "Mercado de artistas, há mais de 40 anos, com tenda de arte, trilha de esculturas, shows gratuitos e atividades para crianças." },
+    d: "Mercado de artistas, há mais de 40 anos, com tenda de arte, trilha de esculturas, shows gratuitos e atividades para crianças.",
+    de: { d: "Künstlermarkt, seit über 40 Jahren, mit Kunstzelt, Skulpturenpfad, kostenlosen Konzerten und Aktionen für Kinder." } },
   { t: "Märchenbazar", type: "natal", s: "2026-11-26", e: "2026-12-28", place: "Olympiapark Süd, Spiridon-Louis-Ring 100", q: "Märchenbazar Olympiapark München", kids: true,
-    d: "Tendas de circo nostálgicas, bar num cenário de cinema, arte e música, e para as crianças oficina de velas, teatro de bonecos e histórias. Fechado em 24 de dezembro." },
+    d: "Tendas de circo nostálgicas, bar num cenário de cinema, arte e música, e para as crianças oficina de velas, teatro de bonecos e histórias. Fechado em 24 de dezembro.",
+    de: { d: "Nostalgische Zirkuszelte, eine Bar in Filmkulisse, Kunst und Musik, für Kinder Kerzenziehen, Kasperltheater und Märchen. Am 24. Dezember geschlossen." } },
   { t: "Winterzauber Gans am Wasser", type: "natal", s: "2026-11-27", e: "2027-01-01", place: "Café Gans am Wasser, Westpark", q: "Gans am Wasser Westpark München", kids: true,
-    d: "Recanto tranquilo à beira do lago no Westpark, com braseiros, música ao vivo e atividades para todas as idades. Fechado em 24 de dezembro." },
+    d: "Recanto tranquilo à beira do lago no Westpark, com braseiros, música ao vivo e atividades para todas as idades. Fechado em 24 de dezembro.",
+    de: { d: "Ruhiges Plätzchen am See im Westpark, mit Feuerschalen, Livemusik und Programm für alle Altersgruppen. Am 24. Dezember geschlossen." } },
   { t: "Pasinger Christkindlmarkt", type: "natal", s: "2026-11-28", e: "2026-12-20", place: "Schererplatz, Pasing", q: "Schererplatz Pasing München",
-    d: "Mercado tradicional em frente à igreja Maria Schutz, com muito artesanato feito à mão, presépios, crepes e castanhas." },
+    d: "Mercado tradicional em frente à igreja Maria Schutz, com muito artesanato feito à mão, presépios, crepes e castanhas.",
+    de: { d: "Traditioneller Markt vor der Kirche Maria Schutz, mit viel Handgemachtem, Krippen, Crêpes und Maroni." } },
   { t: "Truderinger Christkindlmarkt", type: "natal", s: "2026-11-28", e: "2026-11-29", place: "Trudering", q: "Truderinger Christkindlmarkt",
-    d: "Mercado de bairro de um fim de semana só, no primeiro Advento." },
+    d: "Mercado de bairro de um fim de semana só, no primeiro Advento.",
+    de: { d: "Viertelmarkt an nur einem Wochenende, dem ersten Advent." } },
   { t: "Blutenburger Weihnacht", type: "natal", s: "2026-12-03", e: "2026-12-06", place: "Schloss Blutenburg, Obermenzing", q: "Schloss Blutenburg München",
-    d: "Quatro dias no pátio do castelo com fosso, iluminado em cores, com artesanato, Feuerzangenbowle e música ao vivo. Combina com uma visita ao Schloss Nymphenburg." },
+    d: "Quatro dias no pátio do castelo com fosso, iluminado em cores, com artesanato, Feuerzangenbowle e música ao vivo. Combina com uma visita ao Schloss Nymphenburg.",
+    de: { d: "Vier Tage im bunt beleuchteten Hof des Wasserschlosses, mit Kunsthandwerk, Feuerzangenbowle und Livemusik. Passt gut zu einem Besuch im Schloss Nymphenburg." } },
   { t: "Krampuslauf", type: "rua", s: "2026-12-13", e: "2026-12-13", place: "Altstadt, saída na Augustinerstraße", q: "Augustinerstraße München",
-    d: "Desfile tradicional de Krampus pelo Christkindlmarkt, das 15h às 17h. Pode assustar crianças pequenas." },
+    d: "Desfile tradicional de Krampus pelo Christkindlmarkt, das 15h às 17h. Pode assustar crianças pequenas.",
+    de: { place: "Altstadt, Start in der Augustinerstraße", d: "Traditioneller Krampuslauf über den Christkindlmarkt, 15 bis 17 Uhr. Kann kleine Kinder erschrecken." } },
   { t: "Allacher Christkindlmarkt", type: "natal", s: "2026-12-17", e: "2026-12-20", place: "Allach", q: "Allacher Christkindlmarkt",
-    d: "Mercado de bairro nos quatro dias antes do último fim de semana de Advento." }
+    d: "Mercado de bairro nos quatro dias antes do último fim de semana de Advento.",
+    de: { d: "Viertelmarkt an den vier Tagen vor dem letzten Adventswochenende." } }
 ];
 var WEEKLY = [
   { t: "Flohmarkt München-Riem", type: "floh", when: "Todo sábado, a partir das 7h", place: "Riem", q: "Flohmarkt München-Riem", kids: true, dow: 6, rrule: "FREQ=WEEKLY;BYDAY=SA",
-    d: "Feira de pulgas semanal, indicada para toda a família." },
+    d: "Feira de pulgas semanal, indicada para toda a família.",
+    de: { when: "Jeden Samstag, ab 7 Uhr", d: "Wöchentlicher Flohmarkt, für die ganze Familie geeignet." } },
   { t: "Antik- & Flohmarkt Daglfing", type: "floh", when: "Sextas e sábados em datas selecionadas, 7h às 15h", place: "Trabrennbahn, Rennbahnstraße 35", q: "Trabrennbahn München-Daglfing", kids: true, dow: 6, note: "Datas selecionadas: confira o calendário do organizador antes de ir.",
-    d: "Feira de antiguidades e pulgas no hipódromo. Veja o calendário do organizador para as datas." }
+    d: "Feira de antiguidades e pulgas no hipódromo. Veja o calendário do organizador para as datas.",
+    de: { when: "Freitags und samstags an ausgewählten Terminen, 7 bis 15 Uhr", note: "Ausgewählte Termine: vor dem Besuch den Kalender des Veranstalters prüfen.", d: "Antik- und Flohmarkt auf der Trabrennbahn. Die Termine stehen im Kalender des Veranstalters." } }
 ];
 // === DADOS DOS EVENTOS: FIM ===
-var MONTHS = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
-var MONTHS_LONG = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"];
+// Textos da página em português e alemão. O HTML já vem em português; em alemão, applyLang troca os elementos marcados com data-i18n.
+var TEXT = {
+  pt: {
+    months: ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"],
+    monthsLong: ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"],
+    title: "Agenda Munique",
+    metaDesc: "Feiras de Natal, Flohmärkte e eventos de rua em Munique, em português, com mapa e envio por WhatsApp.",
+    other: "Deutsch", otherLang: "de", otherHref: "de/",
+    home: "Agenda Munique, início",
+    shareAll: "Compartilhar programação",
+    h1: 'Tá rolando<br class="br"> o quê em<br class="br"> <em>Munique?</em>',
+    lede: "Feiras de Natal, Flohmärkte e eventos de rua, em português, para planejar o rolê com a família.",
+    see: "Ver o que tem",
+    suggest: "Sugerir um evento",
+    scene: "Ilustração de uma barraquinha de feira de Natal com Glühwein e pretzel",
+    filterBy: "Filtrar por tipo",
+    fAll: "Todos", fNatal: "🎄 Natal", fFloh: "🧺 Flohmarkt", fRua: "🎭 Rua e tradição", fKids: "🧒 Com crianças",
+    missing: "Faltou algum evento?",
+    missingText: "Conhece uma feira, um mercado ou um evento de rua que não está aqui? Conta pra gente. Não pedimos nome nem e-mail.",
+    formHint: "O formulário abre numa página do Google.",
+    share: "Compartilhar", sms: "Mensagem de texto (SMS)", more: "Mais opções", close: "Fechar",
+    copy: "Copiar link", copied: "Link copiado!",
+    bye: "Boa feira! 🥨",
+    sources: 'Datas e horários conferidos no portal <a href="https://www.muenchen.de/veranstaltungen/weihnachtsmaerkte-christkindlmaerkte-2026" target="_blank" rel="noopener">muenchen.de</a>, no guia de turismo <a href="https://www.munich.travel/en/topics/markets-festivals/christmas-markets-munich" target="_blank" rel="noopener">munich.travel</a>, no site do <a href="https://www.christkindlmarkt-muenchen.de/" target="_blank" rel="noopener">Christkindlmarkt</a> e no <a href="https://www.kindaling.de/weihnachtsmaerkte/muenchen" target="_blank" rel="noopener">Kindaling</a>. Horários variam por dia e a maioria das feiras de Natal fecha em 15 de novembro (Volkstrauertag) e no Totensonntag (22 de novembro). Confira a página do evento antes de sair. Os pontos do mapa são buscas pelo nome do local.',
+    photo: "Foto do criador da agenda",
+    about: "Projeto independente, feito por um brasileiro morando em Munique, sem vínculo com os organizadores dos eventos. Esta página não usa cookies e serve as fontes pelo próprio site. As visitas são contadas de forma anônima pelo Cloudflare Web Analytics, sem cookies. O formulário de sugestões é do Google.",
+    openMap: "Abrir no mapa",
+    range: function (a, b) { return a + " a " + b; },
+    openFromTo: function (a, b) { return " Aberto de " + a + " a " + b + "."; },
+    map: "Mapa: ", checkDate: " (confirme a data)",
+    live: "Aberto agora", tomorrow: "Abre amanhã", inDays: function (n) { return "Abre em " + n + " dias"; }, closed: "Encerrado",
+    free: "Entrada gratuita", kids: "Bom com crianças",
+    everyWeek: "Toda semana", running: "Em cartaz", recurring: "Recorrente", addCal: "Adicionar na agenda",
+    weekend: "Neste fim de semana", today: "Hoje",
+    nothing: "<h2>Por enquanto é só isso</h2><p>Nada com data marcada à vista. Os Flohmärkte semanais continuam rolando.</p>",
+    nextOpen: "Próximas aberturas",
+    daysTo: function (n) { return (n === 1 ? "dia" : "dias") + " para a primeira feira abrir"; },
+    opensOn: "abre em ",
+    statDated: "eventos com data", statWeekly: "feiras toda semana", statEnd: "fim da temporada",
+    dated: "Com data marcada", ofYear: " de ", empty: "Nenhum evento neste filtro por enquanto.",
+    shareSiteText: "Olha esse site com as feiras de Natal e eventos de rua de Munique, tudo em português: ",
+    shareSiteSub: "Feiras de Natal e eventos de rua em Munique",
+    shareSiteSubject: "Agenda Munique: feiras e eventos de rua",
+    shareSiteTg: "Feiras de Natal e eventos de rua em Munique, tudo em português.",
+    inCity: " em Munique", moreEvents: "Mais eventos em Munique: ",
+    updated: function (d, m, y) { return "Atualizado em " + d + " de " + m + " de " + y; }
+  },
+  de: {
+    months: ["Jan", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"],
+    monthsLong: ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
+    title: "Agenda Munique – Was ist los in München?",
+    metaDesc: "Weihnachtsmärkte, Flohmärkte und Straßenfeste in München auf einen Blick, mit Karte und zum Teilen per WhatsApp.",
+    other: "Português", otherLang: "pt-BR", otherHref: "./",
+    home: "Agenda Munique, Startseite",
+    shareAll: "Programm teilen",
+    h1: 'Was ist<br class="br"> los in<br class="br"> <em>München?</em>',
+    lede: "Weihnachtsmärkte, Flohmärkte und Straßenfeste auf einen Blick, damit du den Ausflug mit der Familie planen kannst.",
+    see: "Zum Programm",
+    suggest: "Termin vorschlagen",
+    scene: "Illustration einer Weihnachtsmarktbude mit Glühwein und Brezn",
+    filterBy: "Nach Art filtern",
+    fAll: "Alle", fNatal: "🎄 Weihnachten", fFloh: "🧺 Flohmarkt", fRua: "🎭 Straße & Tradition", fKids: "🧒 Mit Kindern",
+    missing: "Fehlt ein Termin?",
+    missingText: "Du kennst einen Markt oder ein Straßenfest, das hier noch fehlt? Sag uns Bescheid. Wir fragen weder nach Namen noch nach E-Mail.",
+    formHint: "Das Formular öffnet sich auf einer Seite von Google und ist auf Portugiesisch, du kannst es aber auf Deutsch ausfüllen.",
+    share: "Teilen", sms: "SMS", more: "Weitere Optionen", close: "Schließen",
+    copy: "Link kopieren", copied: "Link kopiert!",
+    bye: "Viel Spaß! 🥨",
+    sources: 'Termine und Öffnungszeiten geprüft auf <a href="https://www.muenchen.de/veranstaltungen/weihnachtsmaerkte-christkindlmaerkte-2026" target="_blank" rel="noopener">muenchen.de</a>, im Tourismusportal <a href="https://www.munich.travel/en/topics/markets-festivals/christmas-markets-munich" target="_blank" rel="noopener">munich.travel</a>, auf der Seite des <a href="https://www.christkindlmarkt-muenchen.de/" target="_blank" rel="noopener">Christkindlmarkts</a> und bei <a href="https://www.kindaling.de/weihnachtsmaerkte/muenchen" target="_blank" rel="noopener">Kindaling</a>. Die Öffnungszeiten ändern sich je nach Tag, und die meisten Weihnachtsmärkte sind am Volkstrauertag (15. November) und am Totensonntag (22. November) geschlossen. Schau vor dem Losgehen auf die Seite der Veranstaltung. Die Kartenpunkte sind Suchen nach dem Namen des Ortes.',
+    photo: "Foto des Machers der Agenda",
+    about: "Ein unabhängiges Projekt von einem Brasilianer, der in München lebt, ohne Verbindung zu den Veranstaltern. Die Seite setzt keine Cookies und lädt ihre Schriften vom eigenen Server. Besuche werden anonym und ohne Cookies mit Cloudflare Web Analytics gezählt. Das Vorschlagsformular ist von Google.",
+    openMap: "Auf der Karte öffnen",
+    range: function (a, b) { return a + " bis " + b; },
+    openFromTo: function (a, b) { return " Geöffnet vom " + a + " bis " + b + "."; },
+    map: "Karte: ", checkDate: " (Termin prüfen)",
+    live: "Jetzt geöffnet", tomorrow: "Öffnet morgen", inDays: function (n) { return "Öffnet in " + n + " Tagen"; }, closed: "Vorbei",
+    free: "Eintritt frei", kids: "Gut mit Kindern",
+    everyWeek: "Jede Woche", running: "Läuft gerade", recurring: "Regelmäßig", addCal: "Zum Kalender hinzufügen",
+    weekend: "Dieses Wochenende", today: "Heute",
+    nothing: "<h2>Das war's vorerst</h2><p>Gerade steht nichts mit festem Termin an. Die wöchentlichen Flohmärkte laufen weiter.</p>",
+    nextOpen: "Bald geht's los",
+    daysTo: function (n) { return (n === 1 ? "Tag" : "Tage") + " bis der erste Markt öffnet"; },
+    opensOn: "öffnet am ",
+    statDated: "Termine", statWeekly: "Märkte jede Woche", statEnd: "Saisonende",
+    dated: "Mit festem Termin", ofYear: " ", empty: "In diesem Filter gibt es gerade keine Termine.",
+    shareSiteText: "Schau mal, hier sind die Weihnachtsmärkte und Straßenfeste in München auf einen Blick: ",
+    shareSiteSub: "Weihnachtsmärkte und Straßenfeste in München",
+    shareSiteSubject: "Agenda Munique: Märkte und Straßenfeste",
+    shareSiteTg: "Weihnachtsmärkte und Straßenfeste in München auf einen Blick.",
+    inCity: " in München", moreEvents: "Mehr Termine in München: ",
+    updated: function (d, m, y) { return "Aktualisiert am " + d + ". " + m + " " + y; }
+  }
+};
+// Idioma: ?lang= na URL (a página /de/ redireciona com ?lang=de), depois a escolha guardada, depois o navegador.
+// Só abre em alemão sozinho se o navegador estiver em alemão e não tiver português na lista.
+function pickLang() {
+  var m = /[?&]lang=(pt|de)/.exec(location.search);
+  if (m) return m[1];
+  try { var saved = localStorage.getItem("lang"); if (saved === "pt" || saved === "de") return saved; } catch (e) {}
+  var langs = navigator.languages || [navigator.language || ""];
+  var hasPt = langs.some(function (l) { return /^pt/i.test(l); });
+  return !hasPt && /^de/i.test(langs[0] || "") ? "de" : "pt";
+}
+var lang = pickLang();
+var L = TEXT[lang], MONTHS = L.months, MONTHS_LONG = L.monthsLong;
+// Campo do evento no idioma atual: em alemão usa ev.de.t / ev.de.d / ev.de.place / ev.de.when / ev.de.note quando existirem
+function tr(ev, k) { return lang === "de" && ev.de && ev.de[k] ? ev.de[k] : ev[k]; }
+function siteUrl() { return lang === "de" ? SITE + "de/" : SITE; }
 var filter = "all";
 
 function parse(s) { var p = s.split("-"); return new Date(+p[0], +p[1] - 1, +p[2]); }
 function addDays(d, n) { return new Date(d.getFullYear(), d.getMonth(), d.getDate() + n); }
 function ymd(d) { return d.getFullYear() + ("0" + (d.getMonth() + 1)).slice(-2) + ("0" + d.getDate()).slice(-2); }
-function fmt(s) { var d = parse(s); return d.getDate() + " " + MONTHS[d.getMonth()]; }
+function dayMonth(d) { return d.getDate() + (lang === "de" ? ". " : " ") + MONTHS[d.getMonth()]; }
+function fmt(s) { return dayMonth(parse(s)); }
 function esc(x) { return String(x).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
 function googleUrl(q) { return "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(q); }
 function isApple() {
@@ -473,9 +624,9 @@ function isApple() {
 }
 function mapUrl(q) { return isApple() ? "https://maps.apple.com/?q=" + encodeURIComponent(q) : googleUrl(q); }
 function placeLink(ev, withPin) {
-  return '<a class="maplink" href="' + mapUrl(ev.q) + '" target="_blank" rel="noopener" title="Abrir no mapa">' + (withPin ? "📍 " : "") + esc(ev.place) + "</a>";
+  return '<a class="maplink" href="' + mapUrl(ev.q) + '" target="_blank" rel="noopener" title="' + L.openMap + '">' + (withPin ? "📍 " : "") + esc(tr(ev, "place")) + "</a>";
 }
-function whenText(ev) { return ev.s === ev.e ? fmt(ev.s) : fmt(ev.s) + " a " + fmt(ev.e); }
+function whenText(ev) { return ev.s === ev.e ? fmt(ev.s) : L.range(fmt(ev.s), fmt(ev.e)); }
 function matches(ev) {
   if (filter === "all") return true;
   if (filter === "kids") return !!ev.kids;
@@ -493,7 +644,7 @@ function icsFor(ev, today) {
   var weekly = !!ev.when, start, end, rule = "";
   if (weekly) { start = nextDow(today, ev.dow); end = addDays(start, 1); if (ev.rrule) rule = "RRULE:" + ev.rrule; }
   else { var s0 = parse(ev.s), e0 = parse(ev.e); start = s0 > today ? s0 : today; end = addDays(e0, 1); }
-  var desc = ev.d + (weekly ? " " + ev.when + "." : (ev.s === ev.e ? "" : " Aberto de " + fmt(ev.s) + " a " + fmt(ev.e) + ".")) + (ev.note ? " " + ev.note : "") + " Mapa: " + googleUrl(ev.q);
+  var desc = tr(ev, "d") + (weekly ? " " + tr(ev, "when") + "." : (ev.s === ev.e ? "" : L.openFromTo(fmt(ev.s), fmt(ev.e)))) + (ev.note ? " " + tr(ev, "note") : "") + " " + L.map + googleUrl(ev.q);
   var now = new Date();
   var stamp = now.getUTCFullYear() + ("0" + (now.getUTCMonth() + 1)).slice(-2) + ("0" + now.getUTCDate()).slice(-2) + "T" +
     ("0" + now.getUTCHours()).slice(-2) + ("0" + now.getUTCMinutes()).slice(-2) + "00Z";
@@ -501,7 +652,7 @@ function icsFor(ev, today) {
     "UID:" + ev.id + "-" + ymd(start) + "@agendamunique.com", "DTSTAMP:" + stamp,
     "DTSTART;VALUE=DATE:" + ymd(start), "DTEND;VALUE=DATE:" + ymd(end)];
   if (rule) lines.push(rule);
-  lines.push("SUMMARY:" + icsText(ev.t + (ev.note ? " (confirme a data)" : "")), "LOCATION:" + icsText(ev.place + ", München"),
+  lines.push("SUMMARY:" + icsText(tr(ev, "t") + (ev.note ? L.checkDate : "")), "LOCATION:" + icsText(tr(ev, "place") + ", München"),
     "DESCRIPTION:" + icsText(desc), "END:VEVENT", "END:VCALENDAR");
   return lines.map(icsFold).join("\r\n") + "\r\n";
 }
@@ -513,71 +664,71 @@ function downloadIcs(id) {
   var blob = new Blob([icsFor(ev, today)], { type: "text/calendar;charset=utf-8" });
   var a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
-  a.download = ev.t.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") + ".ics";
+  a.download = ev.id + ".ics";
   document.body.appendChild(a); a.click(); document.body.removeChild(a);
   setTimeout(function () { URL.revokeObjectURL(a.href); }, 2000);
 }
 function statusOf(ev, today) {
   var s = parse(ev.s), e = parse(ev.e);
-  if (today >= s && today <= e) return '<span class="status live">Aberto agora</span>';
+  if (today >= s && today <= e) return '<span class="status live">' + L.live + "</span>";
   if (today < s) {
     var n = Math.round((s - today) / 86400000);
-    return '<span class="status soon">' + (n === 1 ? "Abre amanhã" : "Abre em " + n + " dias") + "</span>";
+    return '<span class="status soon">' + (n === 1 ? L.tomorrow : L.inDays(n)) + "</span>";
   }
-  return '<span class="status">Encerrado</span>';
+  return '<span class="status">' + L.closed + "</span>";
 }
 function tagsOf(ev) {
   var t = [];
-  if (ev.free) t.push("Entrada gratuita");
-  if (ev.kids) t.push("Bom com crianças");
+  if (ev.free) t.push(L.free);
+  if (ev.kids) t.push(L.kids);
   if (!t.length) return "";
   return '<ul class="tags">' + t.map(function (x) { return '<li class="tag">' + x + "</li>"; }).join("") + "</ul>";
 }
 function row(ev, today, weekly) {
-  var when = weekly ? ev.when : whenText(ev);
+  var when = weekly ? tr(ev, "when") : whenText(ev);
   var s = parse(ev.s || "2026-01-01");
   var sticker;
-  if (weekly) sticker = '<div class="sticker alt"><span aria-hidden="true">🔁</span><b>Toda semana</b></div>';
-  else if (today >= parse(ev.s) && today <= parse(ev.e)) sticker = '<div class="sticker alt"><span aria-hidden="true">✨</span><b>Em cartaz</b></div>';
+  if (weekly) sticker = '<div class="sticker alt"><span aria-hidden="true">🔁</span><b>' + L.everyWeek + "</b></div>";
+  else if (today >= parse(ev.s) && today <= parse(ev.e)) sticker = '<div class="sticker alt"><span aria-hidden="true">✨</span><b>' + L.running + "</b></div>";
   else sticker = '<div class="sticker"><b>' + s.getDate() + "</b><i>" + MONTHS[s.getMonth()] + "</i></div>";
-  var st = weekly ? '<span class="status">Recorrente</span>' : statusOf(ev, today);
-  var cal = '<button type="button" class="act" data-ics="' + ev.id + '">Adicionar na agenda</button>';
-  return '<li class="card" id="ev-' + ev.id + '"><div class="head">' + sticker + '<div class="titles"><h3>' + esc(ev.t) + "</h3>" + st + "</div></div>" +
-    '<p class="when">' + esc(when) + "</p><p class=\"desc\">" + esc(ev.d) + "</p>" +
+  var st = weekly ? '<span class="status">' + L.recurring + "</span>" : statusOf(ev, today);
+  var cal = '<button type="button" class="act" data-ics="' + ev.id + '">' + L.addCal + "</button>";
+  return '<li class="card" id="ev-' + ev.id + '"><div class="head">' + sticker + '<div class="titles"><h3>' + esc(tr(ev, "t")) + "</h3>" + st + "</div></div>" +
+    '<p class="when">' + esc(when) + "</p><p class=\"desc\">" + esc(tr(ev, "d")) + "</p>" +
     '<p class="place">' + placeLink(ev, true) + "</p>" + tagsOf(ev) +
-    '<div class="acts"><button type="button" class="act main" data-share="' + ev.id + '">Compartilhar <i aria-hidden="true"><svg class="plane" viewBox="1 -1 24 24" aria-hidden="true"><path d="M14.54 21.69a.5.5 0 0 0 .94-.03l6.5-19a.5.5 0 0 0-.64-.63l-19 6.5a.5.5 0 0 0-.02.93l7.93 3.18a2 2 0 0 1 1.11 1.11zM21.85 2.15 10.91 13.09"/></svg></i></button>' + cal + "</div></li>";
+    '<div class="acts"><button type="button" class="act main" data-share="' + ev.id + '">' + L.share + ' <i aria-hidden="true"><svg class="plane" viewBox="1 -1 24 24" aria-hidden="true"><path d="M14.54 21.69a.5.5 0 0 0 .94-.03l6.5-19a.5.5 0 0 0-.64-.63l-19 6.5a.5.5 0 0 0-.02.93l7.93 3.18a2 2 0 0 1 1.11 1.11zM21.85 2.15 10.91 13.09"/></svg></i></button>' + cal + "</div></li>";
 }
 function weekendWindow(today) {
   var dow = today.getDay();
-  if (dow >= 1 && dow <= 5) { var sat = addDays(today, 6 - dow); return { a: sat, b: addDays(sat, 1), label: "Neste fim de semana" }; }
-  if (dow === 6) return { a: today, b: addDays(today, 1), label: "Neste fim de semana" };
-  return { a: today, b: today, label: "Hoje" };
+  if (dow >= 1 && dow <= 5) { var sat = addDays(today, 6 - dow); return { a: sat, b: addDays(sat, 1), label: L.weekend }; }
+  if (dow === 6) return { a: today, b: addDays(today, 1), label: L.weekend };
+  return { a: today, b: today, label: L.today };
 }
 function buildNow(today) {
   var w = weekendWindow(today);
   var active = EVENTS.filter(function (e) { return parse(e.s) <= w.b && parse(e.e) >= w.a; });
   if (active.length) {
     return "<h2>" + w.label + " 🎉</h2><ul>" + active.map(function (e) {
-      return "<li><strong>" + esc(e.t) + "</strong><span>" + esc(whenText(e)) + ", " + placeLink(e, false) + "</span></li>";
+      return "<li><strong>" + esc(tr(e, "t")) + "</strong><span>" + esc(whenText(e)) + ", " + placeLink(e, false) + "</span></li>";
     }).join("") + "</ul>";
   }
   var next = EVENTS.filter(function (e) { return parse(e.s) > today; })
     .sort(function (a, b) { return parse(a.s) - parse(b.s); }).slice(0, 3);
-  if (!next.length) return "<h2>Por enquanto é só isso</h2><p>Nada com data marcada à vista. Os Flohmärkte semanais continuam rolando.</p>";
+  if (!next.length) return L.nothing;
   var n = Math.round((parse(next[0].s) - today) / 86400000);
-  var head = "<h2>Próximas aberturas</h2>";
-  var count = '<div class="count"><b>' + n + "</b><span>" + (n === 1 ? "dia" : "dias") + " para a primeira feira abrir</span></div>";
+  var head = "<h2>" + L.nextOpen + "</h2>";
+  var count = '<div class="count"><b>' + n + "</b><span>" + L.daysTo(n) + "</span></div>";
   return head + count + "<ul>" + next.map(function (e) {
-    return "<li><strong>" + esc(e.t) + "</strong><span>abre em " + esc(fmt(e.s)) + ", " + placeLink(e, false) + "</span></li>";
+    return "<li><strong>" + esc(tr(e, "t")) + "</strong><span>" + L.opensOn + esc(fmt(e.s)) + ", " + placeLink(e, false) + "</span></li>";
   }).join("") + "</ul>";
 }
 function buildStats(today) {
   var open = EVENTS.filter(function (e) { return parse(e.e) >= today; });
   if (!open.length) return "";
   var last = open.reduce(function (m, e) { return parse(e.e) > m ? parse(e.e) : m; }, parse(open[0].e));
-  return '<div class="stat"><b>' + open.length + "</b><span>eventos com data</span></div>" +
-    '<div class="stat"><b>' + WEEKLY.length + "</b><span>feiras toda semana</span></div>" +
-    '<div class="stat"><b>' + last.getDate() + " " + MONTHS[last.getMonth()] + "</b><span>fim da temporada</span></div>";
+  return '<div class="stat"><b>' + open.length + "</b><span>" + L.statDated + "</span></div>" +
+    '<div class="stat"><b>' + WEEKLY.length + "</b><span>" + L.statWeekly + "</span></div>" +
+    '<div class="stat"><b>' + dayMonth(last) + "</b><span>" + L.statEnd + "</span></div>";
 }
 function build(now) {
   var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -587,7 +738,7 @@ function build(now) {
   var html = "";
   if (dated.length) {
     // Um divisor por mês; eventos que já abriram entram no mês de hoje
-    html += "<h2 class=\"sec\">Com data marcada</h2>";
+    html += "<h2 class=\"sec\">" + L.dated + "</h2>";
     var groups = [];
     dated.forEach(function (e) {
       var d = parse(e.s) > today ? parse(e.s) : today, key = d.getFullYear() * 12 + d.getMonth();
@@ -596,12 +747,12 @@ function build(now) {
     });
     groups.forEach(function (g) {
       var name = MONTHS_LONG[g.date.getMonth()];
-      if (g.date.getFullYear() !== today.getFullYear()) name += " de " + g.date.getFullYear();
+      if (g.date.getFullYear() !== today.getFullYear()) name += L.ofYear + g.date.getFullYear();
       html += '<h3 class="month-sep">' + name + "</h3><ul class=\"list\">" + g.items.map(function (e) { return row(e, today, false); }).join("") + "</ul>";
     });
   }
-  if (weekly.length) html += "<h2 class=\"sec\">Toda semana</h2><ul class=\"list\">" + weekly.map(function (e) { return row(e, today, true); }).join("") + "</ul>";
-  if (!html) html = '<p class="empty">Nenhum evento neste filtro por enquanto.</p>';
+  if (weekly.length) html += "<h2 class=\"sec\">" + L.everyWeek + "</h2><ul class=\"list\">" + weekly.map(function (e) { return row(e, today, true); }).join("") + "</ul>";
+  if (!html) html = '<p class="empty">' + L.empty + "</p>";
   return { list: html, now: buildNow(today), stats: buildStats(today) };
 }
 function render() {
@@ -610,19 +761,33 @@ function render() {
   document.getElementById("now").innerHTML = out.now;
   document.getElementById("stats").innerHTML = out.stats;
 }
+function applyLang() {
+  document.documentElement.lang = lang === "de" ? "de" : "pt-BR";
+  document.title = L.title;
+  document.querySelector('meta[name="description"]').setAttribute("content", L.metaDesc);
+  function each(attr, fn) { Array.prototype.forEach.call(document.querySelectorAll("[" + attr + "]"), function (el) { fn(el, L[el.getAttribute(attr)]); }); }
+  each("data-i18n", function (el, v) { el.textContent = v; });
+  each("data-i18n-html", function (el, v) { el.innerHTML = v; });
+  each("data-i18n-aria", function (el, v) { el.setAttribute("aria-label", v); });
+  each("data-i18n-alt", function (el, v) { el.setAttribute("alt", v); });
+  var sw = document.getElementById("lang");
+  sw.textContent = L.other; sw.setAttribute("href", L.otherHref); sw.setAttribute("hreflang", L.otherLang); sw.setAttribute("lang", L.otherLang);
+  var u = parse(UPDATED);
+  document.getElementById("updated").textContent = L.updated(u.getDate(), MONTHS_LONG[u.getMonth()], u.getFullYear());
+}
 var shareCtx = null;
 function findEv(id) { var r = null; EVENTS.concat(WEEKLY).forEach(function (x) { if (x.id === id) r = x; }); return r; }
 function openShare(id) {
   var c;
   if (id === "site") {
-    var msg = "Olha esse site com as feiras de Natal e eventos de rua de Munique, tudo em português: " + SITE;
-    c = { sub: "Feiras de Natal e eventos de rua em Munique", subject: "Agenda Munique: feiras e eventos de rua", text: msg, tg: "Feiras de Natal e eventos de rua em Munique, tudo em português.", url: SITE, title: "Agenda Munique" };
+    var site = siteUrl();
+    c = { sub: L.shareSiteSub, subject: L.shareSiteSubject, text: L.shareSiteText + site, tg: L.shareSiteTg, url: site, title: "Agenda Munique" };
   } else {
     var ev = findEv(id); if (!ev) return;
-    var when = ev.when ? ev.when : whenText(ev);
-    var url = SITE + "#ev-" + ev.id;
-    c = { sub: ev.t + ", " + when, subject: ev.t + " em Munique", url: url, title: ev.t, tg: ev.t + ", " + when + ". " + ev.place + ".",
-      text: ev.t + ", " + when + ". " + ev.place + ".\nMapa: " + googleUrl(ev.q) + "\nMais eventos em Munique: " + url };
+    var when = ev.when ? tr(ev, "when") : whenText(ev), t = tr(ev, "t"), place = tr(ev, "place");
+    var url = siteUrl() + "#ev-" + ev.id;
+    c = { sub: t + ", " + when, subject: t + L.inCity, url: url, title: t, tg: t + ", " + when + ". " + place + ".",
+      text: t + ", " + when + ". " + place + ".\n" + L.map + googleUrl(ev.q) + "\n" + L.moreEvents + url };
   }
   shareCtx = { title: c.title, text: c.text, url: c.url };
   document.getElementById("share-sub").textContent = c.sub;
@@ -631,7 +796,7 @@ function openShare(id) {
   document.getElementById("sh-mail").href = "mailto:?subject=" + encodeURIComponent(c.subject) + "&body=" + encodeURIComponent(c.text.replace(/\n/g, "\r\n"));
   document.getElementById("sh-sms").href = "sms:?&body=" + encodeURIComponent(c.text);
   document.getElementById("sh-more").hidden = !navigator.share;
-  document.getElementById("sh-copy-label").textContent = "Copiar link";
+  document.getElementById("sh-copy-label").textContent = L.copy;
   var d = document.getElementById("share");
   if (d.showModal) d.showModal(); else d.setAttribute("open", "");
 }
@@ -651,7 +816,7 @@ document.addEventListener("click", function (e) {
 });
 document.getElementById("sh-close").addEventListener("click", closeShare);
 document.getElementById("sh-copy").addEventListener("click", function () {
-  copyText(shareCtx.url, function () { document.getElementById("sh-copy-label").textContent = "Link copiado!"; });
+  copyText(shareCtx.url, function () { document.getElementById("sh-copy-label").textContent = L.copied; });
 });
 document.getElementById("sh-more").addEventListener("click", function () {
   if (navigator.share) navigator.share({ title: shareCtx.title, text: shareCtx.text, url: shareCtx.url }).catch(function () {});
@@ -661,8 +826,16 @@ document.getElementById("sh-more").addEventListener("click", function () {
   EVENTS.concat(WEEKLY).forEach(function (e) {
     e.id = e.t.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
   });
-  var u = parse(UPDATED);
-  document.getElementById("updated").textContent = "Atualizado em " + u.getDate() + " de " + MONTHS_LONG[u.getMonth()] + " de " + u.getFullYear();
+  applyLang();
+  document.getElementById("lang").addEventListener("click", function (e) {
+    e.preventDefault();
+    lang = lang === "de" ? "pt" : "de";
+    L = TEXT[lang]; MONTHS = L.months; MONTHS_LONG = L.monthsLong;
+    try { localStorage.setItem("lang", lang); } catch (err) {}
+    if (history.replaceState) history.replaceState(null, "", "?lang=" + lang + location.hash);
+    applyLang();
+    render();
+  });
   Array.prototype.forEach.call(document.querySelectorAll(".chip"), function (b) {
     b.addEventListener("click", function () {
       filter = b.getAttribute("data-filter");

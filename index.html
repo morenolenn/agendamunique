@@ -186,6 +186,8 @@ h2.sec { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.
 .month-sep { display: flex; align-items: center; gap: 16px; margin: 36px 0 14px; font: 800 clamp(1.4rem, 4.5vw, 1.9rem) var(--font-display); letter-spacing: -0.03em; }
 .month-sep::after { content: ""; flex: 1; height: 3px; border-radius: 3px; background: var(--ink); opacity: .22; }
 h2.sec + .month-sep { margin-top: 0; }
+.period-note { margin: -4px 0 22px; padding: 12px 16px; background: #fff; border-radius: 16px; font-weight: 600; font-size: 0.95rem; max-width: 70ch; }
+.period-note + .month-sep { margin-top: 0; }
 .list { padding: 0; margin: 0; list-style: none; display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; }
 .card h3, .desc, .place { overflow-wrap: anywhere; }
 .card {
@@ -605,6 +607,7 @@ var TEXT = {
     statDated: "eventos com data", statWeekly: "feiras toda semana", statEnd: "fim da temporada",
     dated: "Com data marcada", ofYear: " de ", empty: "Nenhum evento neste filtro por enquanto.",
     inMonth: function (m) { return "em " + m; }, thisWeekend: "neste fim de semana",
+    periodNote: function (p) { return "Aparecem aqui os eventos que começam " + p + " e também os que começaram antes e continuam abertos " + p + "."; },
     startsIn: function (p) { return "Começam " + p; }, carryIn: function (p) { return "Continuam abertos " + p; },
     shareSiteText: "Olha esse site com as feiras de Natal e eventos de rua de Munique, tudo em português: ",
     shareSiteSub: "Feiras de Natal e eventos de rua em Munique",
@@ -652,6 +655,7 @@ var TEXT = {
     statDated: "Termine", statWeekly: "Märkte jede Woche", statEnd: "Saisonende",
     dated: "Mit festem Termin", ofYear: " ", empty: "In diesem Filter gibt es gerade keine Termine.",
     inMonth: function (m) { return "im " + m; }, thisWeekend: "an diesem Wochenende",
+    periodNote: function (p) { return "Hier stehen die Termine, die " + p + " beginnen, und auch die, die schon vorher geöffnet haben und " + p + " noch offen sind."; },
     startsIn: function (p) { return "Starten " + p; }, carryIn: function (p) { return "Schon offen, auch " + p; },
     shareSiteText: "Schau mal, hier sind die Weihnachtsmärkte und Straßenfeste in München auf einen Blick: ",
     shareSiteSub: "Weihnachtsmärkte und Straßenfeste in München",
@@ -699,6 +703,7 @@ var TEXT = {
     statDated: "dated events", statWeekly: "weekly markets", statEnd: "end of season",
     dated: "With a fixed date", ofYear: " ", empty: "No events in this filter right now.",
     inMonth: function (m) { return "in " + m; }, thisWeekend: "this weekend",
+    periodNote: function (p) { return "This shows events that open " + p + " and also those that opened earlier and are still on " + p + "."; },
     startsIn: function (p) { return "Opening " + p; }, carryIn: function (p) { return "Already open, still on " + p; },
     shareSiteText: "Check out this guide to Munich's Christmas markets and street festivals: ",
     shareSiteSub: "Christmas markets and street festivals in Munich",
@@ -906,6 +911,7 @@ function build(now) {
       var starts = dated.filter(function (e) { return parse(e.s) >= pr.a; }), carry = dated.filter(function (e) { return parse(e.s) < pr.a; });
       if (starts.length) groups.push({ date: today, title: L.startsIn(ph), items: starts });
       if (carry.length) groups.push({ date: today, title: L.carryIn(ph), items: carry });
+      if (carry.length) html += '<p class="period-note">' + L.periodNote(ph) + "</p>";
     } else dated.forEach(function (e) {
       var d = parse(e.s) > today ? parse(e.s) : today, key = d.getFullYear() * 12 + d.getMonth();
       if (!groups.length || groups[groups.length - 1].key !== key) groups.push({ key: key, date: d, items: [] });

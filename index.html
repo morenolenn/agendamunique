@@ -268,6 +268,15 @@ dialog::backdrop { background: rgba(29, 42, 26, .45); }
   background: var(--cream); color: var(--ink); font: 600 1rem var(--font-body); text-decoration: none; border: 0; cursor: pointer; width: 100%; text-align: left; }
 .opt:hover { background: var(--lime); }
 .opt small { font-weight: 400; color: var(--muted); }
+/* Janela de inscrição confirmada: ilustração do envelope com a carta subindo e o check */
+.confirmed { gap: 12px; padding: 18px 18px 22px; justify-items: start; }
+.confirmed-art { width: 100%; height: auto; display: block; margin-bottom: 4px; }
+.confirmed h2 { font-size: 1.75rem; }
+.confirmed .sub { margin: 0 0 6px; font-size: 1rem; color: var(--ink); }
+.confirmed-letter { animation: letter-up .9s cubic-bezier(.2, .8, .3, 1.2) both; }
+.confirmed.bad .confirmed-check { display: none; }
+@keyframes letter-up { from { transform: translateY(34px); } to { transform: translateY(0); } }
+@media (prefers-reduced-motion: reduce) { .confirmed-letter { animation: none; } }
 .sheet .close { justify-self: start; margin-top: 6px; background: transparent; border: 1px solid var(--line, #d3dae5); border-radius: 999px; min-height: 44px; padding: 8px 18px; font: 600 0.95rem var(--font-body); cursor: pointer; color: var(--ink); }
 .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
 .tag { font-size: 0.82rem; font-weight: 600; background: var(--cream); border-radius: 999px; padding: 3px 11px; }
@@ -448,6 +457,30 @@ dialog::backdrop { background: rgba(29, 42, 26, .45); }
     </div>
   </section>
 </main>
+
+<dialog id="confirmed" aria-labelledby="confirmed-title">
+  <div class="sheet confirmed">
+    <svg class="confirmed-art" viewBox="0 0 320 190" aria-hidden="true">
+      <rect width="320" height="190" rx="22" fill="#a5d86a"/>
+      <ellipse cx="160" cy="174" rx="112" ry="11" fill="#7fbf4a"/>
+      <path d="M52 34l4.5 9.5 10.5 1.3-7.7 7.2 2 10.4-9.3-5.1-9.3 5.1 2-10.4-7.7-7.2 10.5-1.3z" fill="#f7d84a"/>
+      <path d="M268 52l3.4 7.1 7.8 1-5.8 5.4 1.5 7.7-6.9-3.8-6.9 3.8 1.5-7.7-5.8-5.4 7.8-1z" fill="#f58a74"/>
+      <g stroke="#fff" stroke-width="4" stroke-linecap="round"><path d="M270 112v26M257 125h26M261 116l18 18M279 116l-18 18"/></g>
+      <circle cx="40" cy="128" r="6" fill="#8fbaf7"/><circle cx="58" cy="146" r="4" fill="#f58a74"/><circle cx="292" cy="30" r="4" fill="#fff"/>
+      <rect x="90" y="82" width="140" height="86" rx="10" fill="#f5f0e3" stroke="#1d2a1a" stroke-width="3"/>
+      <g class="confirmed-letter">
+        <rect x="106" y="34" width="108" height="96" rx="8" fill="#fff" stroke="#1d2a1a" stroke-width="3" transform="rotate(-4 160 82)"/>
+        <g class="confirmed-check"><circle cx="160" cy="70" r="19" fill="#a5d86a" stroke="#1d2a1a" stroke-width="3"/><path d="M151 70l6.5 6.5 12-13" fill="none" stroke="#1d2a1a" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></g>
+        <path d="M128 100h62M134 111h50" stroke="#1d2a1a" stroke-opacity=".25" stroke-width="4" stroke-linecap="round"/>
+      </g>
+      <path d="M90 96l70 42 70-42v62a10 10 0 0 1-10 10H100a10 10 0 0 1-10-10z" fill="#f5f0e3" stroke="#1d2a1a" stroke-width="3" stroke-linejoin="round"/>
+      <rect x="196" y="140" width="26" height="18" rx="5" fill="#f7d84a" stroke="#1d2a1a" stroke-width="2.5" transform="rotate(8 209 149)"/>
+    </svg>
+    <h2 id="confirmed-title"></h2>
+    <p class="sub" id="confirmed-text"></p>
+    <button class="go" type="button" id="confirmed-btn"><span id="confirmed-btn-label"></span> <i aria-hidden="true"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M3.5 8.5L8 13l4.5-4.5"/></svg></i></button>
+  </div>
+</dialog>
 
 <dialog id="share" aria-labelledby="share-title">
   <div class="sheet">
@@ -651,8 +684,8 @@ var TEXT = {
     newsAlready: "Esse e-mail já está na lista. Obrigado!",
     newsBad: "Esse e-mail parece incompleto. Confere?",
     newsErr: "Não deu certo agora. Tenta de novo daqui a pouco?",
-    newsConfirmed: "Pronto, e-mail confirmado! Avisamos quando a primeira agenda sair.",
-    newsConfirmBad: "Esse link de confirmação não funcionou. Se quiser, inscreva-se de novo aqui.",
+    confirmedTitle: "Inscrição confirmada!", confirmedText: "Assim que a primeira newsletter sair, ela chega no seu e-mail. Até lá, a programação está toda aqui.", confirmedBtn: "Ver a programação",
+    confirmBadTitle: "Esse link não funcionou", confirmBadText: "Ele pode ter sido copiado pela metade. Inscreva-se de novo pelo campo no topo da página.", confirmBadBtn: "Inscrever de novo",
     share: "Compartilhar", sms: "Mensagem de texto (SMS)", more: "Mais opções", close: "Fechar",
     copy: "Copiar link", copied: "Link copiado!",
     bye: "Boa feira! 🥨",
@@ -710,8 +743,8 @@ var TEXT = {
     newsAlready: "Diese E-Mail ist schon auf der Liste. Danke!",
     newsBad: "Die E-Mail-Adresse sieht unvollständig aus. Magst du sie prüfen?",
     newsErr: "Das hat gerade nicht geklappt. Versuch es bitte gleich noch einmal.",
-    newsConfirmed: "Geschafft, deine E-Mail ist bestätigt! Wir sagen Bescheid, sobald die erste Agenda kommt.",
-    newsConfirmBad: "Dieser Bestätigungslink hat nicht funktioniert. Du kannst dich hier einfach neu eintragen.",
+    confirmedTitle: "Anmeldung bestätigt!", confirmedText: "Sobald der erste Newsletter erscheint, landet er in deinem Postfach. Bis dahin findest du das ganze Programm hier.", confirmedBtn: "Zum Programm",
+    confirmBadTitle: "Dieser Link hat nicht funktioniert", confirmBadText: "Vielleicht wurde er nur halb kopiert. Trag dich einfach oben auf der Seite noch einmal ein.", confirmBadBtn: "Neu eintragen",
     share: "Teilen", sms: "SMS", more: "Weitere Optionen", close: "Schließen",
     copy: "Link kopieren", copied: "Link kopiert!",
     bye: "Viel Spaß! 🥨",
@@ -769,8 +802,8 @@ var TEXT = {
     newsAlready: "This email is already on the list. Thanks!",
     newsBad: "That email looks incomplete. Mind checking it?",
     newsErr: "That didn't work just now. Please try again in a moment.",
-    newsConfirmed: "Done, your email is confirmed! We'll let you know when the first edition goes out.",
-    newsConfirmBad: "This confirmation link didn't work. You can sign up again here.",
+    confirmedTitle: "You're subscribed!", confirmedText: "As soon as the first newsletter goes out, it'll land in your inbox. Until then, the full programme is right here.", confirmedBtn: "See what's on",
+    confirmBadTitle: "This link didn't work", confirmBadText: "It may have been copied only partly. Just sign up again with the field at the top of the page.", confirmBadBtn: "Sign up again",
     share: "Share", sms: "Text message (SMS)", more: "More options", close: "Close",
     copy: "Copy link", copied: "Link copied!",
     bye: "Enjoy the markets! 🥨",
@@ -1118,14 +1151,30 @@ Array.prototype.forEach.call(document.querySelectorAll(".news-form"), function (
     }).catch(function () { setNews(msg, "newsErr"); }).then(function () { btn.disabled = false; });
   });
 });
+// O link do e-mail termina em #newsletter; tira o hash para a página abrir no topo, atrás da janela
 if (confirmToken) {
-  var confirmMsg = document.getElementById("news-msg");
-  postNews({ action: "confirm", token: confirmToken }).then(function (res) {
-    setNews(confirmMsg, res.ok ? "newsConfirmed" : "newsConfirmBad");
-  }).catch(function () { setNews(confirmMsg, "newsErr"); }).then(function () {
-    document.getElementById("newsletter").scrollIntoView({ block: "center" });
-  });
+  if (location.hash === "#newsletter") history.replaceState(null, "", location.pathname + location.search);
+  postNews({ action: "confirm", token: confirmToken }).then(function (res) { openConfirmed(res.ok ? "ok" : "bad"); })
+    .catch(function () { openConfirmed("err"); });
 }
+function openConfirmed(kind) {
+  var ok = kind === "ok";
+  document.querySelector(".confirmed").classList.toggle("bad", !ok);
+  document.getElementById("confirmed-title").textContent = ok ? L.confirmedTitle : L.confirmBadTitle;
+  document.getElementById("confirmed-text").textContent = ok ? L.confirmedText : kind === "bad" ? L.confirmBadText : L.newsErr;
+  document.getElementById("confirmed-btn-label").textContent = ok ? L.confirmedBtn : L.confirmBadBtn;
+  document.getElementById("confirmed-btn").onclick = function () {
+    closeDialog("confirmed");
+    if (ok) document.getElementById("lista").scrollIntoView({ behavior: "smooth" });
+    else document.getElementById("hero-news-email").focus();
+  };
+  window.scrollTo({ top: 0, behavior: "instant" });
+  var d = document.getElementById("confirmed");
+  if (d.showModal) d.showModal(); else d.setAttribute("open", "");
+}
+function closeDialog(id) { var d = document.getElementById(id); if (d.close) d.close(); else d.removeAttribute("open"); }
+// Clique fora da janela fecha
+document.getElementById("confirmed").addEventListener("click", function (e) { if (e.target.id === "confirmed") closeDialog("confirmed"); });
 (function () {
   // O id vem do nome, para os links compartilhados (#ev-...) não mudarem quando entra um evento novo na lista
   EVENTS.concat(WEEKLY).forEach(function (e) {

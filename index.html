@@ -354,7 +354,7 @@ dialog::backdrop { background: rgba(29, 42, 26, .45); }
     <div class="hero-text">
       <h1 data-i18n-html="h1">Tá rolando<br class="br"> o quê em<br class="br"> <em>Munique?</em></h1>
       <p class="lede" data-i18n="lede">Feiras de Natal, Flohmärkte e eventos de rua, em português, para planejar o rolê com a família.</p>
-      <p class="hero-news-label" data-i18n="newsHeroLabel">Em breve, a agenda toda sexta no seu e-mail.</p>
+      <p class="hero-news-label" data-i18n="newsHeroLabel">Receba a programação toda quinta-feira no seu email.</p>
       <form class="news-form hero-news" novalidate data-msg="hero-news-msg">
         <label class="vh" for="hero-news-email" data-i18n="newsLabel">Seu e-mail</label>
         <input id="hero-news-email" name="email" type="email" autocomplete="email" inputmode="email" required placeholder="seu@email.com" data-i18n-ph="newsPh">
@@ -362,7 +362,7 @@ dialog::backdrop { background: rgba(29, 42, 26, .45); }
         <button class="go" type="submit"><span data-i18n="newsBtn">Quero receber</span> <i aria-hidden="true"><svg class="mail" viewBox="0 0 16 16" aria-hidden="true"><rect x="2" y="3.5" width="12" height="9" rx="1.6"/><path d="M2.6 4.6 8 8.8l5.4-4.2"/></svg></i></button>
       </form>
       <p class="news-msg hero-news-msg" id="hero-news-msg" role="status" aria-live="polite"></p>
-      <p class="hero-news-hint" data-i18n="newsHeroHint">Só o e-mail. Você confirma pelo link que vamos mandar e sai quando quiser.</p>
+      <p class="hero-news-hint" data-i18n="newsHeroHint">Sem spam. Cancele a newsletter quando quiser.</p>
       <div class="hero-btns">
         <a class="go" href="#lista"><span data-i18n="see">Ver o que tem</span> <i aria-hidden="true"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M3.5 8.5L8 13l4.5-4.5"/></svg></i></a>
         <button class="go light" id="share-hero" type="button" data-share="site"><span data-i18n="shareAll">Compartilhar programação</span> <i aria-hidden="true"><svg class="plane" viewBox="1 -1 24 24" aria-hidden="true"><path d="M14.54 21.69a.5.5 0 0 0 .94-.03l6.5-19a.5.5 0 0 0-.64-.63l-19 6.5a.5.5 0 0 0-.02.93l7.93 3.18a2 2 0 0 1 1.11 1.11zM21.85 2.15 10.91 13.09"/></svg></i></button>
@@ -427,7 +427,7 @@ dialog::backdrop { background: rgba(29, 42, 26, .45); }
   <section class="news" id="newsletter">
     <h2 class="sec" data-i18n="newsTitle">Quer receber no seu e-mail?</h2>
     <div class="news-card">
-      <p data-i18n="newsText">Estamos pensando em mandar esta agenda toda sexta de manhã, por e-mail. Deixe seu e-mail e avisamos quando começar.</p>
+      <p data-i18n="newsText">Receba a programação toda quinta-feira no seu email.</p>
       <form class="news-form" id="news-form" novalidate data-msg="news-msg">
         <label class="vh" for="news-email" data-i18n="newsLabel">Seu e-mail</label>
         <input id="news-email" name="email" type="email" autocomplete="email" inputmode="email" required placeholder="seu@email.com" data-i18n-ph="newsPh">
@@ -435,7 +435,7 @@ dialog::backdrop { background: rgba(29, 42, 26, .45); }
         <button class="go" type="submit"><span data-i18n="newsBtn">Quero receber</span> <i aria-hidden="true"><svg class="mail" viewBox="0 0 16 16" aria-hidden="true"><rect x="2" y="3.5" width="12" height="9" rx="1.6"/><path d="M2.6 4.6 8 8.8l5.4-4.2"/></svg></i></button>
       </form>
       <p class="news-msg" id="news-msg" role="status" aria-live="polite"></p>
-      <p class="hint" data-i18n="newsHint">Só pedimos o e-mail. Você confirma pelo link que vamos mandar e pode sair quando quiser.</p>
+      <p class="hint" data-i18n="newsHint">Sem spam. Cancele a newsletter quando quiser.</p>
     </div>
   </section>
 
@@ -643,9 +643,9 @@ var TEXT = {
     missingText: "Conhece uma feira, um mercado ou um evento de rua que não está aqui? Conta pra gente. Não pedimos nome nem e-mail.",
     formHint: "O formulário abre numa página do Google.",
     newsTitle: "Quer receber no seu e-mail?",
-    newsText: "Estamos pensando em mandar esta agenda toda sexta de manhã, por e-mail. Deixe seu e-mail e avisamos quando começar.",
-    newsLink: "Receber por e-mail", newsHeroLabel: "Em breve, a agenda toda sexta no seu e-mail.", newsHeroHint: "Só o e-mail. Você confirma pelo link que vamos mandar e sai quando quiser.", newsLabel: "Seu e-mail", newsPh: "seu@email.com", newsBtn: "Quero receber",
-    newsHint: "Só pedimos o e-mail. Você confirma pelo link que vamos mandar e pode sair quando quiser.",
+    newsText: "Receba a programação toda quinta-feira no seu email.",
+    newsLink: "Receber por e-mail", newsHeroLabel: "Receba a programação toda quinta-feira no seu email.", newsHeroHint: "Sem spam. Cancele a newsletter quando quiser.", newsLabel: "Seu e-mail", newsPh: "seu@email.com", newsBtn: "Quero receber",
+    newsHint: "Sem spam. Cancele a newsletter quando quiser.",
     newsSending: "Enviando…",
     newsOk: "Quase lá! Abra o e-mail que mandamos e toque no link para confirmar. Não chegou? Olhe no spam.",
     newsAlready: "Esse e-mail já está na lista. Obrigado!",
@@ -702,9 +702,9 @@ var TEXT = {
     missingText: "Du kennst einen Markt oder ein Straßenfest, das hier noch fehlt? Sag uns Bescheid. Wir fragen weder nach Namen noch nach E-Mail.",
     formHint: "Das Formular öffnet sich auf einer Seite von Google und ist auf Portugiesisch, du kannst es aber auf Deutsch ausfüllen.",
     newsTitle: "Lieber per E-Mail?",
-    newsText: "Wir überlegen, diese Agenda jeden Freitagmorgen per E-Mail zu verschicken. Trag dich ein, dann sagen wir Bescheid, sobald es losgeht.",
-    newsLink: "Per E-Mail bekommen", newsHeroLabel: "Bald jeden Freitag die Agenda per E-Mail.", newsHeroHint: "Nur deine E-Mail. Du bestätigst per Link und kannst dich jederzeit abmelden.", newsLabel: "Deine E-Mail", newsPh: "deine@email.de", newsBtn: "Eintragen",
-    newsHint: "Wir fragen nur nach der E-Mail-Adresse. Du bestätigst über den Link, den wir dir schicken, und kannst dich jederzeit abmelden.",
+    newsText: "Das Programm jeden Donnerstag in deinem Postfach.",
+    newsLink: "Per E-Mail bekommen", newsHeroLabel: "Das Programm jeden Donnerstag in deinem Postfach.", newsHeroHint: "Kein Spam. Du kannst den Newsletter jederzeit abbestellen.", newsLabel: "Deine E-Mail", newsPh: "deine@email.de", newsBtn: "Eintragen",
+    newsHint: "Kein Spam. Du kannst den Newsletter jederzeit abbestellen.",
     newsSending: "Wird gesendet…",
     newsOk: "Fast geschafft! Öffne die E-Mail von uns und tippe auf den Link zum Bestätigen. Nichts angekommen? Schau im Spam-Ordner nach.",
     newsAlready: "Diese E-Mail ist schon auf der Liste. Danke!",
@@ -761,9 +761,9 @@ var TEXT = {
     missingText: "Know a market or street festival that isn't listed here? Let us know. We don't ask for your name or email.",
     formHint: "The form opens on a Google page and is in Portuguese, but you can fill it in in English.",
     newsTitle: "Want it in your inbox?",
-    newsText: "We're thinking of sending this guide every Friday morning by email. Leave your address and we'll let you know when it starts.",
-    newsLink: "Get it by email", newsHeroLabel: "Coming soon: the guide in your inbox every Friday.", newsHeroHint: "Just your email. Confirm through the link we send, and leave anytime.", newsLabel: "Your email", newsPh: "you@email.com", newsBtn: "Sign me up",
-    newsHint: "We only ask for your email. You'll confirm through the link we send, and you can leave anytime.",
+    newsText: "Get the programme every Thursday in your inbox.",
+    newsLink: "Get it by email", newsHeroLabel: "Get the programme every Thursday in your inbox.", newsHeroHint: "No spam. Cancel the newsletter anytime.", newsLabel: "Your email", newsPh: "you@email.com", newsBtn: "Sign me up",
+    newsHint: "No spam. Cancel the newsletter anytime.",
     newsSending: "Sending…",
     newsOk: "Almost there! Open the email we just sent and tap the link to confirm. Not there? Check your spam folder.",
     newsAlready: "This email is already on the list. Thanks!",

@@ -107,12 +107,13 @@ svg.plane { width: 15px; height: 15px; stroke-width: 2.1; animation: plane-float
 
 /* Hero */
 .hero {
+  --h1: clamp(2.9rem, 12vw, 6.4rem);
   position: relative; background: var(--lime); border-radius: 0 0 44px 44px; overflow: hidden;
   padding: 112px max(20px, env(safe-area-inset-right, 0px)) 0 max(20px, env(safe-area-inset-left, 0px));
 }
 .hero-in { max-width: 1040px; margin: 0 auto; display: grid; grid-template-columns: 1fr; gap: 8px; position: relative; z-index: 2; }
 .hero h1 {
-  font-family: var(--font-display); font-weight: 800; font-size: clamp(2.9rem, 12vw, 6.4rem);
+  font-family: var(--font-display); font-weight: 800; font-size: var(--h1);
   line-height: 0.92; letter-spacing: -0.05em; margin: 0; text-wrap: balance;
 }
 .hero h1 em { font-style: normal; background: var(--yellow); border-radius: 18px; padding: 0 0.14em; display: inline-block; transform: rotate(-2deg); }
@@ -127,12 +128,6 @@ svg.plane { width: 15px; height: 15px; stroke-width: 2.1; animation: plane-float
 .go { border: 0; cursor: pointer; }
 .go:hover { filter: brightness(1.12); }
 .scene { width: min(100%, 520px); margin: 6px auto 0; display: block; position: relative; z-index: 2; }
-/* A data saiu do hero; esse espaço abaixo dos botões fica no lugar dela, para o hero manter a altura */
-.hero-btns { margin-bottom: 23px; }
-/* Os botões ficam lado a lado (ou empilhados no celular) dentro da mesma altura de antes, quando ocupavam duas linhas */
-.hero-btns { min-height: 116px; align-content: flex-start; }
-/* Um botão embaixo do outro */
-.hero-btns { flex-direction: column; align-items: flex-start; }
 /* Em alemão e inglês o título fica em duas linhas: a primeira inteira e a cidade embaixo */
 .hero h1 .l1 { white-space: nowrap; }
 .updated-row { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px 22px; margin: -12px 0 18px; }
@@ -302,13 +297,17 @@ dialog::backdrop { background: rgba(29, 42, 26, .45); }
 @media (min-width: 720px) {
   .hero-in { grid-template-columns: 1.15fr 1fr; align-items: end; gap: 24px; }
   .hero-text { padding-bottom: 56px; justify-self: start; width: fit-content; max-width: 100%; }
+  /* O hero ocupa no máximo 85% da altura da tela, para a lista já aparecer embaixo:
+     o título encolhe com a altura (o resto do hero mede uns 30,5rem) e a ilustração também */
+  .hero { --h1: max(2.6rem, min(6.4rem, 12vw, calc((85svh - 30.5rem) / 2.76))); }
+  .scene { max-height: calc(85svh - 140px); }
   .br { display: inline; }
   /* Alemão e inglês: a fonte diminui o suficiente para a primeira linha caber na coluna,
      e o título ocupa a mesma altura das três linhas do português, para o hero não mudar de altura */
   html[lang="de"] .hero h1, html[lang="en"] .hero h1 {
-    font-size: min(6rem, max(calc((100vw - 64px) * 0.09), calc(0.81 * clamp(2.9rem, 12vw, 6.4rem))));
-    min-height: calc(2.76 * clamp(2.9rem, 12vw, 6.4rem));
-    min-width: calc(4.68 * clamp(2.9rem, 12vw, 6.4rem));
+    font-size: min(6rem, 1.5 * var(--h1), max(calc((100vw - 64px) * 0.09), calc(0.81 * var(--h1))));
+    min-height: calc(2.76 * var(--h1));
+    min-width: calc(4.68 * var(--h1));
     display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-start;
   }
   html[lang="de"] .hero h1 br, html[lang="en"] .hero h1 br { display: none; }
@@ -373,8 +372,7 @@ dialog::backdrop { background: rgba(29, 42, 26, .45); }
       <p class="news-msg hero-news-msg" id="hero-news-msg" role="status" aria-live="polite"></p>
       <p class="hero-news-hint" data-i18n="newsHeroHint">Sem spam. Cancele a newsletter quando quiser.</p>
       <div class="hero-btns">
-        <a class="go" href="#lista"><span data-i18n="see">Ver o que tem</span> <i aria-hidden="true"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M3.5 8.5L8 13l4.5-4.5"/></svg></i></a>
-        <button class="go light" id="share-hero" type="button" data-share="site"><span data-i18n="shareAll">Compartilhar programação</span> <i aria-hidden="true"><svg class="plane" viewBox="1 -1 24 24" aria-hidden="true"><path d="M14.54 21.69a.5.5 0 0 0 .94-.03l6.5-19a.5.5 0 0 0-.64-.63l-19 6.5a.5.5 0 0 0-.02.93l7.93 3.18a2 2 0 0 1 1.11 1.11zM21.85 2.15 10.91 13.09"/></svg></i></button>
+        <a class="go" href="#lista"><span data-i18n="see">Conferir a programação</span> <i aria-hidden="true"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M3.5 8.5L8 13l4.5-4.5"/></svg></i></a>
       </div>
     </div>
 
@@ -666,7 +664,7 @@ var TEXT = {
     shareAll: "Compartilhar programação",
     h1: 'Tá rolando<br class="br"> o quê em<br class="br"> <em>Munique?</em>',
     lede: "Feiras de Natal, Flohmärkte e eventos de rua, em português, para planejar o rolê com a família.",
-    see: "Ver o que tem",
+    see: "Conferir a programação",
     suggest: "Sugerir um evento",
     scene: "Ilustração de uma barraquinha de feira de Natal com Glühwein e pretzel",
     filterBy: "Filtrar por tipo",

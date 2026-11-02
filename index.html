@@ -174,6 +174,7 @@ svg.plane { width: 15px; height: 15px; stroke-width: 2.1; animation: plane-float
 .stat span { display: block; color: var(--muted); font-size: 0.9rem; margin-top: 4px; }
 
 .filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; }
+.filters + .filters { margin-top: -8px; }
 .chip {
   font: 600 0.95rem var(--font-body); color: var(--ink); background: #fff; border: 2px solid transparent; border-radius: 999px;
   padding: 9px 16px; cursor: pointer; min-height: 44px; transition: transform .15s;
@@ -377,6 +378,7 @@ dialog::backdrop { background: rgba(29, 42, 26, .45); }
     <button class="chip" id="f-rua" data-filter="rua" aria-pressed="false" data-i18n="fRua">🎭 Rua e tradição</button>
     <button class="chip" id="f-kids" data-filter="kids" aria-pressed="false" data-i18n="fKids">🧒 Com crianças</button>
   </div>
+  <div class="filters" id="periods" role="group" aria-label="Filtrar por período" data-i18n-aria="periodBy"></div>
 
   <div id="out"></div>
 
@@ -579,6 +581,7 @@ var TEXT = {
     scene: "Ilustração de uma barraquinha de feira de Natal com Glühwein e pretzel",
     filterBy: "Filtrar por tipo",
     fAll: "Todos", fNatal: "🎄 Natal", fFloh: "🧺 Flohmarkt", fRua: "🎭 Rua e tradição", fKids: "🧒 Com crianças",
+    periodBy: "Filtrar por período", pAll: "📅 Qualquer data",
     missing: "Faltou algum evento?",
     missingText: "Conhece uma feira, um mercado ou um evento de rua que não está aqui? Conta pra gente. Não pedimos nome nem e-mail.",
     formHint: "O formulário abre numa página do Google.",
@@ -623,6 +626,7 @@ var TEXT = {
     scene: "Illustration einer Weihnachtsmarktbude mit Glühwein und Brezn",
     filterBy: "Nach Art filtern",
     fAll: "Alle", fNatal: "🎄 Weihnachten", fFloh: "🧺 Flohmarkt", fRua: "🎭 Straße & Tradition", fKids: "🧒 Mit Kindern",
+    periodBy: "Nach Zeitraum filtern", pAll: "📅 Jederzeit",
     missing: "Fehlt ein Termin?",
     missingText: "Du kennst einen Markt oder ein Straßenfest, das hier noch fehlt? Sag uns Bescheid. Wir fragen weder nach Namen noch nach E-Mail.",
     formHint: "Das Formular öffnet sich auf einer Seite von Google und ist auf Portugiesisch, du kannst es aber auf Deutsch ausfüllen.",
@@ -667,6 +671,7 @@ var TEXT = {
     scene: "Illustration of a Christmas market stall with Glühwein and a pretzel",
     filterBy: "Filter by type",
     fAll: "All", fNatal: "🎄 Christmas", fFloh: "🧺 Flea market", fRua: "🎭 Street & tradition", fKids: "🧒 With kids",
+    periodBy: "Filter by date", pAll: "📅 Any date",
     missing: "Missing an event?",
     missingText: "Know a market or street festival that isn't listed here? Let us know. We don't ask for your name or email.",
     formHint: "The form opens on a Google page and is in Portuguese, but you can fill it in in English.",
@@ -716,6 +721,8 @@ function siteUrl() { return lang === "pt" ? SITE : SITE + lang + "/"; }
 // Deixa na barra de endereço /de/ ou /en/ em vez de ?lang=, para quem copiar o link mandar a página com prévia no idioma certo
 function syncUrl() { if (history.replaceState) history.replaceState(null, "", (lang === "pt" ? "/" : "/" + lang + "/") + location.hash); }
 var filter = "all";
+// Período: "all", "weekend" ou o mês como "m" + ano*12+mês
+var period = "all";
 
 function parse(s) { var p = s.split("-"); return new Date(+p[0], +p[1] - 1, +p[2]); }
 function addDays(d, n) { return new Date(d.getFullYear(), d.getMonth(), d.getDate() + n); }
@@ -737,6 +744,39 @@ function matches(ev) {
   if (filter === "all") return true;
   if (filter === "kids") return !!ev.kids;
   return ev.type === filter;
+}
+function periodRange(today) {
+  if (period === "weekend") { var w = weekendWindow(today); return { a: w.a, b: w.b }; }
+  if (period.charAt(0) === "m") { var k = +period.slice(1), y = Math.floor(k / 12), m = k % 12; return { a: new Date(y, m, 1), b: new Date(y, m + 1, 0) }; }
+  return null;
+}
+function inPeriod(ev, today) {
+  var r = periodRange(today); if (!r) return true;
+  return parse(ev.s) <= r.b && parse(ev.e) >= r.a;
+}
+// Os semanais acontecem todo mês; no fim de semana, só os que caem no sábado ou domingo daquele fim de semana
+function weeklyInPeriod(ev, today) {
+  if (period !== "weekend") return true;
+  var r = periodRange(today);
+  for (var d = r.a; d <= r.b; d = addDays(d, 1)) if (d.getDay() === ev.dow) return true;
+  return false;
+}
+// Pílulas de período: qualquer data, fim de semana e um mês para cada mês com evento daqui pra frente
+function buildPeriods(today) {
+  var keys = {};
+  EVENTS.forEach(function (e) {
+    var a = parse(e.s) > today ? parse(e.s) : today, b = parse(e.e);
+    for (var k = a.getFullYear() * 12 + a.getMonth(); k <= b.getFullYear() * 12 + b.getMonth(); k++) keys[k] = true;
+  });
+  var list = Object.keys(keys).map(Number).sort(function (x, y) { return x - y; });
+  if (period.charAt(0) === "m" && !keys[+period.slice(1)]) period = "all";
+  function chip(id, label) { return '<button class="chip" type="button" data-period="' + id + '" aria-pressed="' + (period === id) + '">' + label + "</button>"; }
+  return chip("all", L.pAll) + chip("weekend", L.weekend) + list.map(function (k) {
+    var y = Math.floor(k / 12), name = MONTHS_LONG[k % 12];
+    name = name.charAt(0).toUpperCase() + name.slice(1);
+    if (y !== today.getFullYear()) name += L.ofYear + y;
+    return chip("m" + k, name);
+  }).join("");
 }
 function icsText(x) { return String(x).replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,").replace(/\r?\n/g, "\\n"); }
 function icsFold(line) {
@@ -838,16 +878,19 @@ function buildStats(today) {
 }
 function build(now) {
   var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  var dated = EVENTS.filter(function (e) { return matches(e) && parse(e.e) >= today; })
+  var dated = EVENTS.filter(function (e) { return matches(e) && parse(e.e) >= today && inPeriod(e, today); })
     .sort(function (a, b) { return parse(a.s) - parse(b.s); });
-  var weekly = WEEKLY.filter(matches);
+  var weekly = WEEKLY.filter(function (e) { return matches(e) && weeklyInPeriod(e, today); });
+  var pr = periodRange(today);
   var html = "";
   if (dated.length) {
-    // Um divisor por mês; eventos que já abriram entram no mês de hoje
+    // Um divisor por mês; eventos que já abriram entram no mês de hoje (ou no início do período escolhido)
     html += "<h2 class=\"sec\">" + L.dated + "</h2>";
     var groups = [];
     dated.forEach(function (e) {
-      var d = parse(e.s) > today ? parse(e.s) : today, key = d.getFullYear() * 12 + d.getMonth();
+      var d = parse(e.s) > today ? parse(e.s) : today;
+      if (pr && d < pr.a) d = pr.a;
+      var key = d.getFullYear() * 12 + d.getMonth();
       if (!groups.length || groups[groups.length - 1].key !== key) groups.push({ key: key, date: d, items: [] });
       groups[groups.length - 1].items.push(e);
     });
@@ -859,13 +902,14 @@ function build(now) {
   }
   if (weekly.length) html += "<h2 class=\"sec\">" + L.everyWeek + "</h2><ul class=\"list\">" + weekly.map(function (e) { return row(e, today, true); }).join("") + "</ul>";
   if (!html) html = '<p class="empty">' + L.empty + "</p>";
-  return { list: html, now: buildNow(today), stats: buildStats(today) };
+  return { list: html, now: buildNow(today), stats: buildStats(today), periods: buildPeriods(today) };
 }
 function render() {
   var out = build(new Date());
   document.getElementById("out").innerHTML = out.list;
   document.getElementById("now").innerHTML = out.now;
   document.getElementById("stats").innerHTML = out.stats;
+  document.getElementById("periods").innerHTML = out.periods;
 }
 // Link compartilhado (#ev-...): os cards nascem pelo script, então o navegador não acha a âncora sozinho
 function goToHash() {
@@ -952,10 +996,15 @@ document.getElementById("sh-more").addEventListener("click", function () {
     applyLang();
     render();
   }); });
-  Array.prototype.forEach.call(document.querySelectorAll(".chip"), function (b) {
+  document.getElementById("periods").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-period]"); if (!b) return;
+    period = b.getAttribute("data-period");
+    render();
+  });
+  Array.prototype.forEach.call(document.querySelectorAll(".chip[data-filter]"), function (b) {
     b.addEventListener("click", function () {
       filter = b.getAttribute("data-filter");
-      Array.prototype.forEach.call(document.querySelectorAll(".chip"), function (c) {
+      Array.prototype.forEach.call(document.querySelectorAll(".chip[data-filter]"), function (c) {
         c.setAttribute("aria-pressed", c === b ? "true" : "false");
       });
       render();

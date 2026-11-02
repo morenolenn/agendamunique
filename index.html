@@ -183,7 +183,7 @@ svg.plane { width: 15px; height: 15px; stroke-width: 2.1; animation: plane-float
 .chip[aria-pressed="true"] { background: var(--ink); color: var(--cream); }
 
 h2.sec { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.8rem, 6vw, 2.6rem); letter-spacing: -0.04em; margin: 34px 0 14px; }
-.month-sep { display: flex; align-items: center; gap: 16px; margin: 36px 0 14px; font: 800 clamp(1.4rem, 4.5vw, 1.9rem) var(--font-display); letter-spacing: -0.03em; text-transform: capitalize; }
+.month-sep { display: flex; align-items: center; gap: 16px; margin: 36px 0 14px; font: 800 clamp(1.4rem, 4.5vw, 1.9rem) var(--font-display); letter-spacing: -0.03em; }
 .month-sep::after { content: ""; flex: 1; height: 3px; border-radius: 3px; background: var(--ink); opacity: .22; }
 h2.sec + .month-sep { margin-top: 0; }
 .list { padding: 0; margin: 0; list-style: none; display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; }
@@ -604,6 +604,8 @@ var TEXT = {
     opensOn: "abre em ",
     statDated: "eventos com data", statWeekly: "feiras toda semana", statEnd: "fim da temporada",
     dated: "Com data marcada", ofYear: " de ", empty: "Nenhum evento neste filtro por enquanto.",
+    inMonth: function (m) { return "em " + m; }, thisWeekend: "neste fim de semana",
+    startsIn: function (p) { return "Começam " + p; }, carryIn: function (p) { return "Continuam abertos " + p; },
     shareSiteText: "Olha esse site com as feiras de Natal e eventos de rua de Munique, tudo em português: ",
     shareSiteSub: "Feiras de Natal e eventos de rua em Munique",
     shareSiteSubject: "Agenda Munique: feiras e eventos de rua",
@@ -649,6 +651,8 @@ var TEXT = {
     opensOn: "öffnet am ",
     statDated: "Termine", statWeekly: "Märkte jede Woche", statEnd: "Saisonende",
     dated: "Mit festem Termin", ofYear: " ", empty: "In diesem Filter gibt es gerade keine Termine.",
+    inMonth: function (m) { return "im " + m; }, thisWeekend: "an diesem Wochenende",
+    startsIn: function (p) { return "Starten " + p; }, carryIn: function (p) { return "Schon offen, auch " + p; },
     shareSiteText: "Schau mal, hier sind die Weihnachtsmärkte und Straßenfeste in München auf einen Blick: ",
     shareSiteSub: "Weihnachtsmärkte und Straßenfeste in München",
     shareSiteSubject: "Agenda Munique: Märkte und Straßenfeste",
@@ -694,6 +698,8 @@ var TEXT = {
     opensOn: "opens ",
     statDated: "dated events", statWeekly: "weekly markets", statEnd: "end of season",
     dated: "With a fixed date", ofYear: " ", empty: "No events in this filter right now.",
+    inMonth: function (m) { return "in " + m; }, thisWeekend: "this weekend",
+    startsIn: function (p) { return "Opening " + p; }, carryIn: function (p) { return "Already open, still on " + p; },
     shareSiteText: "Check out this guide to Munich's Christmas markets and street festivals: ",
     shareSiteSub: "Christmas markets and street festivals in Munich",
     shareSiteSubject: "Agenda Munique: markets and street festivals",
@@ -745,6 +751,14 @@ function matches(ev) {
   if (filter === "kids") return !!ev.kids;
   return ev.type === filter;
 }
+function cap(x) { return x.charAt(0).toUpperCase() + x.slice(1); }
+// Nome do período para os títulos: "em dezembro", "neste fim de semana"
+function periodPhrase(today) {
+  if (period === "weekend") return L.thisWeekend;
+  var k = +period.slice(1), y = Math.floor(k / 12), name = MONTHS_LONG[k % 12];
+  if (y !== today.getFullYear()) name += L.ofYear + y;
+  return L.inMonth(name);
+}
 function periodRange(today) {
   if (period === "weekend") { var w = weekendWindow(today); return { a: w.a, b: w.b }; }
   if (period.charAt(0) === "m") { var k = +period.slice(1), y = Math.floor(k / 12), m = k % 12; return { a: new Date(y, m, 1), b: new Date(y, m + 1, 0) }; }
@@ -773,9 +787,8 @@ function buildPeriods(today) {
   function chip(id, label) { return '<button class="chip" type="button" data-period="' + id + '" aria-pressed="' + (period === id) + '">' + label + "</button>"; }
   return chip("all", L.pAll) + chip("weekend", L.weekend) + list.map(function (k) {
     var y = Math.floor(k / 12), name = MONTHS_LONG[k % 12];
-    name = name.charAt(0).toUpperCase() + name.slice(1);
     if (y !== today.getFullYear()) name += L.ofYear + y;
-    return chip("m" + k, name);
+    return chip("m" + k, cap(name));
   }).join("");
 }
 function icsText(x) { return String(x).replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,").replace(/\r?\n/g, "\\n"); }
@@ -884,20 +897,25 @@ function build(now) {
   var pr = periodRange(today);
   var html = "";
   if (dated.length) {
-    // Um divisor por mês; eventos que já abriram entram no mês de hoje (ou no início do período escolhido)
+    // Um divisor por mês; eventos que já abriram entram no mês de hoje.
+    // Com um período escolhido, os que abrem nele vêm primeiro e os que já estavam abertos vêm depois, em grupo próprio
     html += "<h2 class=\"sec\">" + L.dated + "</h2>";
     var groups = [];
-    dated.forEach(function (e) {
-      var d = parse(e.s) > today ? parse(e.s) : today;
-      if (pr && d < pr.a) d = pr.a;
-      var key = d.getFullYear() * 12 + d.getMonth();
+    if (pr) {
+      var ph = periodPhrase(today);
+      var starts = dated.filter(function (e) { return parse(e.s) >= pr.a; }), carry = dated.filter(function (e) { return parse(e.s) < pr.a; });
+      if (starts.length) groups.push({ date: today, title: L.startsIn(ph), items: starts });
+      if (carry.length) groups.push({ date: today, title: L.carryIn(ph), items: carry });
+    } else dated.forEach(function (e) {
+      var d = parse(e.s) > today ? parse(e.s) : today, key = d.getFullYear() * 12 + d.getMonth();
       if (!groups.length || groups[groups.length - 1].key !== key) groups.push({ key: key, date: d, items: [] });
       groups[groups.length - 1].items.push(e);
     });
     groups.forEach(function (g) {
       var name = MONTHS_LONG[g.date.getMonth()];
       if (g.date.getFullYear() !== today.getFullYear()) name += L.ofYear + g.date.getFullYear();
-      html += '<h3 class="month-sep">' + name + "</h3><ul class=\"list\">" + g.items.map(function (e) { return row(e, today, false); }).join("") + "</ul>";
+      if (pr) name = g.title;
+      html += '<h3 class="month-sep">' + cap(name) + "</h3><ul class=\"list\">" + g.items.map(function (e) { return row(e, today, false); }).join("") + "</ul>";
     });
   }
   if (weekly.length) html += "<h2 class=\"sec\">" + L.everyWeek + "</h2><ul class=\"list\">" + weekly.map(function (e) { return row(e, today, true); }).join("") + "</ul>";

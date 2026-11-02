@@ -131,6 +131,10 @@ svg.plane { width: 15px; height: 15px; stroke-width: 2.1; animation: plane-float
 .hero-btns { margin-bottom: 23px; }
 /* Os botões ficam lado a lado (ou empilhados no celular) dentro da mesma altura de antes, quando ocupavam duas linhas */
 .hero-btns { min-height: 116px; align-content: flex-start; }
+/* Um botão embaixo do outro */
+.hero-btns { flex-direction: column; align-items: flex-start; }
+/* Em alemão e inglês o título fica em duas linhas: a primeira inteira e a cidade embaixo */
+.hero h1 .l1 { white-space: nowrap; }
 .updated-row { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px 22px; margin: -12px 0 18px; }
 .textlink { font-weight: 600; font-size: 0.95rem; text-decoration-thickness: 2px; text-underline-offset: 4px; }
 .textlink:hover { text-decoration-color: var(--lime-deep); }
@@ -256,6 +260,15 @@ dialog::backdrop { background: rgba(29, 42, 26, .45); }
   .hero-in { grid-template-columns: 1.15fr 1fr; align-items: end; gap: 24px; }
   .hero-text { padding-bottom: 56px; justify-self: start; width: fit-content; max-width: 100%; }
   .br { display: inline; }
+  /* Alemão e inglês: a fonte diminui o suficiente para a primeira linha caber na coluna,
+     e o título ocupa a mesma altura das três linhas do português, para o hero não mudar de altura */
+  html[lang="de"] .hero h1, html[lang="en"] .hero h1 {
+    font-size: min(6rem, max(calc((100vw - 64px) * 0.09), calc(0.81 * clamp(2.9rem, 12vw, 6.4rem))));
+    min-height: calc(2.76 * clamp(2.9rem, 12vw, 6.4rem));
+    min-width: calc(4.68 * clamp(2.9rem, 12vw, 6.4rem));
+    display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-start;
+  }
+  html[lang="de"] .hero h1 br, html[lang="en"] .hero h1 br { display: none; }
   .hero p.lede { width: 0; min-width: 100%; max-width: none; font-size: 1.1rem; text-align: justify; text-align-last: left; }
   .scene { margin: 0; }
   .card { display: grid; grid-template-columns: 84px minmax(0, 1fr) auto; column-gap: 22px; row-gap: 6px; align-items: start; padding: 22px 24px; }
@@ -603,7 +616,7 @@ var TEXT = {
     langLabel: "Sprache",
     home: "Agenda Munique, Startseite",
     shareAll: "Programm teilen",
-    h1: 'Was ist<br class="br"> los in<br class="br"> <em>München?</em>',
+    h1: '<span class="l1">Was ist los in</span><br> <em>München?</em>',
     lede: "Weihnachtsmärkte, Flohmärkte und Straßenfeste auf einen Blick, damit du den Ausflug mit der Familie planen kannst.",
     see: "Zum Programm",
     suggest: "Termin vorschlagen",
@@ -647,7 +660,7 @@ var TEXT = {
     langLabel: "Language",
     home: "Agenda Munique, home",
     shareAll: "Share the guide",
-    h1: 'What\'s on<br class="br"> in<br class="br"> <em>Munich?</em>',
+    h1: '<span class="l1">What\'s on in</span><br> <em>Munich?</em>',
     lede: "Christmas markets, flea markets and street festivals at a glance, so you can plan a day out with the family.",
     see: "See what's on",
     suggest: "Suggest an event",

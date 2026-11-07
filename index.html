@@ -205,7 +205,11 @@ h2.sec + .month-sep { margin-top: 0; }
 }
 .sticker b { display: block; font-size: 2.1rem; font-weight: 800; letter-spacing: -0.05em; font-variant-numeric: tabular-nums; }
 .sticker i { display: block; font-style: normal; font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-top: 3px; }
-.sticker small { display: block; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 3px; }
+.sticker.range b { font-size: 1.6rem; white-space: nowrap; }
+.sticker.two { padding: 9px 8px; }
+.sticker.two b { font-size: 1.25rem; }
+.sticker.two b i { display: inline; font-size: 0.7rem; margin: 0; }
+.sticker.two em { display: block; font-style: normal; font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin: 3px 0; }
 .sticker.alt b { font-size: 1.05rem; line-height: 1.05; letter-spacing: -0.02em; }
 .sticker.alt span { font-size: 1.4rem; display: block; margin-bottom: 4px; }
 .titles { min-width: 0; }
@@ -1001,7 +1005,10 @@ function row(ev, today, weekly) {
   var s = parse(ev.s || "2026-01-01");
   var sticker;
   if (weekly) sticker = '<div class="sticker alt"><span aria-hidden="true">🔁</span><b>' + L.everyWeek + "</b></div>";
-  else if (today >= parse(ev.s) && today <= parse(ev.e)) { var e = parse(ev.e); sticker = '<div class="sticker"><small>' + L.until + "</small><b>" + e.getDate() + "</b><i>" + MONTHS[e.getMonth()] + "</i></div>"; }
+  else if (today >= parse(ev.s) && today <= parse(ev.e)) { var e = parse(ev.e);
+    sticker = s.getMonth() === e.getMonth()
+      ? '<div class="sticker range"><b>' + s.getDate() + "–" + e.getDate() + "</b><i>" + MONTHS[s.getMonth()] + "</i></div>"
+      : '<div class="sticker range two"><b>' + s.getDate() + " <i>" + MONTHS[s.getMonth()] + "</i></b><em>" + L.until + "</em><b>" + e.getDate() + " <i>" + MONTHS[e.getMonth()] + "</i></b></div>"; }
   else sticker = '<div class="sticker"><b>' + s.getDate() + "</b><i>" + MONTHS[s.getMonth()] + "</i></div>";
   var st = weekly ? '<span class="status">' + L.recurring + "</span>" : statusOf(ev, today);
   var cal = '<button type="button" class="act" data-ics="' + ev.id + '">' + L.addCal + "</button>" +

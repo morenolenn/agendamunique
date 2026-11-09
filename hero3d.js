@@ -313,6 +313,31 @@ for (let i = 0; i < 34; i++) {
 for (let x = -60; x < 220; x += 2.6 + rnd() * 2.5) pine(x, -48 - rnd() * 18, 0.9 + rnd() * 0.9);
 for (let i = 0; i < 40; i++) { const x = 45 + rnd() * 50, z = -30 + rnd() * 25; pine(x, z, 0.8 + rnd() * 0.9); }
 plantTrees();
+// Alpes ao fundo, ao sul da cidade: picos low-poly com neve no alto. Ficam fora da névoa, com cores já
+// clareadas, para parecerem distantes sem sumir; mais baixos à esquerda, onde fica o texto
+(function alps() {
+  const rock = new THREE.MeshLambertMaterial({ color: 0xc6c3ee, flatShading: true, fog: false });
+  const rock2 = new THREE.MeshLambertMaterial({ color: 0xbab8ea, flatShading: true, fog: false });
+  const snow = new THREE.MeshLambertMaterial({ color: 0xf1f2ff, flatShading: true, fog: false });
+  // quando a cidade fica embaixo do texto (até 1000px), os picos ficam mais baixos para não subir atrás do botão
+  for (let x = -70; x < 330; x += 16 + rnd() * 22) {
+    const far = rnd() < 0.5, z = (far ? -235 : -190) - rnd() * 30;
+    const side = Math.min(1, Math.max(0.35, (x + 70) / 120)); // mais baixos na ponta esquerda
+    const h = (17 + rnd() * 20) * side * (far ? 1.15 : 1) * (innerWidth < 1000 ? 0.6 : 1), r = h * (0.85 + rnd() * 0.35);
+    const g = group(x, -1, z), seg = 5 + Math.floor(rnd() * 2), turn = rnd() * Math.PI;
+    const peak = new THREE.Mesh(new THREE.ConeGeometry(r, h, seg), far ? rock2 : rock);
+    peak.position.y = h / 2; peak.rotation.y = turn; g.add(peak);
+    const cap = new THREE.Mesh(new THREE.ConeGeometry(r * 0.36, h * 0.36, seg), snow);
+    cap.position.y = h - h * 0.18 + 0.05; cap.rotation.y = turn; cap.scale.set(1.04, 1, 1.04); g.add(cap);
+    if (rnd() < 0.6) { // um pico menor encostado, para a serra não parecer uma fileira de cones
+      const h2 = h * (0.5 + rnd() * 0.25), r2 = h2 * 0.95, dx = (rnd() < 0.5 ? -1 : 1) * r * 0.75;
+      const p2 = new THREE.Mesh(new THREE.ConeGeometry(r2, h2, seg), far ? rock2 : rock);
+      p2.position.set(dx, h2 / 2, 6); p2.rotation.y = turn + 1; g.add(p2);
+      const c2 = new THREE.Mesh(new THREE.ConeGeometry(r2 * 0.32, h2 * 0.32, seg), snow);
+      c2.position.set(dx, h2 - h2 * 0.16 + 0.05, 6); c2.rotation.y = turn + 1; c2.scale.set(1.04, 1, 1.04); g.add(c2);
+    }
+  }
+})();
 [[22, 16, 9, 2.2], [40, 12, 11, 2.8], [-18, 18, 8, 1.6], [52, -2, 10, 3], [6, 24, 7, 1.4], [-40, -40, 22, 6], [10, -46, 26, 7], [60, -40, 24, 6]]
   .forEach(([x, z, r, h]) => mound(x, z, r, h));
 // postes ao longo da estrada, do lado de dentro da curva
@@ -587,7 +612,7 @@ function update(dt) {
   camera.position.set(T.x + Math.sin(ang) * Math.cos(el) * dist, T.y + Math.sin(el) * dist, T.z + Math.cos(ang) * Math.cos(el) * dist);
   camera.lookAt(T);
   nextFlip -= s;
-  if (nextFlip <= 0) { nextFlip = 0.8 + Math.random() * 1.8; flipWindow(); }
+  if (nextFlip <= 0) { nextFlip = 0.4 + Math.random() * 0.9; flipWindow(); }
   // neve caindo, com um leve balanço
   const p = flakes.geometry.attributes.position.array;
   for (let i = 0; i < FLAKES; i++) {

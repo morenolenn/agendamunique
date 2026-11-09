@@ -36,7 +36,7 @@
 @font-face { font-family: "Source Sans 3"; src: url("/fonts/source-sans-3-600.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: swap; }
 </style>
 <style>
-/* Visual: hero verde-limão com título gigante, doodles flutuando, fundo creme, cartões brancos arredondados e adesivos de data coloridos. */
+/* Visual: hero com céu azul-lilás e Munique no inverno em 3D (hero3d.js), título gigante, fundo creme, cartões brancos arredondados e adesivos de data coloridos. */
 :root {
   --lime: #a5d86a;
   --lime-deep: #7fbf4a;
@@ -110,7 +110,7 @@ svg.plane { width: 15px; height: 15px; stroke-width: 2.1; animation: plane-float
 /* Hero */
 .hero {
   --h1: clamp(2.9rem, 12vw, 6.4rem);
-  position: relative; background: var(--lime); border-radius: 0 0 44px 44px; overflow: hidden;
+  position: relative; background: #8193e0 linear-gradient(180deg, #8193e0 0%, #a8b0ee 50%, #d9d3f3 78%); border-radius: 0 0 44px 44px; overflow: hidden;
   padding: 112px max(20px, env(safe-area-inset-right, 0px)) 0 max(20px, env(safe-area-inset-left, 0px));
 }
 .hero-in { max-width: 1040px; margin: 0 auto; display: grid; grid-template-columns: 1fr; gap: 8px; position: relative; z-index: 2; }
@@ -129,7 +129,8 @@ svg.plane { width: 15px; height: 15px; stroke-width: 2.1; animation: plane-float
 .go.light { background: #fff; color: var(--ink); }
 .go { border: 0; cursor: pointer; }
 .go:hover { filter: brightness(1.12); }
-.scene { width: min(100%, 520px); margin: 6px auto 0; display: block; position: relative; z-index: 2; }
+/* Cena 3D de Munique no inverno, desenhada pelo hero3d.js atrás do texto */
+.city3d { position: absolute; inset: 0; z-index: 1; pointer-events: none; display: block; width: 100%; height: 100%; }
 /* Em alemão e inglês o título fica em duas linhas: a primeira inteira e a cidade embaixo */
 .hero h1 .l1 { white-space: nowrap; }
 .updated-row { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px 22px; margin: -12px 0 18px; }
@@ -137,18 +138,6 @@ svg.plane { width: 15px; height: 15px; stroke-width: 2.1; animation: plane-float
 .textlink:hover { text-decoration-color: var(--lime-deep); }
 .updated-chip { display: inline-block; font-size: 0.9rem; font-weight: 600; background: #fff; border-radius: 999px; padding: 4px 12px; }
 
-/* Doodles */
-.doodle { position: absolute; z-index: 1; pointer-events: none; }
-.d1 { top: 22%; right: 8%; width: 90px; animation: float 6s ease-in-out infinite; }
-.d2 { top: 52%; left: 4%; width: 58px; animation: float 7s ease-in-out -2s infinite; }
-.d3 { top: 14%; left: 42%; width: 120px; opacity: .9; animation: drift 14s ease-in-out infinite; }
-.d4 { bottom: 18%; right: 3%; width: 70px; animation: float 5s ease-in-out -1s infinite; }
-.d5 { top: 40%; right: 38%; width: 40px; animation: spin 18s linear infinite; }
-@keyframes float { 0%,100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-14px) rotate(6deg); } }
-@keyframes drift { 0%,100% { transform: translateX(0); } 50% { transform: translateX(26px); } }
-@keyframes spin { to { transform: rotate(360deg); } }
-.steam { animation: steam 2.6s ease-in-out infinite; transform-origin: center bottom; }
-@keyframes steam { 0%,100% { transform: translateY(0); opacity: .9; } 50% { transform: translateY(-5px); opacity: .5; } }
 
 /* Conteúdo */
 .wrap { max-width: 1040px; margin: 0 auto; padding: 36px max(16px, env(safe-area-inset-left, 0px)) 24px; }
@@ -310,12 +299,10 @@ a.act { gap: 6px; }
 .foot a { text-decoration-thickness: 2px; text-underline-offset: 3px; }
 
 @media (min-width: 720px) {
-  .hero-in { grid-template-columns: 1.15fr 1fr; align-items: end; gap: 24px; }
-  .hero-text { padding-bottom: 56px; justify-self: start; width: fit-content; max-width: 100%; }
+  .hero-text { padding-bottom: 96px; justify-self: start; width: fit-content; max-width: 560px; }
   /* O hero ocupa no máximo 85% da altura da tela, para a lista já aparecer embaixo:
-     o título encolhe com a altura (o resto do hero mede uns 30,5rem) e a ilustração também */
+     o título encolhe com a altura (o resto do hero mede uns 30,5rem) */
   .hero { --h1: max(2.6rem, min(6.4rem, 12vw, calc((85svh - 30.5rem) / 2.76))); }
-  .scene { max-height: calc(85svh - 140px); }
   .br { display: inline; }
   /* Alemão e inglês: a fonte diminui o suficiente para a primeira linha caber na coluna,
      e o título ocupa a mesma altura das três linhas do português, para o hero não mudar de altura */
@@ -327,7 +314,6 @@ a.act { gap: 6px; }
   }
   html[lang="de"] .hero h1 br, html[lang="en"] .hero h1 br { display: none; }
   .hero p.lede { width: 0; min-width: 100%; max-width: none; font-size: 1.1rem; text-align: justify; text-align-last: left; }
-  .scene { margin: 0; }
   .card { display: grid; grid-template-columns: 84px minmax(0, 1fr) auto; column-gap: 22px; row-gap: 6px; align-items: start; padding: 22px 24px; }
   .head { display: contents; }
   .sticker { grid-column: 1; grid-row: 1 / 6; }
@@ -338,13 +324,14 @@ a.act { gap: 6px; }
   .now > h2 { grid-column: 1 / -1; }
   .logo { font-size: 1.2rem; }
 }
+/* Até 1000px a cidade fica embaixo do texto, então o texto deixa espaço para ela */
+@media (max-width: 999px) { .hero-text { padding-bottom: calc(min(105vw, 640px) * 0.6); } }
 @media (max-width: 719px) {
-  .d3, .d5, #share-site { display: none; }
-  .d1 { top: 11%; width: 64px; }
+  #share-site { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .doodle, .steam, svg.plane, .go svg { animation: none !important; }
+  svg.plane, .go svg { animation: none !important; }
   .card, .chip, .sticker, .pill i, .go i, .act.main i { transition: none; }
 }
 </style>
@@ -367,12 +354,6 @@ a.act { gap: 6px; }
 </div>
 
 <section class="hero">
-  <svg class="doodle d1" viewBox="0 0 90 40" aria-hidden="true"><path d="M4 30q10-26 20 0t20 0 20 0 20 0" fill="none" stroke="#f7d84a" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-  <svg class="doodle d2" viewBox="0 0 60 60" aria-hidden="true"><circle cx="18" cy="18" r="9" fill="#8fbaf7"/><circle cx="44" cy="40" r="6" fill="#f58a74"/><circle cx="14" cy="48" r="4" fill="#fff"/></svg>
-  <svg class="doodle d3" viewBox="0 0 120 56" aria-hidden="true"><path d="M20 50c-14 0-18-18-4-22 0-16 22-20 32-8 8-10 28-6 30 8 16-2 24 16 12 22z" fill="#fff"/></svg>
-  <svg class="doodle d4" viewBox="0 0 70 70" aria-hidden="true"><path d="M35 6v58M6 35h58M14 14l42 42M56 14L14 56" stroke="#fff" stroke-width="5" stroke-linecap="round"/></svg>
-  <svg class="doodle d5" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 3l4.7 11.8L37 16l-9.6 8.1L30.5 37 20 30l-10.5 7 3.1-12.9L3 16l12.3-1.2z" fill="#f58a74"/></svg>
-
   <div class="hero-in">
     <div class="hero-text">
       <h1 data-i18n-html="h1">Tá rolando<br class="br"> o quê em<br class="br"> <em>Munique?</em></h1>
@@ -390,43 +371,6 @@ a.act { gap: 6px; }
         <a class="go" href="#lista"><span data-i18n="see">Conferir a programação</span> <i aria-hidden="true"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M3.5 8.5L8 13l4.5-4.5"/></svg></i></a>
       </div>
     </div>
-
-    <svg class="scene" viewBox="0 0 360 300" role="img" aria-label="Ilustração de uma barraquinha de feira de Natal com Glühwein e pretzel" data-i18n-aria="scene">
-      <ellipse cx="180" cy="268" rx="165" ry="26" fill="#7fbf4a"/>
-      <!-- balcão -->
-      <rect x="86" y="140" width="188" height="122" rx="10" fill="#f3e3c0"/>
-      <rect x="76" y="198" width="208" height="18" rx="8" fill="#c98f5b"/>
-      <rect x="96" y="216" width="168" height="46" rx="6" fill="#e5cfa0"/>
-      <!-- toldo listrado -->
-      <path d="M66 98L180 44 294 98z" fill="#2f6b3d"/>
-      <g>
-        <rect x="76" y="98" width="35" height="38" fill="#f58a74"/><rect x="111" y="98" width="35" height="38" fill="#fff"/>
-        <rect x="146" y="98" width="35" height="38" fill="#f58a74"/><rect x="181" y="98" width="35" height="38" fill="#fff"/>
-        <rect x="216" y="98" width="35" height="38" fill="#f58a74"/><rect x="251" y="98" width="33" height="38" fill="#fff"/>
-        <circle cx="93.500" cy="136" r="17.500" fill="#f58a74"/><circle cx="128.500" cy="136" r="17.500" fill="#fff"/>
-        <circle cx="163.500" cy="136" r="17.500" fill="#f58a74"/><circle cx="198.500" cy="136" r="17.500" fill="#fff"/>
-        <circle cx="233.500" cy="136" r="17.500" fill="#f58a74"/><circle cx="267.500" cy="136" r="16.500" fill="#fff"/>
-      </g>
-      <!-- luzinhas -->
-      <path d="M90 168Q180 196 270 168" fill="none" stroke="#1d2a1a" stroke-width="2"/>
-      <circle cx="112" cy="176" r="5" fill="#f7d84a"/><circle cx="146" cy="184" r="5" fill="#f58a74"/><circle cx="180" cy="186" r="5" fill="#f7d84a"/><circle cx="214" cy="184" r="5" fill="#8fbaf7"/><circle cx="248" cy="176" r="5" fill="#f7d84a"/>
-      <!-- placa -->
-      <rect x="118" y="206" width="124" height="38" rx="10" fill="#1d2a1a"/>
-      <text x="180" y="232" text-anchor="middle" font-family="Bricolage Grotesque, Arial, sans-serif" font-weight="800" font-size="22" fill="#f5f0e3">Glühwein</text>
-      <!-- caneca e pretzel -->
-      <rect x="222" y="168" width="28" height="30" rx="6" fill="#8fbaf7"/>
-      <path d="M250 175q14 0 14 10t-14 10" fill="none" stroke="#8fbaf7" stroke-width="5"/>
-      <g class="steam" fill="none" stroke="#fff" stroke-width="3.500" stroke-linecap="round"><path d="M229 160q-5-7 0-13"/><path d="M240 160q-5-7 0-13"/></g>
-      <path d="M96 190c0-14 12-20 22-20s22 6 22 20-12 6-22 6-22 8-22-6z" fill="none" stroke="#c9722e" stroke-width="7" stroke-linecap="round"/>
-      <!-- bonequinho de neve -->
-      <circle cx="318" cy="236" r="24" fill="#fff"/><circle cx="318" cy="200" r="17" fill="#fff"/>
-      <circle cx="313" cy="196" r="2.500" fill="#1d2a1a"/><circle cx="323" cy="196" r="2.500" fill="#1d2a1a"/>
-      <path d="M318 201l12 3-12 3z" fill="#f58a74"/>
-      <rect x="305" y="176" width="26" height="8" rx="3" fill="#1d2a1a"/><rect x="310" y="162" width="16" height="16" rx="3" fill="#1d2a1a"/>
-      <path d="M303 213q15 9 30 0" fill="none" stroke="#f58a74" stroke-width="6" stroke-linecap="round"/>
-      <!-- estrelinha -->
-      <path d="M44 70l4 10 10 1-8 7 3 10-9-6-9 6 3-10-8-7 10-1z" fill="#f7d84a"/>
-    </svg>
   </div>
 </section>
 
@@ -712,7 +656,6 @@ var TEXT = {
     lede: "Feiras de Natal, Flohmärkte e eventos de rua, em português, para planejar o rolê com a família.",
     see: "Conferir a programação",
     suggest: "Sugerir um evento",
-    scene: "Ilustração de uma barraquinha de feira de Natal com Glühwein e pretzel",
     filterBy: "Filtrar por tipo",
     fAll: "Todos", fNatal: "🎄 Natal", fFloh: "🧺 Flohmarkt", fRua: "🎭 Rua e tradição", fKids: "🧒 Com crianças",
     periodBy: "Filtrar por período", pAll: "📅 Qualquer data",
@@ -771,7 +714,6 @@ var TEXT = {
     lede: "Weihnachtsmärkte, Flohmärkte und Straßenfeste auf einen Blick, damit du den Ausflug mit der Familie planen kannst.",
     see: "Zum Programm",
     suggest: "Termin vorschlagen",
-    scene: "Illustration einer Weihnachtsmarktbude mit Glühwein und Brezn",
     filterBy: "Nach Art filtern",
     fAll: "Alle", fNatal: "🎄 Weihnachten", fFloh: "🧺 Flohmarkt", fRua: "🎭 Straße & Tradition", fKids: "🧒 Mit Kindern",
     periodBy: "Nach Zeitraum filtern", pAll: "📅 Jederzeit",
@@ -830,7 +772,6 @@ var TEXT = {
     lede: "Christmas markets, flea markets and street festivals at a glance, so you can plan a day out with the family.",
     see: "See what's on",
     suggest: "Suggest an event",
-    scene: "Illustration of a Christmas market stall with Glühwein and a pretzel",
     filterBy: "Filter by type",
     fAll: "All", fNatal: "🎄 Christmas", fFloh: "🧺 Flea market", fRua: "🎭 Street & tradition", fKids: "🧒 With kids",
     periodBy: "Filter by date", pAll: "📅 Any date",
@@ -1272,5 +1213,9 @@ document.getElementById("confirmed").addEventListener("click", function (e) { if
 })();
 </script>
 
+<script type="module">
+// Cena 3D do hero (Munique no inverno): só carrega se o navegador tiver WebGL; sem ele, fica o céu em degradê
+try { const c = document.createElement("canvas"); if (c.getContext("webgl2") || c.getContext("webgl")) import("/hero3d.js"); } catch (e) {}
+</script>
 </body>
 </html>

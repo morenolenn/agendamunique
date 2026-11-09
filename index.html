@@ -322,7 +322,8 @@ a.act { gap: 6px; }
 .foot a { text-decoration-thickness: 2px; text-underline-offset: 3px; }
 
 @media (min-width: 720px) {
-  .hero-text { padding-bottom: 96px; justify-self: start; width: fit-content; max-width: 560px; }
+  /* o conteúdo do hero fica 48px mais para dentro que o logo do topo */
+  .hero-text { padding-bottom: 96px; padding-left: 48px; justify-self: start; width: fit-content; max-width: 608px; }
   /* O hero ocupa no máximo 85% da altura da tela, para a lista já aparecer embaixo:
      o título encolhe com a altura (o resto do hero mede uns 30,5rem) */
   .hero { --h1: max(2.6rem, min(6.4rem, 12vw, calc((85svh - 30.5rem) / 2.76))); }

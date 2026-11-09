@@ -251,7 +251,14 @@ h2.sec + .month-sep { margin-top: 0; }
 .partner-form input:not(.hp), .partner-form textarea {
   min-height: 46px; padding: 10px 14px; border-radius: 14px; border: 2px solid var(--ink); background: #fff; color: var(--ink); font: 400 1rem var(--font-body); resize: vertical;
 }
-.partner-form .go { justify-self: start; margin-top: 10px; }
+.partner-actions { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 14px; }
+.partner-actions .close { margin-top: 0; }
+/* Botão de fechar no canto da janela */
+.partner-sheet { position: relative; }
+.partner-sheet h2 { padding-right: 48px; }
+.sheet .x { position: absolute; top: 16px; right: 16px; display: grid; place-items: center; width: 40px; height: 40px; border: 0; border-radius: 50%; background: var(--cream); color: var(--ink); cursor: pointer; }
+.sheet .x:hover { background: var(--lime); }
+.sheet .x svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
 .partner-form .go[disabled] { opacity: .6; cursor: progress; }
 .partner-form .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
 .sug-form .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
@@ -491,7 +498,8 @@ a.act { gap: 6px; }
 </dialog>
 
 <dialog id="partner" aria-labelledby="partner-title">
-  <div class="sheet">
+  <div class="sheet partner-sheet">
+    <button class="x" type="button" id="partner-x" aria-label="Fechar" data-i18n-aria="close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
     <h2 id="partner-title" data-i18n="partnerTitle">Anuncie na Agenda Munique</h2>
     <p class="sub" data-i18n="partnerText">Em breve teremos espaço para anunciantes aqui no site e na newsletter que sai toda quinta-feira. Deixe seu contato e a gente conta como funciona.</p>
     <form class="partner-form" id="partner-form" novalidate>
@@ -504,10 +512,12 @@ a.act { gap: 6px; }
       <label for="pt-msg" data-i18n="pMsg">O que você quer divulgar? (opcional)</label>
       <textarea id="pt-msg" name="mensagem" rows="3" maxlength="2000"></textarea>
       <input class="hp" name="site" tabindex="-1" autocomplete="off" aria-hidden="true">
-      <button class="go" type="submit"><span data-i18n="pSend">Enviar</span> <i aria-hidden="true"><svg class="plane" viewBox="1 -1 24 24" aria-hidden="true"><path d="M14.54 21.69a.5.5 0 0 0 .94-.03l6.5-19a.5.5 0 0 0-.64-.63l-19 6.5a.5.5 0 0 0-.02.93l7.93 3.18a2 2 0 0 1 1.11 1.11zM21.85 2.15 10.91 13.09"/></svg></i></button>
+      <div class="partner-actions">
+        <button class="close" type="button" id="partner-close" data-i18n="close">Fechar</button>
+        <button class="go" type="submit"><span data-i18n="pSend">Enviar</span> <i aria-hidden="true"><svg class="plane" viewBox="1 -1 24 24" aria-hidden="true"><path d="M14.54 21.69a.5.5 0 0 0 .94-.03l6.5-19a.5.5 0 0 0-.64-.63l-19 6.5a.5.5 0 0 0-.02.93l7.93 3.18a2 2 0 0 1 1.11 1.11zM21.85 2.15 10.91 13.09"/></svg></i></button>
+      </div>
     </form>
     <p class="news-msg" id="partner-msg" role="status" aria-live="polite"></p>
-    <button class="close" type="button" id="partner-close" data-i18n="close">Fechar</button>
   </div>
 </dialog>
 
@@ -1222,13 +1232,14 @@ function openPartner(e) {
   if (e) e.preventDefault();
   var d = document.getElementById("partner");
   if (d.showModal) d.showModal(); else d.setAttribute("open", "");
+  document.getElementById("pt-nome").focus(); // começa pelo nome, não pelo X do canto
 }
 Array.prototype.forEach.call(document.querySelectorAll("[data-partner]"), function (b) { b.addEventListener("click", openPartner); });
-document.getElementById("partner-close").addEventListener("click", function () { closeDialog("partner"); });
+["partner-close", "partner-x"].forEach(function (id) { document.getElementById(id).addEventListener("click", function () { closeDialog("partner"); }); });
 document.getElementById("partner").addEventListener("click", function (e) { if (e.target.id === "partner") closeDialog("partner"); });
 document.getElementById("partner-form").addEventListener("submit", function (e) {
   e.preventDefault();
-  var form = e.target, btn = form.querySelector("button"), msg = document.getElementById("partner-msg"), email = form.email.value.trim();
+  var form = e.target, btn = form.querySelector('button[type="submit"]'), msg = document.getElementById("partner-msg"), email = form.email.value.trim();
   if (form.nome.value.trim().length < 2 || !email) { setNews(msg, "pNeed"); (form.nome.value.trim() ? form.email : form.nome).focus(); return; }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { setNews(msg, "newsBad"); form.email.focus(); return; }
   btn.disabled = true; setNews(msg, "newsSending");

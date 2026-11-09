@@ -235,6 +235,16 @@ h2.sec + .month-sep { margin-top: 0; }
 .news-msg { font-weight: 600; }
 .news-msg:empty { display: none; }
 #newsletter { scroll-margin-top: 16px; }
+/* Sugestão de evento: texto e link, enviados para o news@ pelo serviço da Agenda */
+.sug-form { display: grid; gap: 10px; justify-self: stretch; }
+.sug-form textarea, .sug-form input[type="url"] {
+  width: 100%; min-height: 48px; padding: 12px 18px; border-radius: 18px; border: 2px solid var(--ink);
+  background: #fff; color: var(--ink); font: 400 1rem var(--font-body); resize: vertical;
+}
+.sug-form .go { justify-self: start; }
+.sug-form .go[disabled] { opacity: .6; cursor: progress; }
+.sug-form .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+#sugerir { scroll-margin-top: 16px; }
 /* Newsletter no hero: rótulo curto, pílula branca com o campo e o botão dentro, aviso ou dica embaixo */
 .hero-news-label { margin: 28px 0 10px; font-weight: 700; }
 .hero-news { background: #fff; border-radius: 999px; padding: 5px; gap: 6px; flex-wrap: nowrap; max-width: 460px; }
@@ -421,7 +431,7 @@ a.act { gap: 6px; }
 </section>
 
 <main class="wrap" id="lista">
-  <div class="updated-row"><span class="updated-chip" id="updated"></span> <a class="textlink" href="https://docs.google.com/forms/d/e/1FAIpQLSeyJaXOf153YXrO3_O6gTEmqLCWgu2sTzwYlIvb6d7Su5BKyg/viewform" target="_blank" rel="noopener" data-i18n="suggest">Sugerir um evento</a> <a class="textlink" href="#newsletter" data-i18n="newsLink">Receber por e-mail</a></div>
+  <div class="updated-row"><span class="updated-chip" id="updated"></span> <a class="textlink" href="#sugerir" data-i18n="suggest">Sugerir um evento</a> <a class="textlink" href="#newsletter" data-i18n="newsLink">Receber por e-mail</a></div>
   <section class="now" id="now" aria-live="polite"></section>
   <div class="stats" id="stats"></div>
 
@@ -455,8 +465,15 @@ a.act { gap: 6px; }
     <h2 class="sec" data-i18n="missing">Faltou algum evento?</h2>
     <div class="suggest-card">
       <p data-i18n="missingText">Conhece uma feira, um mercado ou um evento de rua que não está aqui? Conta pra gente. Não pedimos nome nem e-mail.</p>
-      <a class="go" href="https://docs.google.com/forms/d/e/1FAIpQLSeyJaXOf153YXrO3_O6gTEmqLCWgu2sTzwYlIvb6d7Su5BKyg/viewform" target="_blank" rel="noopener"><span data-i18n="suggest">Sugerir um evento</span> <i aria-hidden="true"><svg class="plane" viewBox="1 -1 24 24" aria-hidden="true"><path d="M14.54 21.69a.5.5 0 0 0 .94-.03l6.5-19a.5.5 0 0 0-.64-.63l-19 6.5a.5.5 0 0 0-.02.93l7.93 3.18a2 2 0 0 1 1.11 1.11zM21.85 2.15 10.91 13.09"/></svg></i></a>
-      <p class="hint" data-i18n="formHint">O formulário abre numa página do Google.</p>
+      <form class="sug-form" id="sug-form" novalidate>
+        <label class="vh" for="sug-texto" data-i18n="sugPh">Nome do evento, data e local</label>
+        <textarea id="sug-texto" name="sugestao" rows="3" maxlength="3000" placeholder="Nome do evento, data e local" data-i18n-ph="sugPh"></textarea>
+        <label class="vh" for="sug-link" data-i18n="sugLinkPh">Link do evento (opcional)</label>
+        <input id="sug-link" name="link" type="url" inputmode="url" placeholder="Link do evento (opcional)" data-i18n-ph="sugLinkPh">
+        <input class="hp" name="site" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <button class="go" type="submit"><span data-i18n="sugSend">Enviar sugestão</span> <i aria-hidden="true"><svg class="plane" viewBox="1 -1 24 24" aria-hidden="true"><path d="M14.54 21.69a.5.5 0 0 0 .94-.03l6.5-19a.5.5 0 0 0-.64-.63l-19 6.5a.5.5 0 0 0-.02.93l7.93 3.18a2 2 0 0 1 1.11 1.11zM21.85 2.15 10.91 13.09"/></svg></i></button>
+      </form>
+      <p class="news-msg" id="sug-msg" role="status" aria-live="polite"></p>
     </div>
   </section>
 </main>
@@ -503,7 +520,7 @@ a.act { gap: 6px; }
   <div class="foot-in">
     <h2 data-i18n="bye">Boa feira! 🥨</h2>
     <p data-i18n-html="sources">Datas e horários conferidos no portal <a href="https://www.muenchen.de/veranstaltungen/weihnachtsmaerkte-christkindlmaerkte-2026" target="_blank" rel="noopener">muenchen.de</a>, no guia de turismo <a href="https://www.munich.travel/en/topics/markets-festivals/christmas-markets-munich" target="_blank" rel="noopener">munich.travel</a>, no site do <a href="https://www.christkindlmarkt-muenchen.de/" target="_blank" rel="noopener">Christkindlmarkt</a> e no <a href="https://www.kindaling.de/weihnachtsmaerkte/muenchen" target="_blank" rel="noopener">Kindaling</a>. Horários variam por dia e a maioria das feiras de Natal fecha em 15 de novembro (Volkstrauertag) e no Totensonntag (22 de novembro). Confira a página do evento antes de sair. Os pontos do mapa são buscas pelo nome do local.</p>
-    <p data-i18n="about">Projeto independente, feito por um brasileiro morando em Munique, sem vínculo com os organizadores dos eventos. Esta página não usa cookies e serve as fontes pelo próprio site. As visitas são contadas de forma anônima pelo Cloudflare Web Analytics, sem cookies. Os formulários de sugestões e da lista de e-mails são do Google: os e-mails da lista ficam numa planilha do Google, servem só para mandar a agenda e são apagados quando você pede para sair.</p>
+    <p data-i18n="about">Projeto independente, feito por um brasileiro morando em Munique, sem vínculo com os organizadores dos eventos. Esta página não usa cookies e serve as fontes pelo próprio site. As visitas são contadas de forma anônima pelo Cloudflare Web Analytics, sem cookies. Os formulários de sugestão e da newsletter passam por um pequeno serviço próprio na Cloudflare; os e-mails da newsletter ficam no Resend, servem só para mandar a agenda, e você sai pelo link no fim de cada edição.</p>
   </div>
   <!-- Cloudflare Web Analytics (sem cookies) --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "fc814bea30b2451f9221f874394a64c0"}'></script><!-- End Cloudflare Web Analytics -->
 </footer>
@@ -701,7 +718,7 @@ var TEXT = {
     periodBy: "Filtrar por período", pAll: "📅 Qualquer data",
     missing: "Faltou algum evento?",
     missingText: "Conhece uma feira, um mercado ou um evento de rua que não está aqui? Conta pra gente. Não pedimos nome nem e-mail.",
-    formHint: "O formulário abre numa página do Google.",
+    sugPh: "Nome do evento, data e local", sugLinkPh: "Link do evento (opcional)", sugSend: "Enviar sugestão", sugOk: "Obrigado! Recebemos sua sugestão.", sugEmpty: "Escreve qual é o evento, por favor.",
     newsTitle: "Quer receber no seu e-mail?",
     newsText: "Receba a programação toda quinta-feira no seu email.",
     newsLink: "Receber por e-mail", newsHeroLabel: "Receba a programação toda quinta-feira no seu email.", newsHeroHint: "Sem spam. Cancele a newsletter quando quiser.", newsLabel: "Seu e-mail", newsPh: "seu@email.com", newsBtn: "Quero receber",
@@ -717,7 +734,7 @@ var TEXT = {
     copy: "Copiar link", copied: "Link copiado!",
     bye: "Boa feira! 🥨",
     sources: 'Datas e horários conferidos no portal <a href="https://www.muenchen.de/veranstaltungen/weihnachtsmaerkte-christkindlmaerkte-2026" target="_blank" rel="noopener">muenchen.de</a>, no guia de turismo <a href="https://www.munich.travel/en/topics/markets-festivals/christmas-markets-munich" target="_blank" rel="noopener">munich.travel</a>, no site do <a href="https://www.christkindlmarkt-muenchen.de/" target="_blank" rel="noopener">Christkindlmarkt</a> e no <a href="https://www.kindaling.de/weihnachtsmaerkte/muenchen" target="_blank" rel="noopener">Kindaling</a>. Horários variam por dia e a maioria das feiras de Natal fecha em 15 de novembro (Volkstrauertag) e no Totensonntag (22 de novembro). Confira a página do evento antes de sair. Os pontos do mapa são buscas pelo nome do local.',
-    about: "Projeto independente, feito por um brasileiro morando em Munique, sem vínculo com os organizadores dos eventos. Esta página não usa cookies e serve as fontes pelo próprio site. As visitas são contadas de forma anônima pelo Cloudflare Web Analytics, sem cookies. Os formulários de sugestões e da lista de e-mails são do Google: os e-mails da lista ficam numa planilha do Google, servem só para mandar a agenda e são apagados quando você pede para sair.",
+    about: "Projeto independente, feito por um brasileiro morando em Munique, sem vínculo com os organizadores dos eventos. Esta página não usa cookies e serve as fontes pelo próprio site. As visitas são contadas de forma anônima pelo Cloudflare Web Analytics, sem cookies. Os formulários de sugestão e da newsletter passam por um pequeno serviço próprio na Cloudflare; os e-mails da newsletter ficam no Resend, servem só para mandar a agenda, e você sai pelo link no fim de cada edição.",
     openMap: "Abrir no mapa",
     range: function (a, b) { return a + " a " + b; },
     openFromTo: function (a, b) { return " Aberto de " + a + " a " + b + "."; },
@@ -760,7 +777,7 @@ var TEXT = {
     periodBy: "Nach Zeitraum filtern", pAll: "📅 Jederzeit",
     missing: "Fehlt ein Termin?",
     missingText: "Du kennst einen Markt oder ein Straßenfest, das hier noch fehlt? Sag uns Bescheid. Wir fragen weder nach Namen noch nach E-Mail.",
-    formHint: "Das Formular öffnet sich auf einer Seite von Google und ist auf Portugiesisch, du kannst es aber auf Deutsch ausfüllen.",
+    sugPh: "Name, Datum und Ort des Events", sugLinkPh: "Link zum Event (optional)", sugSend: "Vorschlag senden", sugOk: "Danke! Dein Vorschlag ist angekommen.", sugEmpty: "Schreib bitte, um welches Event es geht.",
     newsTitle: "Lieber per E-Mail?",
     newsText: "Das Programm jeden Donnerstag in deinem Postfach.",
     newsLink: "Per E-Mail bekommen", newsHeroLabel: "Das Programm jeden Donnerstag in deinem Postfach.", newsHeroHint: "Kein Spam. Du kannst den Newsletter jederzeit abbestellen.", newsLabel: "Deine E-Mail", newsPh: "deine@email.de", newsBtn: "Eintragen",
@@ -776,7 +793,7 @@ var TEXT = {
     copy: "Link kopieren", copied: "Link kopiert!",
     bye: "Viel Spaß! 🥨",
     sources: 'Termine und Öffnungszeiten geprüft auf <a href="https://www.muenchen.de/veranstaltungen/weihnachtsmaerkte-christkindlmaerkte-2026" target="_blank" rel="noopener">muenchen.de</a>, im Tourismusportal <a href="https://www.munich.travel/en/topics/markets-festivals/christmas-markets-munich" target="_blank" rel="noopener">munich.travel</a>, auf der Seite des <a href="https://www.christkindlmarkt-muenchen.de/" target="_blank" rel="noopener">Christkindlmarkts</a> und bei <a href="https://www.kindaling.de/weihnachtsmaerkte/muenchen" target="_blank" rel="noopener">Kindaling</a>. Die Öffnungszeiten ändern sich je nach Tag, und die meisten Weihnachtsmärkte sind am Volkstrauertag (15. November) und am Totensonntag (22. November) geschlossen. Schau vor dem Losgehen auf die Seite der Veranstaltung. Die Kartenpunkte sind Suchen nach dem Namen des Ortes.',
-    about: "Ein unabhängiges Projekt von einem Brasilianer, der in München lebt, ohne Verbindung zu den Veranstaltern. Die Seite setzt keine Cookies und lädt ihre Schriften vom eigenen Server. Besuche werden anonym und ohne Cookies mit Cloudflare Web Analytics gezählt. Das Vorschlagsformular und die E-Mail-Liste laufen über Google: Die Adressen liegen in einer Google-Tabelle, werden nur für die Agenda genutzt und gelöscht, sobald du dich abmeldest.",
+    about: "Ein unabhängiges Projekt von einem Brasilianer, der in München lebt, ohne Verbindung zu den Veranstaltern. Die Seite setzt keine Cookies und lädt ihre Schriften vom eigenen Server. Besuche werden anonym und ohne Cookies mit Cloudflare Web Analytics gezählt. Das Vorschlagsformular und die Newsletter-Anmeldung laufen über einen eigenen kleinen Dienst bei Cloudflare; die Adressen liegen bei Resend, werden nur für die Agenda genutzt, und abmelden kannst du dich über den Link am Ende jeder Ausgabe.",
     openMap: "Auf der Karte öffnen",
     range: function (a, b) { return a + " bis " + b; },
     openFromTo: function (a, b) { return " Geöffnet vom " + a + " bis " + b + "."; },
@@ -819,7 +836,7 @@ var TEXT = {
     periodBy: "Filter by date", pAll: "📅 Any date",
     missing: "Missing an event?",
     missingText: "Know a market or street festival that isn't listed here? Let us know. We don't ask for your name or email.",
-    formHint: "The form opens on a Google page and is in Portuguese, but you can fill it in in English.",
+    sugPh: "Event name, date and place", sugLinkPh: "Event link (optional)", sugSend: "Send suggestion", sugOk: "Thanks! We got your suggestion.", sugEmpty: "Please tell us which event.",
     newsTitle: "Want it in your inbox?",
     newsText: "Get the programme every Thursday in your inbox.",
     newsLink: "Get it by email", newsHeroLabel: "Get the programme every Thursday in your inbox.", newsHeroHint: "No spam. Cancel the newsletter anytime.", newsLabel: "Your email", newsPh: "you@email.com", newsBtn: "Sign me up",
@@ -835,7 +852,7 @@ var TEXT = {
     copy: "Copy link", copied: "Link copied!",
     bye: "Enjoy the markets! 🥨",
     sources: 'Dates and opening hours checked on <a href="https://www.muenchen.de/veranstaltungen/weihnachtsmaerkte-christkindlmaerkte-2026" target="_blank" rel="noopener">muenchen.de</a>, the tourism site <a href="https://www.munich.travel/en/topics/markets-festivals/christmas-markets-munich" target="_blank" rel="noopener">munich.travel</a>, the <a href="https://www.christkindlmarkt-muenchen.de/" target="_blank" rel="noopener">Christkindlmarkt</a> website and <a href="https://www.kindaling.de/weihnachtsmaerkte/muenchen" target="_blank" rel="noopener">Kindaling</a>. Opening hours vary by day, and most Christmas markets close on 15 November (Volkstrauertag) and on Totensonntag (22 November). Check the event\'s page before you go. Map pins are searches for the venue name.',
-    about: "An independent project by a Brazilian living in Munich, not affiliated with any of the organisers. This page sets no cookies and serves its fonts from its own server. Visits are counted anonymously, without cookies, by Cloudflare Web Analytics. The suggestion form and the email list run on Google: addresses are kept in a Google spreadsheet, used only to send the guide, and deleted when you ask to leave.",
+    about: "An independent project by a Brazilian living in Munich, not affiliated with any of the organisers. This page sets no cookies and serves its fonts from its own server. Visits are counted anonymously, without cookies, by Cloudflare Web Analytics. The suggestion and newsletter forms run on our own small service at Cloudflare; newsletter addresses are kept with Resend, used only to send the guide, and you can leave with the link at the end of each issue.",
     openMap: "Open in maps",
     range: function (a, b) { return a + " to " + b; },
     openFromTo: function (a, b) { return " Open from " + a + " to " + b + "."; },
@@ -1157,10 +1174,10 @@ document.getElementById("sh-copy").addEventListener("click", function () {
 document.getElementById("sh-more").addEventListener("click", function () {
   if (navigator.share) navigator.share({ title: shareCtx.title, text: shareCtx.text, url: shareCtx.url }).catch(function () {});
 });
-// Lista de espera da newsletter: o e-mail vai para uma planilha do Google (Apps Script, ver inscricoes-apps-script.js fora do site),
-// que manda um e-mail de confirmação com link para ?confirmar=<código>. O código é lido aqui antes de syncUrl limpar a URL.
-var NEWS_URL = "https://script.google.com/macros/s/AKfycbzTrWIiNfB5S1tH57RCKartWwF4WO4xEAP5HehoWEfslmZdlD5altsGiv-UA2O-ayROMg/exec";
-var confirmToken = (/[?&]confirmar=([0-9a-f-]{36})/i.exec(location.search) || [])[1];
+// Newsletter e sugestões vão para o serviço da Agenda na Cloudflare (pasta worker/ fora do site), que usa o Resend.
+// A inscrição manda um e-mail com link para ?confirmar=<código assinado>; o código é lido aqui antes de syncUrl limpar a URL.
+var NEWS_URL = "https://agendamunique.agendamunique.workers.dev/";
+var confirmToken = (/[?&]confirmar=([A-Za-z0-9_.-]{20,})/.exec(location.search) || [])[1];
 // Aviso no idioma atual; data-key guarda qual é, para applyLang trocar o texto quando o idioma muda
 function setNews(el, key) { el.setAttribute("data-key", key); el.textContent = L[key]; }
 function postNews(data) {
@@ -1182,6 +1199,15 @@ Array.prototype.forEach.call(document.querySelectorAll(".news-form"), function (
   });
 });
 // O link do e-mail termina em #newsletter; tira o hash para a página abrir no topo, atrás da janela
+document.getElementById("sug-form").addEventListener("submit", function (e) {
+  e.preventDefault();
+  var form = e.target, btn = form.querySelector("button"), msg = document.getElementById("sug-msg");
+  if (form.sugestao.value.trim().length < 5) { setNews(msg, "sugEmpty"); form.sugestao.focus(); return; }
+  btn.disabled = true; setNews(msg, "newsSending");
+  postNews({ action: "suggest", sugestao: form.sugestao.value, link: form.link.value, site: form.site.value }).then(function (res) {
+    if (res.ok) { setNews(msg, "sugOk"); form.reset(); } else setNews(msg, res.error === "vazio" ? "sugEmpty" : "newsErr");
+  }).catch(function () { setNews(msg, "newsErr"); }).then(function () { btn.disabled = false; });
+});
 if (confirmToken) {
   if (location.hash === "#newsletter") history.replaceState(null, "", location.pathname + location.search);
   postNews({ action: "confirm", token: confirmToken }).then(function (res) { openConfirmed(res.ok ? "ok" : "bad"); })

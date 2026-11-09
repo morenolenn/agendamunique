@@ -21,7 +21,7 @@ renderer.outputColorSpace = THREE.SRGBColorSpace;
 const scene = new THREE.Scene();
 const HAZE = 0xd9d3f3; // lilás claro do horizonte, igual ao fim do degradê do céu no CSS
 scene.fog = new THREE.Fog(HAZE, 100, 300);
-const camera = new THREE.PerspectiveCamera(32, 1, 0.5, 900);
+const camera = new THREE.PerspectiveCamera(32, 1, 0.5, 4000);
 
 // Luz de fim de tarde de inverno: céu azul-lilás de cima, sol baixo e quente vindo da esquerda
 scene.add(new THREE.HemisphereLight(0xd5dcff, 0x6b62c4, 1.45));
@@ -98,7 +98,7 @@ function winGrid(parent, x0, x1, y0, y1, z, cols, rows) {
 }
 
 // --- Chão de neve, montinhos e a estrada ---
-const ground = mesh(new THREE.CircleGeometry(600, 64), C.snow);
+const ground = mesh(new THREE.CircleGeometry(3000, 64), C.snow);
 ground.rotation.x = -Math.PI / 2;
 ground.castShadow = false;
 function mound(x, z, r, h, color = C.mound) {
@@ -313,18 +313,19 @@ for (let i = 0; i < 34; i++) {
 for (let x = -60; x < 220; x += 2.6 + rnd() * 2.5) pine(x, -48 - rnd() * 18, 0.9 + rnd() * 0.9);
 for (let i = 0; i < 40; i++) { const x = 45 + rnd() * 50, z = -30 + rnd() * 25; pine(x, z, 0.8 + rnd() * 0.9); }
 plantTrees();
-// Alpes ao fundo, ao sul da cidade: picos low-poly com neve no alto. Ficam fora da névoa, com cores já
-// clareadas, para parecerem distantes sem sumir; mais baixos à esquerda, onde fica o texto
+// Alpes no horizonte, ao sul da cidade: picos low-poly com neve no alto, bem longe,
+// tão longe que a névoa já apagou a neve: a base deles cai na linha do horizonte. Ficam fora da névoa, com cores já clareadas, para parecerem
+// distantes sem sumir; mais baixos à esquerda, onde fica o texto
 (function alps() {
   const rock = new THREE.MeshLambertMaterial({ color: 0xc6c3ee, flatShading: true, fog: false });
   const rock2 = new THREE.MeshLambertMaterial({ color: 0xbab8ea, flatShading: true, fog: false });
   const snow = new THREE.MeshLambertMaterial({ color: 0xf1f2ff, flatShading: true, fog: false });
   // quando a cidade fica embaixo do texto (até 1000px), os picos ficam mais baixos para não subir atrás do botão
-  for (let x = -70; x < 330; x += 16 + rnd() * 22) {
-    const far = rnd() < 0.5, z = (far ? -235 : -190) - rnd() * 30;
-    const side = Math.min(1, Math.max(0.35, (x + 70) / 120)); // mais baixos na ponta esquerda
-    const h = (17 + rnd() * 20) * side * (far ? 1.15 : 1) * (innerWidth < 1000 ? 0.6 : 1), r = h * (0.85 + rnd() * 0.35);
-    const g = group(x, -1, z), seg = 5 + Math.floor(rnd() * 2), turn = rnd() * Math.PI;
+  for (let x = -330; x < 1500; x += 60 + rnd() * 80) {
+    const far = rnd() < 0.5, z = (far ? -1080 : -980) - rnd() * 60;
+    const side = Math.min(1, Math.max(0.35, (x + 330) / 450)); // mais baixos na ponta esquerda
+    const h = (55 + rnd() * 60) * side * (far ? 1.15 : 1) * (innerWidth < 1000 ? 0.6 : 1), r = h * (0.85 + rnd() * 0.35);
+    const g = group(x, 0, z), seg = 5 + Math.floor(rnd() * 2), turn = rnd() * Math.PI;
     const peak = new THREE.Mesh(new THREE.ConeGeometry(r, h, seg), far ? rock2 : rock);
     peak.position.y = h / 2; peak.rotation.y = turn; g.add(peak);
     const cap = new THREE.Mesh(new THREE.ConeGeometry(r * 0.36, h * 0.36, seg), snow);
@@ -332,9 +333,9 @@ plantTrees();
     if (rnd() < 0.6) { // um pico menor encostado, para a serra não parecer uma fileira de cones
       const h2 = h * (0.5 + rnd() * 0.25), r2 = h2 * 0.95, dx = (rnd() < 0.5 ? -1 : 1) * r * 0.75;
       const p2 = new THREE.Mesh(new THREE.ConeGeometry(r2, h2, seg), far ? rock2 : rock);
-      p2.position.set(dx, h2 / 2, 6); p2.rotation.y = turn + 1; g.add(p2);
+      p2.position.set(dx, h2 / 2, 30); p2.rotation.y = turn + 1; g.add(p2);
       const c2 = new THREE.Mesh(new THREE.ConeGeometry(r2 * 0.32, h2 * 0.32, seg), snow);
-      c2.position.set(dx, h2 - h2 * 0.16 + 0.05, 6); c2.rotation.y = turn + 1; c2.scale.set(1.04, 1, 1.04); g.add(c2);
+      c2.position.set(dx, h2 - h2 * 0.16 + 0.05, 30); c2.rotation.y = turn + 1; c2.scale.set(1.04, 1, 1.04); g.add(c2);
     }
   }
 })();

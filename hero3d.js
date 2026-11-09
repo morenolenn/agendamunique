@@ -236,7 +236,7 @@ function olympiaturm(x, z) {
   [[2.5, 2.1, 0.9, 22.4], [1.7, 1.7, 0.8, 23.25], [2.2, 1.8, 0.9, 24.1], [1.3, 1.3, 0.8, 24.95]].forEach(([a, b, h, y]) =>
     mesh(new THREE.CylinderGeometry(a, b, h, 14), C.tower, 0, y, 0, g));
   mesh(new THREE.CylinderGeometry(0.14, 0.25, 9, 6), C.tower, 0, 29.8, 0, g);
-  for (let k = 0; k < 6; k++) { const a = (k / 6) * Math.PI * 2; wins.push({ parent: g, x: Math.sin(a) * 2.2, y: 22.4, z: Math.cos(a) * 2.2, w: 0.6, h: 0.3, lit: true }); }
+  for (let k = 0; k < 6; k++) { const a = (k / 6) * Math.PI * 2; wins.push({ parent: g, x: Math.sin(a) * 2.2, y: 22.4, z: Math.cos(a) * 2.2, w: 0.6, h: 0.3, lit: true, fixed: true }); }
 }
 function spire(x, z, h, color = C.wall3) {
   const g = group(x, 0, z);
@@ -333,16 +333,30 @@ for (let u = 0.32; u < 0.66; u += 0.022) {
   scene.add(inst);
 })();
 // todas as janelas de uma vez
-(function windows() {
+// Uma instância só, com a cor de cada janela; assim dá para acender e apagar uma de cada vez
+const LIT = new THREE.Color(C.winLit), OFF = new THREE.Color(C.winDark);
+const winInst = (function windows() {
   scene.updateMatrixWorld(true);
-  const geo = new THREE.BoxGeometry(1, 1, 0.06);
-  const lit = wins.filter((w) => w.lit), off = wins.filter((w) => !w.lit);
-  [[lit, glow(C.winLit)], [off, mat(C.winDark)]].forEach(([list, material]) => {
-    const inst = new THREE.InstancedMesh(geo, material, list.length), m = new THREE.Matrix4(), l = new THREE.Matrix4();
-    list.forEach((w, i) => inst.setMatrixAt(i, m.multiplyMatrices(w.parent.matrixWorld, l.makeScale(w.w, w.h, 1).setPosition(w.x, w.y, w.z))));
-    scene.add(inst);
+  const inst = new THREE.InstancedMesh(new THREE.BoxGeometry(1, 1, 0.06), new THREE.MeshBasicMaterial({ color: 0xffffff }), wins.length);
+  const m = new THREE.Matrix4(), l = new THREE.Matrix4();
+  wins.forEach((w, i) => {
+    inst.setMatrixAt(i, m.multiplyMatrices(w.parent.matrixWorld, l.makeScale(w.w, w.h, 1).setPosition(w.x, w.y, w.z)));
+    inst.setColorAt(i, w.lit ? LIT : OFF);
   });
+  scene.add(inst);
+  return inst;
 })();
+// Moradores chegando e saindo: de tempos em tempos uma janela acende ou apaga, mantendo uns 60% acesas
+let nextFlip = 2;
+function flipWindow() {
+  const i = Math.floor(Math.random() * wins.length), w = wins[i];
+  if (w.fixed) return;
+  const litShare = wins.filter((x) => x.lit).length / wins.length;
+  if ((w.lit && litShare < 0.55) || (!w.lit && litShare > 0.68)) return;
+  w.lit = !w.lit;
+  winInst.setColorAt(i, w.lit ? LIT : OFF);
+  winInst.instanceColor.needsUpdate = true;
+}
 
 // --- Neve caindo ---
 const FLAKES = small ? 700 : 1600;
@@ -545,10 +559,12 @@ function resize() {
   mobile = W < 1000; // até 1000px a cidade fica embaixo do texto
   renderer.setSize(W, H, false);
   camera.aspect = W / H;
-  // No computador a cidade fica na metade da direita, ao lado do texto; no celular, embaixo dele.
-  const right = Math.min(W - 24, (W + 1040) / 2 + 120), left = W * 0.48;
-  frameW = mobile ? Math.min(W * 1.05, 640) : right - left;
-  const cx = mobile ? W / 2 : (left + right) / 2, cy = H - (mobile ? 0.26 : 0.3) * frameW;
+  // No computador a cidade fica à direita do texto, até a borda, e cresce ou diminui inteira com a tela;
+  // no celular, fica embaixo do texto
+  const text = document.querySelector(".hero-text"), textRight = text ? text.getBoundingClientRect().right - r.left : W * 0.45;
+  const right = W - 8, left = Math.max(textRight + 32, W * 0.46);
+  frameW = mobile ? Math.min(W * 1.05, 640) : Math.min(right - left, H * 1.6);
+  const cx = mobile ? W / 2 : right - frameW / 2, cy = H - (mobile ? 0.26 : 0.22) * frameW;
   camera.setViewOffset(W, H, W / 2 - cx, H / 2 - cy, W, H);
   camera.updateProjectionMatrix();
 }
@@ -565,11 +581,13 @@ function update(dt) {
   const s = dt * speed;
   t += s;
   // distância para a cidade (uns 66 de largura) ocupar o espaço reservado para ela
-  const dist = ((mobile ? 74 : 58) * H) / (2 * Math.tan((camera.fov * Math.PI) / 360) * frameW);
+  const dist = ((mobile ? 74 : 84) * H) / (2 * Math.tan((camera.fov * Math.PI) / 360) * frameW);
   scene.fog.near = dist * 1.05; scene.fog.far = dist * 1.9;
   const ang = Math.sin(t * 0.04) * 0.1, el = 0.12;
   camera.position.set(T.x + Math.sin(ang) * Math.cos(el) * dist, T.y + Math.sin(el) * dist, T.z + Math.cos(ang) * Math.cos(el) * dist);
   camera.lookAt(T);
+  nextFlip -= s;
+  if (nextFlip <= 0) { nextFlip = 0.8 + Math.random() * 1.8; flipWindow(); }
   // neve caindo, com um leve balanço
   const p = flakes.geometry.attributes.position.array;
   for (let i = 0; i < FLAKES; i++) {

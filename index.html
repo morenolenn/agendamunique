@@ -61,28 +61,41 @@ body {
 a { color: inherit; }
 :focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
 
-/* Topo flutuante */
+/* Margem lateral do topo e do hero: cresce com a largura da tela */
+:root { --pad: 20px; }
+@media (min-width: 720px) { :root { --pad: 48px; } }
+@media (min-width: 1440px) { :root { --pad: 64px; } }
+@media (min-width: 1800px) { :root { --pad: 80px; } }
+
+/* Topo: logo à esquerda; à direita parceria, compartilhar, idioma e o botão para a programação */
 .top {
-  position: absolute; z-index: 5; top: 12px; left: max(12px, env(safe-area-inset-left, 0px)); right: max(12px, env(safe-area-inset-right, 0px));
+  position: absolute; z-index: 5; top: 16px; left: max(var(--pad), env(safe-area-inset-left, 0px)); right: max(var(--pad), env(safe-area-inset-right, 0px));
   display: flex; align-items: center; justify-content: space-between; gap: 10px;
 }
 .logo {
-  display: inline-flex; align-items: center; gap: 10px; background: #fff; border-radius: 999px; padding: 10px 16px;
-  font-family: var(--font-display); font-weight: 800; font-size: 1.1rem; letter-spacing: -0.02em; text-decoration: none;
+  display: inline-flex; align-items: center; gap: 10px; white-space: nowrap;
+  font-family: var(--font-display); font-weight: 800; font-size: 1.15rem; letter-spacing: -0.02em; text-decoration: none;
 }
-.logo svg { width: 28px; height: 28px; flex: none; }
-.top-r { display: flex; align-items: center; gap: 8px; }
-.langs { display: inline-flex; gap: 2px; padding: 4px; background: #fff; border-radius: 999px; }
-/* Em telas largas o seletor fica no centro do topo; no celular não cabe entre o logo e a borda, então fica à direita */
-@media (min-width: 720px) { .langs { position: absolute; left: 50%; transform: translateX(-50%); } }
-.langs a { display: inline-grid; place-items: center; min-width: 40px; min-height: 36px; padding: 0 8px; border-radius: 999px; font: 600 0.9rem var(--font-body); text-decoration: none; }
+.logo svg { width: 30px; height: 30px; flex: none; }
+.top-r { display: flex; align-items: center; gap: 10px; }
+/* Pílulas do topo: brancas translúcidas sobre o céu */
+.pill.ghost { background: rgba(255, 255, 255, .62); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+.pill.ghost:hover { background: #fff; }
+.pill.plain { padding: 8px 18px; }
+.pill.ghost i { background: transparent; width: 22px; }
+/* Idioma: pílula com o idioma atual e o globo, que abre a lista dos três */
+.lang-menu { position: relative; }
+.lang-menu summary { list-style: none; }
+.lang-menu summary::-webkit-details-marker { display: none; }
+.lang-menu summary svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.5; }
+.langs { position: absolute; top: calc(100% + 8px); right: 0; display: grid; gap: 2px; padding: 6px; min-width: 150px; background: #fff; border-radius: 18px; box-shadow: 0 10px 30px rgba(29, 42, 26, .16); }
+.langs a { display: flex; align-items: center; min-height: 40px; padding: 0 12px; border-radius: 12px; font: 600 0.95rem var(--font-body); text-decoration: none; }
 .langs a:hover { background: var(--cream); }
 .langs a[aria-current="true"] { background: var(--ink); color: var(--cream); }
-.logo { white-space: nowrap; }
-@media (max-width: 400px) {
-  .logo { padding: 10px 12px; gap: 8px; font-size: 1rem; }
-  .langs a { min-width: 34px; padding: 0 6px; }
-}
+/* Telas médias: só o idioma e o botão; no celular, só o idioma (o botão volta para o hero) */
+@media (max-width: 1099px) { #partner-btn, #share-site { display: none; } }
+@media (max-width: 719px) { .top .nav-cta { display: none; } }
+@media (min-width: 720px) { .hero .hero-btns { display: none; } }
 .pill {
   display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 8px 8px 8px 18px;
   background: #fff; border-radius: 999px; font: 600 0.95rem var(--font-body); text-decoration: none; border: 0; cursor: pointer;
@@ -110,10 +123,10 @@ svg.plane { width: 15px; height: 15px; stroke-width: 2.1; animation: plane-float
 /* Hero */
 .hero {
   --h1: clamp(2.9rem, 12vw, 6.4rem);
-  position: relative; background: #8193e0 linear-gradient(180deg, #8193e0 0%, #a8b0ee 50%, #d9d3f3 78%); border-radius: 0 0 44px 44px; overflow: hidden;
-  padding: 112px max(20px, env(safe-area-inset-right, 0px)) 0 max(20px, env(safe-area-inset-left, 0px));
+  position: relative; background: #a3b1f2 linear-gradient(180deg, #a3b1f2 0%, #b4baf1 50%, #d9d3f3 78%); border-radius: 0 0 44px 44px; overflow: hidden;
+  padding: 112px max(var(--pad), env(safe-area-inset-right, 0px)) 0 max(var(--pad), env(safe-area-inset-left, 0px));
 }
-.hero-in { max-width: 1040px; margin: 0 auto; display: grid; grid-template-columns: 1fr; gap: 8px; position: relative; z-index: 2; }
+.hero-in { display: grid; grid-template-columns: 1fr; gap: 8px; position: relative; z-index: 2; }
 .hero h1 {
   font-family: var(--font-display); font-weight: 800; font-size: var(--h1);
   line-height: 0.92; letter-spacing: -0.05em; margin: 0; text-wrap: balance;
@@ -232,6 +245,15 @@ h2.sec + .month-sep { margin-top: 0; }
 }
 .sug-form .go { justify-self: start; }
 .sug-form .go[disabled] { opacity: .6; cursor: progress; }
+/* Parceria: janela com um formulário curto */
+.partner-form { display: grid; gap: 4px; }
+.partner-form label { font-weight: 600; font-size: 0.9rem; margin-top: 6px; }
+.partner-form input:not(.hp), .partner-form textarea {
+  min-height: 46px; padding: 10px 14px; border-radius: 14px; border: 2px solid var(--ink); background: #fff; color: var(--ink); font: 400 1rem var(--font-body); resize: vertical;
+}
+.partner-form .go { justify-self: start; margin-top: 10px; }
+.partner-form .go[disabled] { opacity: .6; cursor: progress; }
+.partner-form .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
 .sug-form .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
 #sugerir { scroll-margin-top: 16px; }
 /* Newsletter no hero: rótulo curto, pílula branca com o campo e o botão dentro, aviso ou dica embaixo */
@@ -240,7 +262,8 @@ h2.sec + .month-sep { margin-top: 0; }
 .hero-news input[type="email"] { border: 0; min-height: 48px; padding: 0 6px 0 16px; flex: 1 1 auto; }
 .hero-news input[type="email"]:focus-visible { outline: none; }
 .hero-news:focus-within { outline: 3px solid var(--ink); outline-offset: 2px; }
-.hero-news .go { flex: none; }
+.hero-news .go { flex: none; background: var(--yellow); color: var(--ink); }
+.hero-news .go i { background: transparent; }
 .hero-news-msg, .hero-news-hint { margin: 10px 0 0; font-size: 0.9rem; max-width: 460px; }
 .news-msg:not(:empty) + .hero-news-hint { display: none; }
 @media (max-width: 359px) {
@@ -322,8 +345,9 @@ a.act { gap: 6px; }
   .desc { max-width: 70ch; }
   .now { grid-template-columns: auto 1fr; align-items: center; gap: 24px 36px; padding: 28px 32px; }
   .now > h2 { grid-column: 1 / -1; }
-  .logo { font-size: 1.2rem; }
 }
+/* Do computador largo para cima, o hero tem altura para a cidade inteira caber à direita */
+@media (min-width: 1000px) { .hero { min-height: clamp(640px, 44vw, 940px); } }
 /* Até 1000px a cidade fica embaixo do texto, então o texto deixa espaço para ela */
 @media (max-width: 999px) { .hero-text { padding-bottom: calc(min(105vw, 640px) * 0.6); } }
 @media (max-width: 719px) {
@@ -340,16 +364,21 @@ a.act { gap: 6px; }
 
 <div class="top">
   <a class="logo" href="/" aria-label="Agenda Munique, início" data-i18n-aria="home">
-    <svg viewBox="12 -1 88 88" aria-hidden="true"><defs><filter id="logo-sombra" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="4" stdDeviation="3.5" flood-color="#1d2a1a" flood-opacity=".22"/></filter></defs><rect x="10.6163" y="13.3935" width="79.6215" height="73" rx="22" transform="rotate(-9.68402 10.6163 13.3935)" fill="#a6d86a"/><circle cx="70.1856" cy="27.0938" r="15.5" fill="#f7d84a" filter="url(#logo-sombra)"/></svg>
+    <svg viewBox="12 -1 88 88" aria-hidden="true"><defs><filter id="logo-sombra" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="4" stdDeviation="3.5" flood-color="#1d2a1a" flood-opacity=".22"/></filter></defs><rect x="10.6163" y="13.3935" width="79.6215" height="73" rx="22" transform="rotate(-9.68402 10.6163 13.3935)" fill="#1d2a1a"/><circle cx="70.1856" cy="27.0938" r="15.5" fill="#f7d84a" filter="url(#logo-sombra)"/></svg>
     Agenda Munique
   </a>
   <div class="top-r">
-  <nav class="langs" aria-label="Idioma" data-i18n-aria="langLabel">
-    <a href="/" data-lang="pt" hreflang="pt-BR" lang="pt-BR" title="Português" aria-current="true">PT</a>
-    <a href="/de/" data-lang="de" hreflang="de" lang="de" title="Deutsch">DE</a>
-    <a href="/en/" data-lang="en" hreflang="en" lang="en" title="English">EN</a>
-  </nav>
-  <button class="pill" id="share-site" type="button" data-share="site"><span data-i18n="shareAll">Compartilhar programação</span> <i aria-hidden="true"><svg class="plane" viewBox="1 -1 24 24" aria-hidden="true"><path d="M14.54 21.69a.5.5 0 0 0 .94-.03l6.5-19a.5.5 0 0 0-.64-.63l-19 6.5a.5.5 0 0 0-.02.93l7.93 3.18a2 2 0 0 1 1.11 1.11zM21.85 2.15 10.91 13.09"/></svg></i></button>
+  <button class="pill ghost plain" id="partner-btn" type="button" data-partner data-i18n="partnerBtn">Seja parceiro</button>
+  <button class="pill ghost" id="share-site" type="button" data-share="site"><span data-i18n="shareAll">Compartilhar programação</span> <i aria-hidden="true"><svg class="plane" viewBox="1 -1 24 24" aria-hidden="true"><path d="M14.54 21.69a.5.5 0 0 0 .94-.03l6.5-19a.5.5 0 0 0-.64-.63l-19 6.5a.5.5 0 0 0-.02.93l7.93 3.18a2 2 0 0 1 1.11 1.11zM21.85 2.15 10.91 13.09"/></svg></i></button>
+  <details class="lang-menu">
+    <summary class="pill ghost plain" aria-label="Idioma" data-i18n-aria="langLabel"><span id="lang-cur">PT</span> <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/></svg></summary>
+    <nav class="langs" aria-label="Idioma" data-i18n-aria="langLabel">
+      <a href="/" data-lang="pt" hreflang="pt-BR" lang="pt-BR" aria-current="true">Português</a>
+      <a href="/de/" data-lang="de" hreflang="de" lang="de">Deutsch</a>
+      <a href="/en/" data-lang="en" hreflang="en" lang="en">English</a>
+    </nav>
+  </details>
+  <a class="go nav-cta" href="#lista"><span data-i18n="see">Conferir a programação</span> <i aria-hidden="true"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M3.5 8.5L8 13l4.5-4.5"/></svg></i></a>
   </div>
 </div>
 
@@ -363,7 +392,7 @@ a.act { gap: 6px; }
         <label class="vh" for="hero-news-email" data-i18n="newsLabel">Seu e-mail</label>
         <input id="hero-news-email" name="email" type="email" autocomplete="email" inputmode="email" required placeholder="seu@email.com" data-i18n-ph="newsPh">
         <input class="hp" name="site" tabindex="-1" autocomplete="off" aria-hidden="true">
-        <button class="go" type="submit"><span data-i18n="newsBtn">Quero receber</span> <i aria-hidden="true"><svg class="mail" viewBox="0 0 16 16" aria-hidden="true"><rect x="2" y="3.5" width="12" height="9" rx="1.6"/><path d="M2.6 4.6 8 8.8l5.4-4.2"/></svg></i></button>
+        <button class="go" type="submit"><span data-i18n="newsBtn">Quero receber</span> <i aria-hidden="true"><svg class="plane" viewBox="1 -1 24 24" aria-hidden="true"><path d="M14.54 21.69a.5.5 0 0 0 .94-.03l6.5-19a.5.5 0 0 0-.64-.63l-19 6.5a.5.5 0 0 0-.02.93l7.93 3.18a2 2 0 0 1 1.11 1.11zM21.85 2.15 10.91 13.09"/></svg></i></button>
       </form>
       <p class="news-msg hero-news-msg" id="hero-news-msg" role="status" aria-live="polite"></p>
       <p class="hero-news-hint" data-i18n="newsHeroHint">Sem spam. Cancele a newsletter quando quiser.</p>
@@ -460,11 +489,33 @@ a.act { gap: 6px; }
   </div>
 </dialog>
 
+<dialog id="partner" aria-labelledby="partner-title">
+  <div class="sheet">
+    <h2 id="partner-title" data-i18n="partnerTitle">Anuncie na Agenda Munique</h2>
+    <p class="sub" data-i18n="partnerText">Em breve teremos espaço para anunciantes aqui no site e na newsletter que sai toda quinta-feira. Deixe seu contato e a gente conta como funciona.</p>
+    <form class="partner-form" id="partner-form" novalidate>
+      <label for="pt-nome" data-i18n="pName">Seu nome</label>
+      <input id="pt-nome" name="nome" autocomplete="name" maxlength="120" required>
+      <label for="pt-empresa" data-i18n="pCompany">Empresa ou projeto</label>
+      <input id="pt-empresa" name="empresa" autocomplete="organization" maxlength="160">
+      <label for="pt-email" data-i18n="pEmail">Seu e-mail</label>
+      <input id="pt-email" name="email" type="email" autocomplete="email" inputmode="email" maxlength="254" required>
+      <label for="pt-msg" data-i18n="pMsg">O que você quer divulgar? (opcional)</label>
+      <textarea id="pt-msg" name="mensagem" rows="3" maxlength="2000"></textarea>
+      <input class="hp" name="site" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <button class="go" type="submit"><span data-i18n="pSend">Enviar</span> <i aria-hidden="true"><svg class="plane" viewBox="1 -1 24 24" aria-hidden="true"><path d="M14.54 21.69a.5.5 0 0 0 .94-.03l6.5-19a.5.5 0 0 0-.64-.63l-19 6.5a.5.5 0 0 0-.02.93l7.93 3.18a2 2 0 0 1 1.11 1.11zM21.85 2.15 10.91 13.09"/></svg></i></button>
+    </form>
+    <p class="news-msg" id="partner-msg" role="status" aria-live="polite"></p>
+    <button class="close" type="button" id="partner-close" data-i18n="close">Fechar</button>
+  </div>
+</dialog>
+
 <footer class="foot">
   <div class="foot-in">
     <h2 data-i18n="bye">Boa feira! 🥨</h2>
     <p data-i18n-html="sources">Datas e horários conferidos no portal <a href="https://www.muenchen.de/veranstaltungen/weihnachtsmaerkte-christkindlmaerkte-2026" target="_blank" rel="noopener">muenchen.de</a>, no guia de turismo <a href="https://www.munich.travel/en/topics/markets-festivals/christmas-markets-munich" target="_blank" rel="noopener">munich.travel</a>, no site do <a href="https://www.christkindlmarkt-muenchen.de/" target="_blank" rel="noopener">Christkindlmarkt</a> e no <a href="https://www.kindaling.de/weihnachtsmaerkte/muenchen" target="_blank" rel="noopener">Kindaling</a>. Horários variam por dia e a maioria das feiras de Natal fecha em 15 de novembro (Volkstrauertag) e no Totensonntag (22 de novembro). Confira a página do evento antes de sair. Os pontos do mapa são buscas pelo nome do local.</p>
-    <p data-i18n="about">Projeto independente, feito por um brasileiro morando em Munique, sem vínculo com os organizadores dos eventos. Esta página não usa cookies e serve as fontes pelo próprio site. As visitas são contadas de forma anônima pelo Cloudflare Web Analytics, sem cookies. Os formulários de sugestão e da newsletter passam por um pequeno serviço próprio na Cloudflare; os e-mails da newsletter ficam no Resend, servem só para mandar a agenda, e você sai pelo link no fim de cada edição.</p>
+    <p><a href="#" data-partner data-i18n="partnerFoot">Quer anunciar na Agenda Munique? Fale com a gente.</a></p>
+    <p data-i18n="about">Projeto independente, feito por um brasileiro morando em Munique, sem vínculo com os organizadores dos eventos. Esta página não usa cookies e serve as fontes pelo próprio site. As visitas são contadas de forma anônima pelo Cloudflare Web Analytics, sem cookies. Os formulários de sugestão, de parceria e da newsletter passam por um pequeno serviço próprio na Cloudflare; os e-mails da newsletter ficam no Resend, servem só para mandar a agenda, e você sai pelo link no fim de cada edição.</p>
   </div>
   <!-- Cloudflare Web Analytics (sem cookies) --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "fc814bea30b2451f9221f874394a64c0"}'></script><!-- End Cloudflare Web Analytics -->
 </footer>
@@ -652,6 +703,11 @@ var TEXT = {
     langLabel: "Idioma",
     home: "Agenda Munique, início",
     shareAll: "Compartilhar programação",
+    partnerBtn: "Seja parceiro", partnerTitle: "Anuncie na Agenda Munique",
+    partnerText: "Em breve teremos espaço para anunciantes aqui no site e na newsletter que sai toda quinta-feira. Deixe seu contato e a gente conta como funciona.",
+    pName: "Seu nome", pCompany: "Empresa ou projeto", pEmail: "Seu e-mail", pMsg: "O que você quer divulgar? (opcional)", pSend: "Enviar",
+    pOk: "Recebemos! Respondemos por e-mail em breve.", pNeed: "Preencha seu nome e seu e-mail, por favor.",
+    partnerFoot: "Quer anunciar na Agenda Munique? Fale com a gente.",
     h1: 'Tá rolando<br class="br"> o quê em<br class="br"> <em>Munique?</em>',
     lede: "Feiras de Natal, Flohmärkte e eventos de rua, em português, para planejar o rolê com a família.",
     see: "Conferir a programação",
@@ -677,7 +733,7 @@ var TEXT = {
     copy: "Copiar link", copied: "Link copiado!",
     bye: "Boa feira! 🥨",
     sources: 'Datas e horários conferidos no portal <a href="https://www.muenchen.de/veranstaltungen/weihnachtsmaerkte-christkindlmaerkte-2026" target="_blank" rel="noopener">muenchen.de</a>, no guia de turismo <a href="https://www.munich.travel/en/topics/markets-festivals/christmas-markets-munich" target="_blank" rel="noopener">munich.travel</a>, no site do <a href="https://www.christkindlmarkt-muenchen.de/" target="_blank" rel="noopener">Christkindlmarkt</a> e no <a href="https://www.kindaling.de/weihnachtsmaerkte/muenchen" target="_blank" rel="noopener">Kindaling</a>. Horários variam por dia e a maioria das feiras de Natal fecha em 15 de novembro (Volkstrauertag) e no Totensonntag (22 de novembro). Confira a página do evento antes de sair. Os pontos do mapa são buscas pelo nome do local.',
-    about: "Projeto independente, feito por um brasileiro morando em Munique, sem vínculo com os organizadores dos eventos. Esta página não usa cookies e serve as fontes pelo próprio site. As visitas são contadas de forma anônima pelo Cloudflare Web Analytics, sem cookies. Os formulários de sugestão e da newsletter passam por um pequeno serviço próprio na Cloudflare; os e-mails da newsletter ficam no Resend, servem só para mandar a agenda, e você sai pelo link no fim de cada edição.",
+    about: "Projeto independente, feito por um brasileiro morando em Munique, sem vínculo com os organizadores dos eventos. Esta página não usa cookies e serve as fontes pelo próprio site. As visitas são contadas de forma anônima pelo Cloudflare Web Analytics, sem cookies. Os formulários de sugestão, de parceria e da newsletter passam por um pequeno serviço próprio na Cloudflare; os e-mails da newsletter ficam no Resend, servem só para mandar a agenda, e você sai pelo link no fim de cada edição.",
     openMap: "Abrir no mapa",
     range: function (a, b) { return a + " a " + b; },
     openFromTo: function (a, b) { return " Aberto de " + a + " a " + b + "."; },
@@ -710,6 +766,11 @@ var TEXT = {
     langLabel: "Sprache",
     home: "Agenda Munique, Startseite",
     shareAll: "Programm teilen",
+    partnerBtn: "Partner werden", partnerTitle: "Werben bei Agenda Munique",
+    partnerText: "Bald gibt es Werbeplätze hier auf der Website und im Newsletter, der jeden Donnerstag verschickt wird. Hinterlass deine Kontaktdaten, dann erzählen wir dir, wie es funktioniert.",
+    pName: "Dein Name", pCompany: "Firma oder Projekt", pEmail: "Deine E-Mail", pMsg: "Was möchtest du bewerben? (optional)", pSend: "Senden",
+    pOk: "Danke! Wir melden uns bald per E-Mail.", pNeed: "Bitte gib deinen Namen und deine E-Mail an.",
+    partnerFoot: "Du möchtest bei Agenda Munique werben? Schreib uns.",
     h1: '<span class="l1">Was ist los in</span><br> <em>München?</em>',
     lede: "Weihnachtsmärkte, Flohmärkte und Straßenfeste auf einen Blick, damit du den Ausflug mit der Familie planen kannst.",
     see: "Zum Programm",
@@ -735,7 +796,7 @@ var TEXT = {
     copy: "Link kopieren", copied: "Link kopiert!",
     bye: "Viel Spaß! 🥨",
     sources: 'Termine und Öffnungszeiten geprüft auf <a href="https://www.muenchen.de/veranstaltungen/weihnachtsmaerkte-christkindlmaerkte-2026" target="_blank" rel="noopener">muenchen.de</a>, im Tourismusportal <a href="https://www.munich.travel/en/topics/markets-festivals/christmas-markets-munich" target="_blank" rel="noopener">munich.travel</a>, auf der Seite des <a href="https://www.christkindlmarkt-muenchen.de/" target="_blank" rel="noopener">Christkindlmarkts</a> und bei <a href="https://www.kindaling.de/weihnachtsmaerkte/muenchen" target="_blank" rel="noopener">Kindaling</a>. Die Öffnungszeiten ändern sich je nach Tag, und die meisten Weihnachtsmärkte sind am Volkstrauertag (15. November) und am Totensonntag (22. November) geschlossen. Schau vor dem Losgehen auf die Seite der Veranstaltung. Die Kartenpunkte sind Suchen nach dem Namen des Ortes.',
-    about: "Ein unabhängiges Projekt von einem Brasilianer, der in München lebt, ohne Verbindung zu den Veranstaltern. Die Seite setzt keine Cookies und lädt ihre Schriften vom eigenen Server. Besuche werden anonym und ohne Cookies mit Cloudflare Web Analytics gezählt. Das Vorschlagsformular und die Newsletter-Anmeldung laufen über einen eigenen kleinen Dienst bei Cloudflare; die Adressen liegen bei Resend, werden nur für die Agenda genutzt, und abmelden kannst du dich über den Link am Ende jeder Ausgabe.",
+    about: "Ein unabhängiges Projekt von einem Brasilianer, der in München lebt, ohne Verbindung zu den Veranstaltern. Die Seite setzt keine Cookies und lädt ihre Schriften vom eigenen Server. Besuche werden anonym und ohne Cookies mit Cloudflare Web Analytics gezählt. Das Vorschlagsformular, das Partnerformular und die Newsletter-Anmeldung laufen über einen eigenen kleinen Dienst bei Cloudflare; die Adressen liegen bei Resend, werden nur für die Agenda genutzt, und abmelden kannst du dich über den Link am Ende jeder Ausgabe.",
     openMap: "Auf der Karte öffnen",
     range: function (a, b) { return a + " bis " + b; },
     openFromTo: function (a, b) { return " Geöffnet vom " + a + " bis " + b + "."; },
@@ -768,6 +829,11 @@ var TEXT = {
     langLabel: "Language",
     home: "Agenda Munique, home",
     shareAll: "Share the guide",
+    partnerBtn: "Be a partner", partnerTitle: "Advertise with Agenda Munique",
+    partnerText: "Soon there will be ad space here on the site and in the newsletter that goes out every Thursday. Leave your details and we'll tell you how it works.",
+    pName: "Your name", pCompany: "Business or project", pEmail: "Your email", pMsg: "What would you like to promote? (optional)", pSend: "Send",
+    pOk: "Got it! We'll reply by email soon.", pNeed: "Please fill in your name and email.",
+    partnerFoot: "Want to advertise with Agenda Munique? Get in touch.",
     h1: '<span class="l1">What\'s on in</span><br> <em>Munich?</em>',
     lede: "Christmas markets, flea markets and street festivals at a glance, so you can plan a day out with the family.",
     see: "See what's on",
@@ -793,7 +859,7 @@ var TEXT = {
     copy: "Copy link", copied: "Link copied!",
     bye: "Enjoy the markets! 🥨",
     sources: 'Dates and opening hours checked on <a href="https://www.muenchen.de/veranstaltungen/weihnachtsmaerkte-christkindlmaerkte-2026" target="_blank" rel="noopener">muenchen.de</a>, the tourism site <a href="https://www.munich.travel/en/topics/markets-festivals/christmas-markets-munich" target="_blank" rel="noopener">munich.travel</a>, the <a href="https://www.christkindlmarkt-muenchen.de/" target="_blank" rel="noopener">Christkindlmarkt</a> website and <a href="https://www.kindaling.de/weihnachtsmaerkte/muenchen" target="_blank" rel="noopener">Kindaling</a>. Opening hours vary by day, and most Christmas markets close on 15 November (Volkstrauertag) and on Totensonntag (22 November). Check the event\'s page before you go. Map pins are searches for the venue name.',
-    about: "An independent project by a Brazilian living in Munich, not affiliated with any of the organisers. This page sets no cookies and serves its fonts from its own server. Visits are counted anonymously, without cookies, by Cloudflare Web Analytics. The suggestion and newsletter forms run on our own small service at Cloudflare; newsletter addresses are kept with Resend, used only to send the guide, and you can leave with the link at the end of each issue.",
+    about: "An independent project by a Brazilian living in Munich, not affiliated with any of the organisers. This page sets no cookies and serves its fonts from its own server. Visits are counted anonymously, without cookies, by Cloudflare Web Analytics. The suggestion, partnership and newsletter forms run on our own small service at Cloudflare; newsletter addresses are kept with Resend, used only to send the guide, and you can leave with the link at the end of each issue.",
     openMap: "Open in maps",
     range: function (a, b) { return a + " to " + b; },
     openFromTo: function (a, b) { return " Open from " + a + " to " + b + "."; },
@@ -1063,6 +1129,7 @@ function applyLang() {
   each("data-i18n-alt", function (el, v) { el.setAttribute("alt", v); });
   each("data-i18n-ph", function (el, v) { el.setAttribute("placeholder", v); });
   Array.prototype.forEach.call(document.querySelectorAll(".news-msg[data-key]"), function (el) { el.textContent = L[el.getAttribute("data-key")]; });
+  document.getElementById("lang-cur").textContent = lang.toUpperCase();
   Array.prototype.forEach.call(document.querySelectorAll(".langs a"), function (a) {
     if (a.getAttribute("data-lang") === lang) a.setAttribute("aria-current", "true"); else a.removeAttribute("aria-current");
   });
@@ -1149,6 +1216,27 @@ document.getElementById("sug-form").addEventListener("submit", function (e) {
     if (res.ok) { setNews(msg, "sugOk"); form.reset(); } else setNews(msg, res.error === "vazio" ? "sugEmpty" : "newsErr");
   }).catch(function () { setNews(msg, "newsErr"); }).then(function () { btn.disabled = false; });
 });
+// Parceria: o botão do topo e o link do rodapé abrem a janela; o envio vira um e-mail para o news@
+function openPartner(e) {
+  if (e) e.preventDefault();
+  var d = document.getElementById("partner");
+  if (d.showModal) d.showModal(); else d.setAttribute("open", "");
+}
+Array.prototype.forEach.call(document.querySelectorAll("[data-partner]"), function (b) { b.addEventListener("click", openPartner); });
+document.getElementById("partner-close").addEventListener("click", function () { closeDialog("partner"); });
+document.getElementById("partner").addEventListener("click", function (e) { if (e.target.id === "partner") closeDialog("partner"); });
+document.getElementById("partner-form").addEventListener("submit", function (e) {
+  e.preventDefault();
+  var form = e.target, btn = form.querySelector("button"), msg = document.getElementById("partner-msg"), email = form.email.value.trim();
+  if (form.nome.value.trim().length < 2 || !email) { setNews(msg, "pNeed"); (form.nome.value.trim() ? form.email : form.nome).focus(); return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { setNews(msg, "newsBad"); form.email.focus(); return; }
+  btn.disabled = true; setNews(msg, "newsSending");
+  postNews({ action: "partner", nome: form.nome.value, empresa: form.empresa.value, email: email, mensagem: form.mensagem.value, site: form.site.value }).then(function (res) {
+    if (res.ok) { setNews(msg, "pOk"); form.reset(); } else setNews(msg, res.error === "email" ? "newsBad" : res.error === "vazio" ? "pNeed" : "newsErr");
+  }).catch(function () { setNews(msg, "newsErr"); }).then(function () { btn.disabled = false; });
+});
+// A lista de idiomas fecha ao clicar fora dela
+document.addEventListener("click", function (e) { var m = document.querySelector(".lang-menu"); if (m.open && !m.contains(e.target)) m.open = false; });
 if (confirmToken) {
   if (location.hash === "#newsletter") history.replaceState(null, "", location.pathname + location.search);
   postNews({ action: "confirm", token: confirmToken }).then(function (res) { openConfirmed(res.ok ? "ok" : "bad"); })
@@ -1181,6 +1269,7 @@ document.getElementById("confirmed").addEventListener("click", function (e) { if
   syncUrl();
   Array.prototype.forEach.call(document.querySelectorAll(".langs a"), function (a) { a.addEventListener("click", function (e) {
     e.preventDefault();
+    document.querySelector(".lang-menu").open = false;
     lang = a.getAttribute("data-lang");
     L = TEXT[lang]; MONTHS = L.months; MONTHS_LONG = L.monthsLong;
     try { localStorage.setItem("lang", lang); } catch (err) {}

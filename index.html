@@ -1306,7 +1306,7 @@ document.getElementById("confirmed").addEventListener("click", function (e) { if
 <script type="module">
 // Cena 3D do hero (Munique no inverno): só carrega se o navegador tiver WebGL; sem ele, fica o céu em degradê.
 // O ?v= muda a cada alteração do hero3d.js, para o navegador não usar a cópia antiga guardada em cache
-try { const c = document.createElement("canvas"); if (c.getContext("webgl2") || c.getContext("webgl")) import("/hero3d.js?v=2026-11-09-alpes"); } catch (e) {}
+try { const c = document.createElement("canvas"); if (c.getContext("webgl2") || c.getContext("webgl")) import("/hero3d.js?v=2026-11-09-alpes2"); } catch (e) {}
 </script>
 </body>
 </html>

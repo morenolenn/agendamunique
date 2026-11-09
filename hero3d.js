@@ -317,14 +317,14 @@ plantTrees();
 // tão longe que a névoa já apagou a neve: a base deles cai na linha do horizonte. Ficam fora da névoa, com cores já clareadas, para parecerem
 // distantes sem sumir; mais baixos à esquerda, onde fica o texto
 (function alps() {
-  const rock = new THREE.MeshLambertMaterial({ color: 0xc6c3ee, flatShading: true, fog: false });
-  const rock2 = new THREE.MeshLambertMaterial({ color: 0xbab8ea, flatShading: true, fog: false });
-  const snow = new THREE.MeshLambertMaterial({ color: 0xf1f2ff, flatShading: true, fog: false });
+  // Cor quase toda "emissiva" (constante) e pouca luz: as faces quase não mudam de tom, como montanha vista de muito longe
+  const faint = (color, glow) => new THREE.MeshLambertMaterial({ color, emissive: glow, flatShading: true, fog: false });
+  const rock = faint(0x2a2a4a, 0xaeaee0), rock2 = faint(0x2a2a4a, 0xb4b4e4), snow = faint(0x30303c, 0xcfd0f2);
   // quando a cidade fica embaixo do texto (até 1000px), os picos ficam mais baixos para não subir atrás do botão
   for (let x = -330; x < 1500; x += 60 + rnd() * 80) {
     const far = rnd() < 0.5, z = (far ? -1080 : -980) - rnd() * 60;
     const side = Math.min(1, Math.max(0.35, (x + 330) / 450)); // mais baixos na ponta esquerda
-    const h = (55 + rnd() * 60) * side * (far ? 1.15 : 1) * (innerWidth < 1000 ? 0.6 : 1), r = h * (0.85 + rnd() * 0.35);
+    const h = (26 + rnd() * 28) * side * (far ? 1.15 : 1) * (innerWidth < 1000 ? 0.6 : 1), r = h * (0.85 + rnd() * 0.35);
     const g = group(x, 0, z), seg = 5 + Math.floor(rnd() * 2), turn = rnd() * Math.PI;
     const peak = new THREE.Mesh(new THREE.ConeGeometry(r, h, seg), far ? rock2 : rock);
     peak.position.y = h / 2; peak.rotation.y = turn; g.add(peak);

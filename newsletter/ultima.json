@@ -1,4 +1,20 @@
 {
-  "data": "",
-  "edicoes": {}
+  "data": "2026-11-12",
+  "edicoes": {
+    "pt": {
+      "assunto": "Fim de semana em Munique: Weihnachtszauberwald, Winterrausch im Hexenhaus e mais 7",
+      "previa": "O que tem para fazer em Munique neste fim de semana, em português.",
+      "url": "https://agendamunique.com/newsletter/2026-11-12-pt.html"
+    },
+    "de": {
+      "assunto": "Wochenende in München: Weihnachtszauberwald, Winterrausch im Hexenhaus und 7 mehr",
+      "previa": "Was am Wochenende in München los ist.",
+      "url": "https://agendamunique.com/newsletter/2026-11-12-de.html"
+    },
+    "en": {
+      "assunto": "Munich this weekend: Weihnachtszauberwald, Winterrausch im Hexenhaus and 7 more",
+      "previa": "What's on in Munich this weekend.",
+      "url": "https://agendamunique.com/newsletter/2026-11-12-en.html"
+    }
+  }
 }

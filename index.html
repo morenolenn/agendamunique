@@ -444,7 +444,7 @@ body { background: var(--page); }
   .hero-text, .tem-destaque .hero-text { padding: 0 !important; text-align: center; margin: 0 auto; }
   .hero h1 { --h1: clamp(2.3rem, 10.5vw, 3.2rem); font-size: var(--h1); }
   .hero p.lede { margin: 14px auto 0; font-size: 1.05rem; }
-  .hero .hero-btns, .hero .city3d, .hero .hero-art { display: none !important; }
+  .hero .hero-btns, .hero .city3d, .hero .hero-art, .hero .hero-fig { display: none !important; }
 }
 /* "Neste fim de semana": a linha vira cabeçalho do card completo quando aberta */
 
@@ -464,6 +464,59 @@ body { background: var(--page); }
 }
 .card .act.main:hover, .now-item .act.main:hover { background: var(--cream); filter: none; }
 .card .act.main i, .now-item .act.main i { background: transparent; color: var(--ink); width: auto; height: auto; }
+/* Arte do destaque + legenda: uma figura só, para o texto ficar sempre colado embaixo da ilustração */
+.hero-fig {
+  position: absolute; z-index: 1; margin: 0; display: flex; flex-direction: column; align-items: center; gap: 6px;
+  left: var(--pad); bottom: 16px; width: calc(100% - 2 * var(--pad));
+  height: min(calc((100vw - 2 * var(--pad)) / 1.26), 420px);
+}
+.hero-fig .hero-art { position: static; inset: auto; width: 100%; height: auto; min-height: 0; flex: 1 1 auto; }
+.hero-cap { font-size: 0.9rem; line-height: 1.35; text-align: center; max-width: 100%; text-wrap: balance; }
+.hero-cap strong { font-family: var(--font-display); font-weight: 700; }
+.hero-cap span { color: var(--muted); }
+@media (min-width: 1000px) {
+  /* texto e ilustração em duas colunas: o respiro da direita é o mesmo da esquerda
+     (margem do card + 48px do texto), e em cima e embaixo valem os 40px do hero */
+  .hero.tem-destaque {
+    display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; column-gap: 32px;
+    padding-top: 40px; padding-bottom: 40px; min-height: 0;
+  }
+  .hero.tem-destaque .hero-in { grid-area: 1 / 1; min-width: 0; }
+  .hero.tem-destaque .hero-text { padding-bottom: 0 !important; }
+  .hero.tem-destaque .hero-fig {
+    grid-area: 1 / 2; position: static; inset: auto; justify-self: end;
+    width: fit-content; height: auto; margin-right: 48px; gap: 10px;
+  }
+  .hero.tem-destaque .hero-art { flex: none; width: auto; height: clamp(230px, 24vw, 340px); max-width: 100%; }
+  /* a legenda ocupa a largura da ilustração sem alargá-la: quebra em duas linhas quando precisa */
+  .hero.tem-destaque .hero-cap { width: 0; min-width: 100%; }
+  /* com a ilustração ao lado, o título ocupa só a coluna da esquerda:
+     em alemão e inglês o tamanho vinha de uma conta feita para o hero inteiro e passava por cima da arte */
+  html[lang="de"] .hero.tem-destaque h1, html[lang="en"] .hero.tem-destaque h1 {
+    font-size: min(5rem, max(2.4rem, 5.4vw)); min-width: 0; min-height: 0;
+  }
+}
+/* entre 720 e 999px a arte fica embaixo do texto: limita a altura para o hero não virar uma tela inteira */
+@media (min-width: 720px) and (max-width: 999px) {
+  /* empilhado: tudo centralizado no card, como no celular — título, texto, ilustração e legenda */
+  .hero.tem-destaque { --cw: min(100%, 620px); --art-h: 240px; }
+  .hero.tem-destaque .hero-in { width: var(--cw); margin-inline: auto; }
+  .hero.tem-destaque .hero-text {
+    width: 100%; max-width: none; padding-left: 0 !important; text-align: center;
+    padding-bottom: calc(var(--art-h) + 76px) !important;
+  }
+  .hero.tem-destaque h1 { align-items: center !important; }
+  .hero.tem-destaque p.lede {
+    width: auto !important; min-width: 0 !important; max-width: 46ch !important;
+    margin-inline: auto; text-align: center !important; text-align-last: center !important;
+  }
+  .hero.tem-destaque .hero-fig {
+    height: calc(var(--art-h) + 30px); bottom: 14px; align-items: center;
+    left: var(--pad); right: var(--pad); width: auto; margin-inline: auto;
+  }
+  .hero-fig .hero-art { object-position: 50% 100%; }
+  .hero-fig .hero-cap { text-align: center; }
+}
 /* Botão de voltar ao começo da programação: redondo, escuro, no canto de baixo */
 .to-top {
   /* fica bem acima do canto, onde costumam aparecer as janelinhas de chat que todo mundo ignora */
@@ -910,7 +963,8 @@ var WEEKLY = [
 ];
 // Destaque do hero: ilustração de um evento especial no lugar da cidade 3D, só entre s e e (inclusive).
 // Arte: PNG/WebP com fundo transparente, cena compacta perto de 4:3, sem texto. Para tirar, use DESTAQUE = null.
-var DESTAQUE = { img: "/destaques/nfl-fan-fest.webp", s: "2026-11-13", e: "2026-11-14",
+// ev: o título (t) do evento em EVENTS; a legenda embaixo da arte sai dele, já traduzida.
+var DESTAQUE = { img: "/destaques/nfl-fan-fest.webp", s: "2026-11-13", e: "2026-11-14", ev: "Fan Fest da NFL na Odeonsplatz",
   alt: { pt: "Ilustração do Fan Fest da NFL na Odeonsplatz, com a Feldherrnhalle, a Theatinerkirche, uma bola de futebol americano gigante e torcedores",
          de: "Illustration des NFL Fan Fests am Odeonsplatz mit Feldherrnhalle, Theatinerkirche, einem riesigen Football und Fans",
          en: "Illustration of the NFL Fan Fest on Odeonsplatz, with the Feldherrnhalle, the Theatinerkirche, a giant football and fans" } };
@@ -1393,6 +1447,7 @@ function applyLang() {
   each("data-i18n-ph", function (el, v) { el.setAttribute("placeholder", v); });
   Array.prototype.forEach.call(document.querySelectorAll(".news-msg[data-key]"), function (el) { el.textContent = L[el.getAttribute("data-key")]; });
   document.getElementById("lang-cur").textContent = lang.toUpperCase();
+  if (typeof window.updateDestaque === "function") window.updateDestaque();
   Array.prototype.forEach.call(document.querySelectorAll(".langs a"), function (a) {
     if (a.getAttribute("data-lang") === lang) a.setAttribute("aria-current", "true"); else a.removeAttribute("aria-current");
   });
@@ -1610,10 +1665,16 @@ function heroDestaque() {
   if (/[?&]destaque=1/.test(location.search)) hoje = DESTAQUE.s; // para conferir antes da data
   if (hoje < DESTAQUE.s || hoje > DESTAQUE.e) return false;
   var hero = document.querySelector(".hero"), txt = hero.querySelector(".hero-text");
+  var fig = document.createElement("figure");
+  fig.className = "hero-fig";
   var img = document.createElement("img");
   img.className = "hero-art"; img.src = DESTAQUE.img; img.decoding = "async";
-  img.alt = (DESTAQUE.alt && (DESTAQUE.alt[lang] || DESTAQUE.alt.pt)) || "";
-  hero.insertBefore(img, hero.firstChild);
+  fig.appendChild(img);
+  var cap = document.createElement("figcaption");
+  cap.className = "hero-cap";
+  fig.appendChild(cap);
+  hero.insertBefore(fig, hero.firstChild);
+  updateDestaque();
   hero.classList.add("tem-destaque");
   // No computador a arte começa 40px depois do fim do texto, que muda com o idioma e a altura da tela
   function borda() { hero.style.setProperty("--txt-r", Math.ceil(txt.getBoundingClientRect().right - hero.getBoundingClientRect().left) + "px"); }
@@ -1622,6 +1683,18 @@ function heroDestaque() {
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(borda);
   return true;
 }
+// Legenda da arte do hero: nome, datas e local do evento, como nas linhas do "Neste fim de semana"
+function updateDestaque() {
+  var fig = document.querySelector(".hero-fig"); if (!fig) return;
+  fig.querySelector(".hero-art").alt = (DESTAQUE.alt && (DESTAQUE.alt[lang] || DESTAQUE.alt.pt)) || "";
+  var cap = fig.querySelector(".hero-cap"), ev = null;
+  EVENTS.forEach(function (e) { if (e.t === DESTAQUE.ev) ev = e; });
+  if (!ev) { cap.hidden = true; return; }
+  cap.hidden = false;
+  cap.innerHTML = "<strong>" + esc(tr(ev, "t")) + "</strong> <span>" + esc(whenText(ev)) + ", " + esc(tr(ev, "place")) + "</span>";
+}
+// este bloco é um <script type="module">, com escopo próprio: o applyLang só enxerga a função assim
+window.updateDestaque = updateDestaque;
 // Cena 3D do hero (Munique no inverno): só carrega se o navegador tiver WebGL; sem ele, fica o céu em degradê.
 // O ?v= muda a cada alteração do hero3d.js, para o navegador não usar a cópia antiga guardada em cache
 if (!heroDestaque()) {

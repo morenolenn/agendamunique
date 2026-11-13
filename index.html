@@ -93,7 +93,7 @@ a { color: inherit; }
 .langs a:hover { background: var(--cream); }
 .langs a[aria-current="true"] { background: var(--ink); color: var(--cream); }
 /* Telas médias: só o idioma e o botão; no celular, só o idioma (o botão volta para o hero) */
-@media (max-width: 1099px) { #partner-btn, #share-site { display: none; } }
+
 @media (max-width: 719px) { .top .nav-cta { display: none; } }
 @media (min-width: 720px) { .hero .hero-btns { display: none; } }
 .pill {
@@ -144,6 +144,25 @@ svg.plane { width: 15px; height: 15px; stroke-width: 2.1; animation: plane-float
 .go:hover { filter: brightness(1.12); }
 /* Cena 3D de Munique no inverno, desenhada pelo hero3d.js atrás do texto */
 .city3d { position: absolute; inset: 0; z-index: 1; pointer-events: none; display: block; width: 100%; height: 100%; }
+/* Destaque de evento (DESTAQUE no script): a ilustração ocupa a área livre do hero, com object-fit contain.
+   Até 999px: faixa embaixo do texto, no espaço que a cidade usava. A partir de 1000px: coluna à direita do texto. */
+.hero-art {
+  position: absolute; z-index: 1; pointer-events: none; display: block;
+  --art-h: min(calc((100vw - 2 * var(--pad)) / 1.26), 420px);
+  left: var(--pad); bottom: 20px; height: var(--art-h);
+  width: calc(100% - 2 * var(--pad)); object-fit: contain; object-position: 50% 100%;
+}
+/* a faixa de baixo cresce para a arte ocupar a largura toda, com 24px de folga até o texto */
+@media (max-width: 999px) {
+  .tem-destaque .hero-text { padding-bottom: calc(min(calc((100vw - 2 * var(--pad)) / 1.26), 420px) + 44px); }
+}
+@media (min-width: 1000px) {
+  .hero-art {
+    --art-l: calc(var(--txt-r, calc(var(--pad) + 648px)) + 40px);
+    left: var(--art-l); right: auto; top: 84px; bottom: auto;
+    width: calc(100% - var(--art-l) - var(--pad)); height: calc(100% - 112px); object-position: 100% 100%;
+  }
+}
 /* Em alemão e inglês o título fica em duas linhas: a primeira inteira e a cidade embaixo */
 .hero h1 .l1 { white-space: nowrap; }
 .updated-row { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px 22px; margin: -12px 0 18px; }
@@ -163,14 +182,17 @@ svg.plane { width: 15px; height: 15px; stroke-width: 2.1; animation: plane-float
   background: var(--yellow); border-radius: 22px; padding: 10px 18px 14px; transform: rotate(-3deg); display: inline-block;
 }
 .count span { font-family: var(--font-display); font-weight: 700; font-size: 1.3rem; line-height: 1.1; letter-spacing: -0.02em; max-width: 12ch; }
-.now ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
-.now li { display: flex; flex-wrap: wrap; gap: 2px 10px; align-items: baseline; padding: 10px 14px; background: var(--cream); border-radius: 16px; }
+.now > ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+.now > ul > li { display: block; }
 .now strong { font-family: var(--font-display); font-weight: 700; }
 
-.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 30px; }
+.stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px 6px; margin-bottom: 30px; }
+@media (min-width: 720px) { .stats { grid-template-columns: repeat(4, 1fr); } }
 .stat { text-align: center; padding: 10px 4px; }
 .stat b { display: block; font-family: var(--font-display); font-weight: 800; font-size: clamp(2rem, 8vw, 3.4rem); letter-spacing: -0.05em; line-height: 1; }
 .stat span { display: block; color: var(--muted); font-size: 0.9rem; margin-top: 4px; }
+.stat span.tag { display: inline-block; color: var(--ink); font-size: 0.82rem; font-weight: 600; background: var(--cream); border-radius: 999px; padding: 3px 11px; margin-top: 8px; }
+.stat span.tag.live { background: var(--lime); }
 
 .search { position: relative; max-width: 560px; margin: 0 0 14px; }
 .search svg { position: absolute; left: 18px; top: 50%; width: 20px; height: 20px; margin-top: -10px; fill: none; stroke: var(--ink); stroke-width: 2; stroke-linecap: round; pointer-events: none; }
@@ -358,6 +380,9 @@ a.act { gap: 6px; }
   .acts { grid-column: 3; grid-row: 1 / 6; flex-direction: column; align-items: stretch; align-self: center; margin: 0; padding: 0; min-width: 220px; }
   .desc { max-width: 70ch; }
   .now { grid-template-columns: auto 1fr; align-items: center; gap: 24px 36px; padding: 28px 32px; }
+  /* as duas colunas servem ao contador de "Próximas aberturas"; sem ele, a lista ocupa a largura toda */
+  .now:not(:has(.count)) { display: block; }
+  .now:not(:has(.count)) > h2 { margin-bottom: 14px; }
   .now > h2 { grid-column: 1 / -1; }
 }
 /* Do computador largo para cima, o hero tem altura para a cidade inteira caber à direita */
@@ -366,6 +391,126 @@ a.act { gap: 6px; }
 @media (max-width: 999px) { .hero-text { padding-bottom: calc(min(105vw, 640px) * 0.6); } }
 @media (max-width: 719px) {
   #share-site { display: none; }
+}
+
+/* ===== Ajuste: fundo da página mais claro (o creme fica só nos detalhes dentro dos cards) ===== */
+:root { --page: #f7f6f2; }
+body { background: var(--page); }
+/* ===== Ajuste: navbar fora do hero, com links de texto; hero vira um card grande ===== */
+.top {
+  position: relative; top: auto; left: auto; right: auto; z-index: 5;
+  padding: 10px max(var(--pad), env(safe-area-inset-right, 0px)) 10px max(var(--pad), env(safe-area-inset-left, 0px));
+  background: var(--page);
+}
+.top-r { gap: 4px; }
+.top .pill.ghost, .top .nav-cta {
+  background: none; border: 0; -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: none;
+  min-height: 44px; padding: 8px 12px; border-radius: 10px; color: var(--ink); font: 600 0.95rem var(--font-body); gap: 6px;
+}
+.top .pill.ghost:hover, .top .nav-cta:hover { background: none; filter: none; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 5px; }
+.top #share-site i, .top .nav-cta i { display: none; }
+.hero {
+  margin: 16px max(var(--pad), env(safe-area-inset-right, 0px)) 0 max(var(--pad), env(safe-area-inset-left, 0px));
+  border-radius: 32px; padding-top: 48px;
+}
+@media (min-width: 720px) {
+  .hero-text { padding-bottom: 56px; }
+}
+@media (min-width: 1000px) { .hero { min-height: clamp(480px, 34vw, 640px); } }
+/* Hero mais baixo, com o bloco de texto centralizado na altura */
+.hero { display: flex; align-items: center; }
+.hero-in { width: 100%; }
+@media (min-width: 720px) {
+  .hero { padding-top: 40px; --h1: max(2.6rem, min(5.2rem, 10vw, calc((85svh - 30.5rem) / 2.76))); }
+  .hero-text { padding-bottom: 40px; }
+}
+@media (min-width: 1000px) { .hero { min-height: clamp(400px, 30vw, 540px); } }
+@media (max-width: 999px) { .hero-text { padding-bottom: calc(min(105vw, 640px) * 0.5); } }
+/* Buscar na navbar: lupa com texto no computador; no celular, só a lupa. Leva ao campo de busca da lista e já deixa pronto para digitar */
+.nav-search { white-space: nowrap; }
+.search { scroll-margin-top: 16px; }
+.nav-search svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; flex: none; }
+@media (max-width: 559px) {
+  .nav-search span, .nav-menu summary span { display: none; }
+  .top .nav-search, .top .nav-menu summary, .top .lang-menu summary { padding: 8px 9px; }
+  .top-r { gap: 0; }
+  .top .logo { font-size: 1.02rem; gap: 8px; }
+  .top .logo svg { width: 26px; height: 26px; }
+  .top .lang-menu summary { gap: 4px; }
+}
+/* Celular: hero baixo, só o céu lilás (sem a cidade 3D nem a arte de destaque), texto centralizado e sem o botão Programação */
+@media (max-width: 719px) {
+  .hero.hero { padding: 32px 20px; } /* mesmo respiro em cima e embaixo */
+  .hero-text, .tem-destaque .hero-text { padding: 0 !important; text-align: center; margin: 0 auto; }
+  .hero h1 { --h1: clamp(2.3rem, 10.5vw, 3.2rem); font-size: var(--h1); }
+  .hero p.lede { margin: 14px auto 0; font-size: 1.05rem; }
+  .hero .hero-btns, .hero .city3d, .hero .hero-art { display: none !important; }
+}
+/* "Neste fim de semana": a linha vira cabeçalho do card completo quando aberta */
+
+.now-item summary { list-style: none; cursor: pointer; display: flex; flex-wrap: wrap; gap: 2px 10px; align-items: baseline; padding: 10px 40px 10px 14px; background: var(--cream); border-radius: 16px; position: relative; }
+.now-item summary::-webkit-details-marker { display: none; }
+.now-item summary::after { content: ""; position: absolute; right: 16px; top: 50%; width: 8px; height: 8px; margin-top: -6px; border: solid var(--ink); border-width: 0 2px 2px 0; transform: rotate(45deg); transition: transform .2s; }
+.now-item[open] summary::after { transform: rotate(-135deg); margin-top: -2px; }
+.now-item summary:hover { background: #ece4d3; }
+.now-item[open] summary { border-radius: 16px 16px 0 0; }
+.now-item .list { margin: 0; }
+.now .now-item .card h3 { display: none; }
+.now .now-item .card .head { align-items: center; }
+.now-item .card:hover { transform: none; }
+/* Compartilhar fica igual aos outros botões do card: branco com contorno */
+.card .act.main, .now-item .act.main {
+  background: transparent; color: var(--ink); border: 2px solid var(--ink); padding: 8px 16px; gap: 6px;
+}
+.card .act.main:hover, .now-item .act.main:hover { background: var(--cream); filter: none; }
+.card .act.main i, .now-item .act.main i { background: transparent; color: var(--ink); width: auto; height: auto; }
+/* Botão de voltar ao começo da programação: redondo, escuro, no canto de baixo */
+.to-top {
+  /* fica bem acima do canto, onde costumam aparecer as janelinhas de chat que todo mundo ignora */
+  position: fixed; z-index: 30; right: max(16px, env(safe-area-inset-right, 0px)); bottom: calc(96px + env(safe-area-inset-bottom, 0px));
+  display: inline-flex; align-items: center; gap: 8px; min-height: 48px; padding: 8px 18px 8px 14px; border-radius: 999px;
+  background: var(--ink); color: var(--lime); text-decoration: none; font: 600 0.95rem var(--font-body);
+  box-shadow: 0 8px 22px rgba(29, 42, 26, .28); opacity: 0; transform: translateY(12px); pointer-events: none; transition: opacity .2s, transform .2s;
+}
+.to-top span { color: var(--cream); white-space: nowrap; }
+.to-top.show { opacity: 1; transform: none; pointer-events: auto; }
+.to-top:hover { filter: brightness(1.15); }
+.to-top svg { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+@media (prefers-reduced-motion: reduce) { .to-top { transition: none; } }
+/* Rodapé: "Sobre o Agenda Munique" abre o texto do projeto */
+.about-box summary { cursor: pointer; font-weight: 600; font-size: 0.95rem; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; list-style: none; width: fit-content; }
+.about-box summary::-webkit-details-marker { display: none; }
+.about-box summary::after { content: " ↓"; text-decoration: none; display: inline-block; margin-left: 4px; }
+.about-box[open] summary::after { content: " ↑"; }
+.about-box p { margin-top: 10px; }
+/* Navbar: no computador largo, todos os links em texto; abaixo de 1080px (o português, com a busca, precisa de uns 1050px), só a busca, o botão Menu e o idioma */
+.top .nav-link { white-space: nowrap; }
+.nav-menu { position: relative; display: none; }
+.nav-menu summary { list-style: none; cursor: pointer; }
+.nav-menu summary::-webkit-details-marker { display: none; }
+.nav-menu summary svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+.menu-panel {
+  position: absolute; top: calc(100% + 8px); right: 0; z-index: 20; display: grid; gap: 2px; padding: 8px; min-width: 260px;
+  background: #fff; border-radius: 18px; box-shadow: 0 10px 30px rgba(29, 42, 26, .16);
+}
+.menu-panel a, .menu-panel button {
+  display: flex; align-items: center; min-height: 48px; padding: 0 14px; border-radius: 12px; border: 0; background: none;
+  font: 600 1rem var(--font-body); color: var(--ink); text-decoration: none; text-align: left; cursor: pointer; width: 100%;
+}
+.menu-panel a:hover, .menu-panel button:hover { background: var(--cream); }
+@media (max-width: 1079px) {
+  .top .nav-link { display: none !important; }
+  .nav-menu { display: block; }
+}
+/* no celular o painel ocupa a largura toda, logo abaixo da navbar */
+@media (max-width: 559px) {
+  .nav-menu { position: static; }
+  .top { position: relative; }
+  .menu-panel { left: 12px; right: 12px; top: calc(100% - 4px); min-width: 0; }
+}
+@media (max-width: 719px) {
+  .hero { margin: 12px 12px 0; border-radius: 26px; padding: 32px 20px 0; }
+  .hero-news input[type="email"] { min-width: 0; width: 0; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -378,12 +523,26 @@ a.act { gap: 6px; }
 
 <div class="top">
   <a class="logo" href="/" aria-label="Agenda Munique, início" data-i18n-aria="home">
-    <svg viewBox="12 -1 88 88" aria-hidden="true"><defs><filter id="logo-sombra" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="4" stdDeviation="3.5" flood-color="#1d2a1a" flood-opacity=".22"/></filter></defs><rect x="10.6163" y="13.3935" width="79.6215" height="73" rx="22" transform="rotate(-9.68402 10.6163 13.3935)" fill="#1d2a1a"/><circle cx="70.1856" cy="27.0938" r="15.5" fill="#f7d84a" filter="url(#logo-sombra)"/></svg>
+    <svg viewBox="12 -1 88 88" aria-hidden="true"><defs><filter id="logo-sombra" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="4" stdDeviation="3.5" flood-color="#1d2a1a" flood-opacity=".22"/></filter></defs><rect x="10.6163" y="13.3935" width="79.6215" height="73" rx="22" transform="rotate(-9.68402 10.6163 13.3935)" fill="#a6d86a"/><circle cx="70.1856" cy="27.0938" r="15.5" fill="#f7d84a" filter="url(#logo-sombra)"/></svg>
     Agenda Munique
   </a>
   <div class="top-r">
-  <button class="pill ghost plain" id="partner-btn" type="button" data-partner data-i18n="partnerBtn">Seja parceiro</button>
-  <button class="pill ghost" id="share-site" type="button" data-share="site"><span data-i18n="shareAll">Compartilhar programação</span> <i aria-hidden="true"><svg class="plane" viewBox="1 -1 24 24" aria-hidden="true"><path d="M14.54 21.69a.5.5 0 0 0 .94-.03l6.5-19a.5.5 0 0 0-.64-.63l-19 6.5a.5.5 0 0 0-.02.93l7.93 3.18a2 2 0 0 1 1.11 1.11zM21.85 2.15 10.91 13.09"/></svg></i></button>
+  <a class="pill ghost plain nav-search" id="nav-search" href="#busca" aria-label="Buscar evento" data-i18n-aria="searchLabel"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span data-i18n="navSearch">Buscar</span></a>
+  <a class="pill ghost plain nav-link" href="#sugerir" data-suggest data-i18n="navSuggest">Sugira um evento</a>
+  <a class="pill ghost plain nav-link" id="news-link" href="#newsletter" data-i18n="navNews">Newsletter</a>
+  <button class="pill ghost plain nav-link" id="partner-btn" type="button" data-partner data-i18n="partnerBtn">Seja parceiro</button>
+  <button class="pill ghost nav-link" id="share-site" type="button" data-share="site"><span data-i18n="navShare">Compartilhe</span> <i aria-hidden="true"><svg class="plane" viewBox="1 -1 24 24" aria-hidden="true"><path d="M14.54 21.69a.5.5 0 0 0 .94-.03l6.5-19a.5.5 0 0 0-.64-.63l-19 6.5a.5.5 0 0 0-.02.93l7.93 3.18a2 2 0 0 1 1.11 1.11zM21.85 2.15 10.91 13.09"/></svg></i></button>
+  <details class="nav-menu">
+    <summary class="pill ghost plain" aria-label="Menu"><span>Menu</span> <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary>
+    <nav class="menu-panel" aria-label="Menu">
+      <a href="#lista" data-i18n="navProg">Programação</a>
+      <a href="#sugerir" data-suggest data-i18n="navSuggest">Sugira um evento</a>
+      <a href="#newsletter" data-i18n="navNews">Newsletter</a>
+      <button type="button" data-share="site" data-i18n="navShare">Compartilhe</button>
+      <button type="button" data-partner data-i18n="partnerBtn">Seja parceiro</button>
+    </nav>
+  </details>
+  <a class="go nav-cta nav-link" href="#lista"><span data-i18n="navProg">Programação</span> <i aria-hidden="true"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M3.5 8.5L8 13l4.5-4.5"/></svg></i></a>
   <details class="lang-menu">
     <summary class="pill ghost plain" aria-label="Idioma" data-i18n-aria="langLabel"><span id="lang-cur">PT</span> <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/></svg></summary>
     <nav class="langs" aria-label="Idioma" data-i18n-aria="langLabel">
@@ -392,7 +551,6 @@ a.act { gap: 6px; }
       <a href="/en/" data-lang="en" hreflang="en" lang="en">English</a>
     </nav>
   </details>
-  <a class="go nav-cta" href="#lista"><span data-i18n="see">Conferir a programação</span> <i aria-hidden="true"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M3.5 8.5L8 13l4.5-4.5"/></svg></i></a>
   </div>
 </div>
 
@@ -401,26 +559,17 @@ a.act { gap: 6px; }
     <div class="hero-text">
       <h1 data-i18n-html="h1">Tá rolando<br class="br"> o quê em<br class="br"> <em>Munique?</em></h1>
       <p class="lede" data-i18n="lede">Feiras de Natal, Flohmärkte e eventos de rua, em português, para planejar o rolê com a família.</p>
-      <p class="hero-news-label" data-i18n="newsHeroLabel">Receba a programação toda quinta-feira no seu email.</p>
-      <form class="news-form hero-news" novalidate data-msg="hero-news-msg">
-        <label class="vh" for="hero-news-email" data-i18n="newsLabel">Seu e-mail</label>
-        <input id="hero-news-email" name="email" type="email" autocomplete="email" inputmode="email" required placeholder="seu@email.com" data-i18n-ph="newsPh">
-        <input class="hp" name="site" tabindex="-1" autocomplete="off" aria-hidden="true">
-        <button class="go" type="submit"><span data-i18n="newsBtn">Quero receber</span> <i aria-hidden="true"><svg class="plane" viewBox="1 -1 24 24" aria-hidden="true"><path d="M14.54 21.69a.5.5 0 0 0 .94-.03l6.5-19a.5.5 0 0 0-.64-.63l-19 6.5a.5.5 0 0 0-.02.93l7.93 3.18a2 2 0 0 1 1.11 1.11zM21.85 2.15 10.91 13.09"/></svg></i></button>
-      </form>
-      <p class="news-msg hero-news-msg" id="hero-news-msg" role="status" aria-live="polite"></p>
-      <p class="hero-news-hint" data-i18n="newsHeroHint">Sem spam. Cancele a newsletter quando quiser.</p>
       <div class="hero-btns">
-        <a class="go" href="#lista"><span data-i18n="see">Conferir a programação</span> <i aria-hidden="true"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M3.5 8.5L8 13l4.5-4.5"/></svg></i></a>
+        <a class="go" href="#lista"><span data-i18n="navProg">Programação</span> <i aria-hidden="true"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M3.5 8.5L8 13l4.5-4.5"/></svg></i></a>
       </div>
     </div>
   </div>
 </section>
 
 <main class="wrap" id="lista">
-  <div class="updated-row"><span class="updated-chip" id="updated"></span> <a class="textlink" href="#sugerir" data-i18n="suggest">Sugerir um evento</a> <a class="textlink" href="#newsletter" data-i18n="newsLink">Receber por e-mail</a></div>
-  <section class="now" id="now" aria-live="polite"></section>
+  <div class="updated-row"><span class="updated-chip" id="updated"></span></div>
   <div class="stats" id="stats"></div>
+  <section class="now" id="now" aria-live="polite"></section>
 
   <div class="search" role="search">
     <label class="vh" for="busca" data-i18n="searchLabel">Buscar evento</label>
@@ -457,7 +606,7 @@ a.act { gap: 6px; }
     <h2 class="sec" data-i18n="missing">Faltou algum evento?</h2>
     <div class="suggest-card">
       <p data-i18n="missingText">Conhece uma feira, um mercado ou um evento de rua que não está aqui? Conta pra gente. Não pedimos nome nem e-mail.</p>
-      <form class="sug-form" id="sug-form" novalidate>
+      <form class="sug-form" id="sug-form" novalidate data-msg="sug-msg">
         <label class="vh" for="sug-texto" data-i18n="sugPh">Nome do evento, data e local</label>
         <textarea id="sug-texto" name="sugestao" rows="3" maxlength="3000" placeholder="Nome do evento, data e local" data-i18n-ph="sugPh"></textarea>
         <label class="vh" for="sug-link" data-i18n="sugLinkPh">Link do evento (opcional)</label>
@@ -469,6 +618,8 @@ a.act { gap: 6px; }
     </div>
   </section>
 </main>
+
+<a class="to-top" id="to-top" href="#lista"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5.5 11.5 12 5l6.5 6.5"/></svg><span data-i18n="toTopLabel">Para o topo</span></a>
 
 <dialog id="confirmed" aria-labelledby="confirmed-title">
   <div class="sheet confirmed">
@@ -508,10 +659,30 @@ a.act { gap: 6px; }
   </div>
 </dialog>
 
+<dialog id="suggest" aria-labelledby="suggest-title">
+  <div class="sheet partner-sheet">
+    <button class="x" type="button" data-close="suggest" aria-label="Fechar" data-i18n-aria="close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <h2 id="suggest-title" data-i18n="navSuggest">Sugira um evento</h2>
+    <p class="sub" data-i18n="missingText">Conhece uma feira, um mercado ou um evento de rua que não está aqui? Conta pra gente. Não pedimos nome nem e-mail.</p>
+    <form class="sug-form partner-form" id="sug-form-pop" novalidate data-msg="sug-msg-pop">
+      <label for="sug-texto-pop" data-i18n="sugPh">Nome do evento, data e local</label>
+      <textarea id="sug-texto-pop" name="sugestao" rows="3" maxlength="3000"></textarea>
+      <label for="sug-link-pop" data-i18n="sugLinkPh">Link do evento (opcional)</label>
+      <input id="sug-link-pop" name="link" type="url" inputmode="url">
+      <input class="hp" name="site" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <div class="partner-actions">
+        <button class="close" type="button" data-close="suggest" data-i18n="close">Fechar</button>
+        <button class="go" type="submit"><span data-i18n="sugSend">Enviar sugestão</span> <i aria-hidden="true"><svg class="plane" viewBox="1 -1 24 24" aria-hidden="true"><path d="M14.54 21.69a.5.5 0 0 0 .94-.03l6.5-19a.5.5 0 0 0-.64-.63l-19 6.5a.5.5 0 0 0-.02.93l7.93 3.18a2 2 0 0 1 1.11 1.11zM21.85 2.15 10.91 13.09"/></svg></i></button>
+      </div>
+    </form>
+    <p class="news-msg" id="sug-msg-pop" role="status" aria-live="polite"></p>
+  </div>
+</dialog>
+
 <dialog id="partner" aria-labelledby="partner-title">
   <div class="sheet partner-sheet">
     <button class="x" type="button" id="partner-x" aria-label="Fechar" data-i18n-aria="close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
-    <h2 id="partner-title" data-i18n="partnerTitle">Anuncie na Agenda Munique</h2>
+    <h2 id="partner-title" data-i18n="partnerTitle">Anuncie no Agenda Munique</h2>
     <p class="sub" data-i18n="partnerText">Em breve teremos espaço para anunciantes aqui no site e na newsletter que sai toda quinta-feira. Deixe seu contato e a gente conta como funciona.</p>
     <form class="partner-form" id="partner-form" novalidate>
       <label for="pt-nome" data-i18n="pName">Seu nome</label>
@@ -534,10 +705,13 @@ a.act { gap: 6px; }
 
 <footer class="foot">
   <div class="foot-in">
-    <h2 data-i18n="bye">Boa feira! 🥨</h2>
-    <p data-i18n-html="sources">Datas e horários conferidos no portal <a href="https://www.muenchen.de/veranstaltungen/weihnachtsmaerkte-christkindlmaerkte-2026" target="_blank" rel="noopener">muenchen.de</a>, no guia de turismo <a href="https://www.munich.travel/en/topics/markets-festivals/christmas-markets-munich" target="_blank" rel="noopener">munich.travel</a>, no site do <a href="https://www.christkindlmarkt-muenchen.de/" target="_blank" rel="noopener">Christkindlmarkt</a> e no <a href="https://www.kindaling.de/weihnachtsmaerkte/muenchen" target="_blank" rel="noopener">Kindaling</a>. Horários variam por dia e a maioria das feiras de Natal fecha em 15 de novembro (Volkstrauertag) e no Totensonntag (22 de novembro). Confira a página do evento antes de sair. Os pontos do mapa são buscas pelo nome do local.</p>
-    <p><a href="#" data-partner data-i18n="partnerFoot">Quer anunciar na Agenda Munique? Fale com a gente.</a></p>
-    <p data-i18n="about">Projeto independente, feito por um brasileiro morando em Munique, sem vínculo com os organizadores dos eventos. Esta página não usa cookies e serve as fontes pelo próprio site. As visitas são contadas de forma anônima pelo Cloudflare Web Analytics, sem cookies. Os formulários de sugestão, de parceria e da newsletter passam por um pequeno serviço próprio na Cloudflare; os e-mails da newsletter ficam no Resend, servem só para mandar a agenda, e você sai pelo link no fim de cada edição.</p>
+    <h2 data-i18n="bye">Boa diversão! 🥨</h2>
+    <p data-i18n="aggregator">O Agenda Munique é um agregador de eventos de Munique. Todas as informações vêm dos sites dos próprios eventos, por isso confira no site oficial de cada um as datas, os locais e os valores antes de sair.</p>
+    <p><a href="#" data-partner data-i18n="partnerFoot">Quer anunciar no Agenda Munique? Fale com a gente.</a></p>
+    <details class="about-box">
+      <summary data-i18n="aboutLink">Sobre o Agenda Munique</summary>
+      <p data-i18n="about">Projeto independente, feito por um brasileiro morando em Munique, sem vínculo com os organizadores dos eventos. Esta página não usa cookies e serve as fontes pelo próprio site. As visitas são contadas de forma anônima pelo Cloudflare Web Analytics, sem cookies. Os formulários de sugestão, de parceria e da newsletter passam por um pequeno serviço próprio na Cloudflare; os e-mails da newsletter ficam no Resend, servem só para mandar a agenda, e você sai pelo link no fim de cada edição.</p>
+    </details>
   </div>
   <!-- Cloudflare Web Analytics (sem cookies) --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "fc814bea30b2451f9221f874394a64c0"}'></script><!-- End Cloudflare Web Analytics -->
 </footer>
@@ -583,7 +757,7 @@ var EVENTS = [
     d: "Mercado de Natal com tema alpino. Funciona até o Ano Novo.",
     de: { d: "Weihnachtsmarkt im Alpen-Look. Geöffnet bis Neujahr." },
     en: { d: "Alpine-themed Christmas market. Open until New Year's Day." } },
-  { t: "Fan Fest da NFL na Odeonsplatz", type: "rua", s: "2026-11-13", e: "2026-11-14", place: "Odeonsplatz", q: "Odeonsplatz München", url: "https://ran.joyn.de/sports/american-football/nfl/detroit-lions-vs-new-england-patriots-in-muenchen-alle-infos-zu-den-munich-game-fan-events-201813", kids: true,
+  { t: "Fan Fest da NFL na Odeonsplatz", type: "rua", s: "2026-11-13", e: "2026-11-14", place: "Odeonsplatz", q: "Odeonsplatz München", url: "https://nfl.de/munich/", kids: true,
     d: "Festa ao ar livre dos Detroit Lions antes do jogo da NFL em Munique, das 11h às 18h: jogos para a família, brindes, food trucks, cheerleaders e mascote, com show a partir das 17h. O jogo no estádio é só com ingresso.",
     de: { t: "NFL Fan Fest am Odeonsplatz", d: "Open-Air-Fanfest der Detroit Lions vor dem NFL-Spiel in München, 11 bis 18 Uhr: Spiele für die ganze Familie, Giveaways, Foodtrucks, Cheerleader und Maskottchen, ab 17 Uhr Konzert. Ins Stadion kommst du nur mit Ticket." },
     en: { t: "NFL Fan Fest on Odeonsplatz", d: "Open-air Detroit Lions fan festival ahead of the NFL game in Munich, 11am to 6pm: family games, giveaways, food trucks, cheerleaders and the mascot, with a concert from 5pm. The game itself is ticket-only." } },
@@ -734,6 +908,12 @@ var WEEKLY = [
     de: { when: "Freitags und samstags an ausgewählten Terminen, 7 bis 15 Uhr", note: "Ausgewählte Termine: vor dem Besuch den Kalender des Veranstalters prüfen.", d: "Antik- und Flohmarkt auf der Trabrennbahn. Die Termine stehen im Kalender des Veranstalters." },
     en: { when: "Selected Fridays and Saturdays, 7am to 3pm", note: "Selected dates only: check the organiser's calendar before you go.", d: "Antiques and flea market at the trotting track. See the organiser's calendar for dates." } }
 ];
+// Destaque do hero: ilustração de um evento especial no lugar da cidade 3D, só entre s e e (inclusive).
+// Arte: PNG/WebP com fundo transparente, cena compacta perto de 4:3, sem texto. Para tirar, use DESTAQUE = null.
+var DESTAQUE = { img: "/destaques/nfl-fan-fest.webp", s: "2026-11-13", e: "2026-11-14",
+  alt: { pt: "Ilustração do Fan Fest da NFL na Odeonsplatz, com a Feldherrnhalle, a Theatinerkirche, uma bola de futebol americano gigante e torcedores",
+         de: "Illustration des NFL Fan Fests am Odeonsplatz mit Feldherrnhalle, Theatinerkirche, einem riesigen Football und Fans",
+         en: "Illustration of the NFL Fan Fest on Odeonsplatz, with the Feldherrnhalle, the Theatinerkirche, a giant football and fans" } };
 // === DADOS DOS EVENTOS: FIM ===
 // Textos da página em português, alemão e inglês. O HTML já vem em português; em alemão, applyLang troca os elementos marcados com data-i18n.
 var TEXT = {
@@ -744,12 +924,13 @@ var TEXT = {
     metaDesc: "Feiras de Natal, Flohmärkte e eventos de rua em Munique, em português, com mapa e envio por WhatsApp.",
     langLabel: "Idioma",
     home: "Agenda Munique, início",
-    shareAll: "Compartilhar programação",
-    partnerBtn: "Seja parceiro", partnerTitle: "Anuncie na Agenda Munique",
+    toTop: "Voltar para o começo da programação", toTopLabel: "Para o topo", navSearch: "Buscar", shareAll: "Compartilhar programação", navShare: "Compartilhe", navNews: "Newsletter", navSuggest: "Sugira um evento", navProg: "Programação",
+    aggregator: "O Agenda Munique é um agregador de eventos de Munique. Todas as informações vêm dos sites dos próprios eventos, por isso confira no site oficial de cada um as datas, os locais e os valores antes de sair.", aboutLink: "Sobre o Agenda Munique",
+    partnerBtn: "Seja parceiro", partnerTitle: "Anuncie no Agenda Munique",
     partnerText: "Em breve teremos espaço para anunciantes aqui no site e na newsletter que sai toda quinta-feira. Deixe seu contato e a gente conta como funciona.",
     pName: "Seu nome", pCompany: "Empresa ou projeto", pEmail: "Seu e-mail", pMsg: "O que você quer divulgar? (opcional)", pSend: "Enviar",
     pOk: "Recebemos! Respondemos por e-mail em breve.", pNeed: "Preencha seu nome e seu e-mail, por favor.",
-    partnerFoot: "Quer anunciar na Agenda Munique? Fale com a gente.",
+    partnerFoot: "Quer anunciar no Agenda Munique? Fale com a gente.",
     h1: 'Tá rolando<br class="br"> o quê em<br class="br"> <em>Munique?</em>',
     lede: "Feiras de Natal, Flohmärkte e eventos de rua, em português, para planejar o rolê com a família.",
     see: "Conferir a programação",
@@ -774,7 +955,7 @@ var TEXT = {
     confirmBadTitle: "Esse link não funcionou", confirmBadText: "Ele pode ter sido copiado pela metade. Inscreva-se de novo pelo campo no topo da página.", confirmBadBtn: "Inscrever de novo",
     share: "Compartilhar", sms: "Mensagem de texto (SMS)", more: "Mais opções", close: "Fechar",
     copy: "Copiar link", copied: "Link copiado!",
-    bye: "Boa feira! 🥨",
+    bye: "Boa diversão! 🥨",
     sources: 'Datas e horários conferidos no portal <a href="https://www.muenchen.de/veranstaltungen/weihnachtsmaerkte-christkindlmaerkte-2026" target="_blank" rel="noopener">muenchen.de</a>, no guia de turismo <a href="https://www.munich.travel/en/topics/markets-festivals/christmas-markets-munich" target="_blank" rel="noopener">munich.travel</a>, no site do <a href="https://www.christkindlmarkt-muenchen.de/" target="_blank" rel="noopener">Christkindlmarkt</a> e no <a href="https://www.kindaling.de/weihnachtsmaerkte/muenchen" target="_blank" rel="noopener">Kindaling</a>. Horários variam por dia e a maioria das feiras de Natal fecha em 15 de novembro (Volkstrauertag) e no Totensonntag (22 de novembro). Confira a página do evento antes de sair. Os pontos do mapa são buscas pelo nome do local.',
     about: "Projeto independente, feito por um brasileiro morando em Munique, sem vínculo com os organizadores dos eventos. Esta página não usa cookies e serve as fontes pelo próprio site. As visitas são contadas de forma anônima pelo Cloudflare Web Analytics, sem cookies. Os formulários de sugestão, de parceria e da newsletter passam por um pequeno serviço próprio na Cloudflare; os e-mails da newsletter ficam no Resend, servem só para mandar a agenda, e você sai pelo link no fim de cada edição.",
     openMap: "Abrir no mapa",
@@ -789,7 +970,7 @@ var TEXT = {
     nextOpen: "Próximas aberturas",
     daysTo: function (n) { return (n === 1 ? "dia" : "dias") + " para a primeira feira abrir"; },
     opensOn: "abre em ",
-    statDated: "eventos com data", statWeekly: "feiras toda semana", statEnd: "fim da temporada",
+    statDated: "eventos com data", statWeekly: "feiras toda semana", statEnd: "fim da temporada", statToday: "abertos hoje", statKids: "bons para crianças",
     dated: "Com data marcada", ofYear: " de ", empty: "Nenhum evento neste filtro por enquanto.",
     inMonth: function (m) { return "em " + m; }, thisWeekend: "neste fim de semana",
     periodNote: function (p) { return "Aparecem aqui os eventos que começam " + p + " e também os que começaram antes e continuam abertos " + p + "."; },
@@ -808,7 +989,8 @@ var TEXT = {
     metaDesc: "Weihnachtsmärkte, Flohmärkte und Straßenfeste in München auf einen Blick, mit Karte und zum Teilen per WhatsApp.",
     langLabel: "Sprache",
     home: "Agenda Munique, Startseite",
-    shareAll: "Programm teilen",
+    toTop: "Zurück zum Anfang des Programms", toTopLabel: "Nach oben", navSearch: "Suchen", shareAll: "Programm teilen", navShare: "Teilen", navNews: "Newsletter", navSuggest: "Termin vorschlagen", navProg: "Programm",
+    aggregator: "Agenda Munique sammelt Veranstaltungen in München an einem Ort. Alle Angaben stammen von den Websites der Veranstaltungen selbst. Prüf deshalb Termine, Orte und Preise vor dem Besuch auf der offiziellen Seite.", aboutLink: "Über Agenda Munique",
     partnerBtn: "Partner werden", partnerTitle: "Werben bei Agenda Munique",
     partnerText: "Bald gibt es Werbeplätze hier auf der Website und im Newsletter, der jeden Donnerstag verschickt wird. Hinterlass deine Kontaktdaten, dann erzählen wir dir, wie es funktioniert.",
     pName: "Dein Name", pCompany: "Firma oder Projekt", pEmail: "Deine E-Mail", pMsg: "Was möchtest du bewerben? (optional)", pSend: "Senden",
@@ -853,7 +1035,7 @@ var TEXT = {
     nextOpen: "Bald geht's los",
     daysTo: function (n) { return (n === 1 ? "Tag" : "Tage") + " bis der erste Markt öffnet"; },
     opensOn: "öffnet am ",
-    statDated: "Termine", statWeekly: "Märkte jede Woche", statEnd: "Saisonende",
+    statDated: "Termine", statWeekly: "Märkte jede Woche", statEnd: "Saisonende", statToday: "heute geöffnet", statKids: "gut für Kinder",
     dated: "Mit festem Termin", ofYear: " ", empty: "In diesem Filter gibt es gerade keine Termine.",
     inMonth: function (m) { return "im " + m; }, thisWeekend: "an diesem Wochenende",
     periodNote: function (p) { return "Hier stehen die Termine, die " + p + " beginnen, und auch die, die schon vorher geöffnet haben und " + p + " noch offen sind."; },
@@ -872,7 +1054,8 @@ var TEXT = {
     metaDesc: "Christmas markets, flea markets and street festivals in Munich at a glance, with maps and WhatsApp sharing.",
     langLabel: "Language",
     home: "Agenda Munique, home",
-    shareAll: "Share the guide",
+    toTop: "Back to the start of the list", toTopLabel: "Back to top", navSearch: "Search", shareAll: "Share the guide", navShare: "Share", navNews: "Newsletter", navSuggest: "Suggest an event", navProg: "What's on",
+    aggregator: "Agenda Munique gathers events in Munich in one place. All the details come from each event's own website, so check dates, venues and prices on the official site before you go.", aboutLink: "About Agenda Munique",
     partnerBtn: "Be a partner", partnerTitle: "Advertise with Agenda Munique",
     partnerText: "Soon there will be ad space here on the site and in the newsletter that goes out every Thursday. Leave your details and we'll tell you how it works.",
     pName: "Your name", pCompany: "Business or project", pEmail: "Your email", pMsg: "What would you like to promote? (optional)", pSend: "Send",
@@ -902,7 +1085,7 @@ var TEXT = {
     confirmBadTitle: "This link didn't work", confirmBadText: "It may have been copied only partly. Just sign up again with the field at the top of the page.", confirmBadBtn: "Sign up again",
     share: "Share", sms: "Text message (SMS)", more: "More options", close: "Close",
     copy: "Copy link", copied: "Link copied!",
-    bye: "Enjoy the markets! 🥨",
+    bye: "Have fun! 🥨",
     sources: 'Dates and opening hours checked on <a href="https://www.muenchen.de/veranstaltungen/weihnachtsmaerkte-christkindlmaerkte-2026" target="_blank" rel="noopener">muenchen.de</a>, the tourism site <a href="https://www.munich.travel/en/topics/markets-festivals/christmas-markets-munich" target="_blank" rel="noopener">munich.travel</a>, the <a href="https://www.christkindlmarkt-muenchen.de/" target="_blank" rel="noopener">Christkindlmarkt</a> website and <a href="https://www.kindaling.de/weihnachtsmaerkte/muenchen" target="_blank" rel="noopener">Kindaling</a>. Opening hours vary by day, and most Christmas markets close on 15 November (Volkstrauertag) and on Totensonntag (22 November). Check the event\'s page before you go. Map pins are searches for the venue name.',
     about: "An independent project by a Brazilian living in Munich, not affiliated with any of the organisers. This page sets no cookies and serves its fonts from its own server. Visits are counted anonymously, without cookies, by Cloudflare Web Analytics. The suggestion, partnership and newsletter forms run on our own small service at Cloudflare; newsletter addresses are kept with Resend, used only to send the guide, and you can leave with the link at the end of each issue.",
     openMap: "Open in maps",
@@ -917,7 +1100,7 @@ var TEXT = {
     nextOpen: "Opening soon",
     daysTo: function (n) { return (n === 1 ? "day" : "days") + " until the first market opens"; },
     opensOn: "opens ",
-    statDated: "dated events", statWeekly: "weekly markets", statEnd: "end of season",
+    statDated: "dated events", statWeekly: "weekly markets", statEnd: "end of season", statToday: "open today", statKids: "good with kids",
     dated: "With a fixed date", ofYear: " ", empty: "No events in this filter right now.",
     inMonth: function (m) { return "in " + m; }, thisWeekend: "this weekend",
     periodNote: function (p) { return "This shows events that open " + p + " and also those that opened earlier and are still on " + p + "."; },
@@ -1098,6 +1281,11 @@ function weekendWindow(today) {
   if (dow === 6) return { a: today, b: addDays(today, 1), label: L.weekend };
   return { a: today, b: today, label: L.today };
 }
+// Cada linha do "Neste fim de semana" abre ali mesmo o card completo do evento (descrição, mapa e botões)
+function nowItem(e, when, today) {
+  return '<li><details class="now-item"><summary><strong>' + esc(tr(e, "t")) + "</strong><span>" + when + ", " + esc(tr(e, "place")) +
+    '</span></summary><ul class="list">' + row(e, today, false).replace('id="ev-' + e.id + '"', "") + "</ul></details></li>";
+}
 function buildNow(today) {
   var w = weekendWindow(today);
   var active = EVENTS.filter(function (e) { return parse(e.s) <= w.b && parse(e.e) >= w.a; });
@@ -1106,7 +1294,7 @@ function buildNow(today) {
   active.sort(function (a, b) { return longOpen(a) - longOpen(b) || parse(a.s) - parse(b.s); });
   if (active.length) {
     return "<h2>" + w.label + " 🎉</h2><ul>" + active.map(function (e) {
-      return "<li><strong>" + esc(tr(e, "t")) + "</strong><span>" + esc(whenText(e)) + ", " + placeLink(e, false) + "</span></li>";
+      return nowItem(e, esc(whenText(e)), today);
     }).join("") + "</ul>";
   }
   var next = EVENTS.filter(function (e) { return parse(e.s) > today; })
@@ -1116,16 +1304,19 @@ function buildNow(today) {
   var head = "<h2>" + L.nextOpen + "</h2>";
   var count = '<div class="count"><b>' + n + "</b><span>" + L.daysTo(n) + "</span></div>";
   return head + count + "<ul>" + next.map(function (e) {
-    return "<li><strong>" + esc(tr(e, "t")) + "</strong><span>" + L.opensOn + esc(fmt(e.s)) + ", " + placeLink(e, false) + "</span></li>";
+    return nowItem(e, L.opensOn + esc(fmt(e.s)), today);
   }).join("") + "</ul>";
 }
 function buildStats(today) {
   var open = EVENTS.filter(function (e) { return parse(e.e) >= today; });
   if (!open.length) return "";
-  var last = open.reduce(function (m, e) { return parse(e.e) > m ? parse(e.e) : m; }, parse(open[0].e));
-  return '<div class="stat"><b>' + open.length + "</b><span>" + L.statDated + "</span></div>" +
-    '<div class="stat"><b>' + WEEKLY.length + "</b><span>" + L.statWeekly + "</span></div>" +
-    '<div class="stat"><b>' + dayMonth(last) + "</b><span>" + L.statEnd + "</span></div>";
+  // O terceiro número diz o que dá para fazer hoje, em vez da data em que o último evento fecha
+  var openToday = open.filter(function (e) { return parse(e.s) <= today; }).length;
+  // Os rótulos usam as mesmas pílulas dos cards: creme como as etiquetas, verde como o "Aberto agora"
+  return '<div class="stat"><b>' + open.length + '</b><span class="tag">' + L.statDated + "</span></div>" +
+    '<div class="stat"><b>' + WEEKLY.length + '</b><span class="tag">' + L.statWeekly + "</span></div>" +
+    '<div class="stat"><b>' + openToday + '</b><span class="tag live">' + L.statToday + "</span></div>" +
+    '<div class="stat"><b>' + open.filter(function (e) { return e.kids; }).length + '</b><span class="tag">' + L.statKids + "</span></div>";
 }
 function build(now) {
   var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -1279,15 +1470,44 @@ Array.prototype.forEach.call(document.querySelectorAll(".news-form"), function (
   });
 });
 // O link do e-mail termina em #newsletter; tira o hash para a página abrir no topo, atrás da janela
-document.getElementById("sug-form").addEventListener("submit", function (e) {
+// Sugestão: o formulário do fim da página e o da janela (aberta pelo "Sugira um evento" da navbar) usam o mesmo envio
+Array.prototype.forEach.call(document.querySelectorAll(".sug-form"), function (f) { f.addEventListener("submit", function (e) {
   e.preventDefault();
-  var form = e.target, btn = form.querySelector("button"), msg = document.getElementById("sug-msg");
+  var form = e.target, btn = form.querySelector('button[type="submit"]'), msg = document.getElementById(form.getAttribute("data-msg"));
   if (form.sugestao.value.trim().length < 5) { setNews(msg, "sugEmpty"); form.sugestao.focus(); return; }
   btn.disabled = true; setNews(msg, "newsSending");
   postNews({ action: "suggest", sugestao: form.sugestao.value, link: form.link.value, site: form.site.value }).then(function (res) {
     if (res.ok) { setNews(msg, "sugOk"); form.reset(); } else setNews(msg, res.error === "vazio" ? "sugEmpty" : "newsErr");
   }).catch(function () { setNews(msg, "newsErr"); }).then(function () { btn.disabled = false; });
+}); });
+Array.prototype.forEach.call(document.querySelectorAll("[data-suggest]"), function (a) { a.addEventListener("click", function (e) {
+  e.preventDefault();
+  var d = document.getElementById("suggest");
+  if (d.showModal) d.showModal(); else d.setAttribute("open", "");
+  document.getElementById("sug-texto-pop").focus();
+}); });
+Array.prototype.forEach.call(document.querySelectorAll('[data-close="suggest"]'), function (b) { b.addEventListener("click", function () { closeDialog("suggest"); }); });
+document.getElementById("suggest").addEventListener("click", function (e) { if (e.target.id === "suggest") closeDialog("suggest"); });
+// No "Neste fim de semana", abrir um evento fecha o que estava aberto
+document.getElementById("now").addEventListener("toggle", function (e) {
+  var d = e.target;
+  if (!d.open || !d.classList.contains("now-item")) return;
+  Array.prototype.forEach.call(this.querySelectorAll(".now-item[open]"), function (o) { if (o !== d) o.open = false; });
+}, true);
+document.getElementById("nav-search").addEventListener("click", function (e) {
+  e.preventDefault();
+  var box = document.querySelector(".search"), input = document.getElementById("busca");
+  box.scrollIntoView({ behavior: "smooth", block: "start" });
+  input.focus({ preventScroll: true });
 });
+// Botão de voltar: aparece depois que a pessoa rolou além do começo da lista e leva de volta ao primeiro evento
+(function () {
+  var b = document.getElementById("to-top"), lista = document.getElementById("lista"), tick = false;
+  function check() { tick = false; b.classList.toggle("show", scrollY > lista.offsetTop + innerHeight * 0.8); }
+  addEventListener("scroll", function () { if (!tick) { tick = true; requestAnimationFrame(check); } }, { passive: true });
+  check();
+  b.addEventListener("click", function (e) { e.preventDefault(); lista.scrollIntoView({ behavior: "smooth", block: "start" }); });
+})();
 // Parceria: o botão do topo e o link do rodapé abrem a janela; o envio vira um e-mail para o news@
 function openPartner(e) {
   if (e) e.preventDefault();
@@ -1309,7 +1529,11 @@ document.getElementById("partner-form").addEventListener("submit", function (e) 
   }).catch(function () { setNews(msg, "newsErr"); }).then(function () { btn.disabled = false; });
 });
 // A lista de idiomas fecha ao clicar fora dela
-document.addEventListener("click", function (e) { var m = document.querySelector(".lang-menu"); if (m.open && !m.contains(e.target)) m.open = false; });
+document.addEventListener("click", function (e) {
+  Array.prototype.forEach.call(document.querySelectorAll(".lang-menu, .nav-menu"), function (m) {
+    if (m.open && (!m.contains(e.target) || e.target.closest(".menu-panel a, .menu-panel button"))) m.open = false;
+  });
+});
 if (confirmToken) {
   if (location.hash === "#newsletter") history.replaceState(null, "", location.pathname + location.search);
   postNews({ action: "confirm", token: confirmToken }).then(function (res) { openConfirmed(res.ok ? "ok" : "bad"); })
@@ -1324,7 +1548,7 @@ function openConfirmed(kind) {
   document.getElementById("confirmed-btn").onclick = function () {
     closeDialog("confirmed");
     if (ok) document.getElementById("lista").scrollIntoView({ behavior: "smooth" });
-    else document.getElementById("hero-news-email").focus();
+    else { document.getElementById("newsletter").scrollIntoView({ behavior: "smooth" }); document.getElementById("news-email").focus({ preventScroll: true }); }
   };
   window.scrollTo({ top: 0, behavior: "instant" });
   var d = document.getElementById("confirmed");
@@ -1377,9 +1601,33 @@ document.getElementById("confirmed").addEventListener("click", function (e) { if
 </script>
 
 <script type="module">
+// Destaque do hero: entre as datas s e e do DESTAQUE, a ilustração do evento entra no lugar da cidade 3D.
+// Fora dessas datas (ou sem DESTAQUE), volta a cidade sozinha. Template e área de segurança em hero-destaques.md (pasta do projeto).
+function heroDestaque() {
+  if (typeof DESTAQUE === "undefined" || !DESTAQUE || !DESTAQUE.img) return false;
+  var n = new Date(), p = function (v) { return (v < 10 ? "0" : "") + v; };
+  var hoje = n.getFullYear() + "-" + p(n.getMonth() + 1) + "-" + p(n.getDate());
+  if (/[?&]destaque=1/.test(location.search)) hoje = DESTAQUE.s; // para conferir antes da data
+  if (hoje < DESTAQUE.s || hoje > DESTAQUE.e) return false;
+  var hero = document.querySelector(".hero"), txt = hero.querySelector(".hero-text");
+  var img = document.createElement("img");
+  img.className = "hero-art"; img.src = DESTAQUE.img; img.decoding = "async";
+  img.alt = (DESTAQUE.alt && (DESTAQUE.alt[lang] || DESTAQUE.alt.pt)) || "";
+  hero.insertBefore(img, hero.firstChild);
+  hero.classList.add("tem-destaque");
+  // No computador a arte começa 40px depois do fim do texto, que muda com o idioma e a altura da tela
+  function borda() { hero.style.setProperty("--txt-r", Math.ceil(txt.getBoundingClientRect().right - hero.getBoundingClientRect().left) + "px"); }
+  borda();
+  if (window.ResizeObserver) new ResizeObserver(borda).observe(hero);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(borda);
+  return true;
+}
 // Cena 3D do hero (Munique no inverno): só carrega se o navegador tiver WebGL; sem ele, fica o céu em degradê.
 // O ?v= muda a cada alteração do hero3d.js, para o navegador não usar a cópia antiga guardada em cache
-try { const c = document.createElement("canvas"); if (c.getContext("webgl2") || c.getContext("webgl")) import("/hero3d.js?v=2026-11-09-alpes2"); } catch (e) {}
+if (!heroDestaque()) {
+  // No celular o hero fica só com o céu lilás: a cena nem carrega
+try { const c = document.createElement("canvas"); if (innerWidth >= 720 && (c.getContext("webgl2") || c.getContext("webgl"))) import("/hero3d.js?v=2026-11-13-card"); } catch (e) {}
+}
 </script>
 </body>
 </html>

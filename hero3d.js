@@ -582,7 +582,7 @@ let W = 0, H = 0, mobile = false, frameW = 600;
 function resize() {
   const r = hero.getBoundingClientRect();
   W = Math.round(r.width); H = Math.round(r.height);
-  mobile = W < 1000; // até 1000px a cidade fica embaixo do texto
+  mobile = innerWidth < 1000; // até 1000px de tela a cidade fica embaixo do texto (o hero agora é um card mais estreito que a tela)
   renderer.setSize(W, H, false);
   camera.aspect = W / H;
   // No computador a cidade fica à direita do texto, até a borda, e cresce ou diminui inteira com a tela;

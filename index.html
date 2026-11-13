@@ -185,6 +185,8 @@ h2.sec { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.
 .month-sep { display: flex; align-items: center; gap: 16px; margin: 36px 0 14px; font: 800 clamp(1.4rem, 4.5vw, 1.9rem) var(--font-display); letter-spacing: -0.03em; }
 .month-sep::after { content: ""; flex: 1; height: 3px; border-radius: 3px; background: var(--ink); opacity: .22; }
 h2.sec + .month-sep { margin-top: 0; }
+.month-sep.sub { font-size: clamp(1.1rem, 3.5vw, 1.35rem); margin-top: 30px; }
+.month-sep + .month-sep.sub { margin-top: 0; }
 .period-note { margin: -4px 0 22px; padding: 12px 16px; background: #fff; border-radius: 16px; font-weight: 600; font-size: 0.95rem; max-width: 70ch; }
 .period-note + .month-sep { margin-top: 0; }
 .list { padding: 0; margin: 0; list-style: none; display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; }
@@ -781,7 +783,7 @@ var TEXT = {
     dated: "Com data marcada", ofYear: " de ", empty: "Nenhum evento neste filtro por enquanto.",
     inMonth: function (m) { return "em " + m; }, thisWeekend: "neste fim de semana",
     periodNote: function (p) { return "Aparecem aqui os eventos que começam " + p + " e também os que começaram antes e continuam abertos " + p + "."; },
-    startsIn: function (p) { return "Começam " + p; }, carryIn: function (p) { return "Continuam abertos " + p; },
+    stillOpen: "Já abertos, por várias semanas", startsIn: function (p) { return "Começam " + p; }, carryIn: function (p) { return "Continuam abertos " + p; },
     shareSiteText: "Olha esse site com as feiras de Natal e eventos de rua de Munique, tudo em português: ",
     shareSiteSub: "Feiras de Natal e eventos de rua em Munique",
     shareSiteSubject: "Agenda Munique: feiras e eventos de rua",
@@ -844,7 +846,7 @@ var TEXT = {
     dated: "Mit festem Termin", ofYear: " ", empty: "In diesem Filter gibt es gerade keine Termine.",
     inMonth: function (m) { return "im " + m; }, thisWeekend: "an diesem Wochenende",
     periodNote: function (p) { return "Hier stehen die Termine, die " + p + " beginnen, und auch die, die schon vorher geöffnet haben und " + p + " noch offen sind."; },
-    startsIn: function (p) { return "Starten " + p; }, carryIn: function (p) { return "Schon offen, auch " + p; },
+    stillOpen: "Schon geöffnet, noch wochenlang", startsIn: function (p) { return "Starten " + p; }, carryIn: function (p) { return "Schon offen, auch " + p; },
     shareSiteText: "Schau mal, hier sind die Weihnachtsmärkte und Straßenfeste in München auf einen Blick: ",
     shareSiteSub: "Weihnachtsmärkte und Straßenfeste in München",
     shareSiteSubject: "Agenda Munique: Märkte und Straßenfeste",
@@ -907,7 +909,7 @@ var TEXT = {
     dated: "With a fixed date", ofYear: " ", empty: "No events in this filter right now.",
     inMonth: function (m) { return "in " + m; }, thisWeekend: "this weekend",
     periodNote: function (p) { return "This shows events that open " + p + " and also those that opened earlier and are still on " + p + "."; },
-    startsIn: function (p) { return "Opening " + p; }, carryIn: function (p) { return "Already open, still on " + p; },
+    stillOpen: "Already open, for weeks to come", startsIn: function (p) { return "Opening " + p; }, carryIn: function (p) { return "Already open, still on " + p; },
     shareSiteText: "Check out this guide to Munich's Christmas markets and street festivals: ",
     shareSiteSub: "Christmas markets and street festivals in Munich",
     shareSiteSubject: "Agenda Munique: markets and street festivals",
@@ -1077,6 +1079,9 @@ function weekendWindow(today) {
 function buildNow(today) {
   var w = weekendWindow(today);
   var active = EVENTS.filter(function (e) { return parse(e.s) <= w.b && parse(e.e) >= w.a; });
+  // Os curtos e os que estreiam agora vêm antes dos longos que já estavam abertos
+  var longOpen = function (e) { return parse(e.s) < today && (parse(e.e) - parse(e.s)) / 86400000 > 7 ? 1 : 0; };
+  active.sort(function (a, b) { return longOpen(a) - longOpen(b) || parse(a.s) - parse(b.s); });
   if (active.length) {
     return "<h2>" + w.label + " 🎉</h2><ul>" + active.map(function (e) {
       return "<li><strong>" + esc(tr(e, "t")) + "</strong><span>" + esc(whenText(e)) + ", " + placeLink(e, false) + "</span></li>";
@@ -1118,16 +1123,30 @@ function build(now) {
       if (starts.length) groups.push({ date: today, title: L.startsIn(ph), items: starts });
       if (carry.length) groups.push({ date: today, title: L.carryIn(ph), items: carry });
       if (carry.length) html += '<p class="period-note">' + L.periodNote(ph) + "</p>";
-    } else dated.forEach(function (e) {
-      var d = parse(e.s) > today ? parse(e.s) : today, key = d.getFullYear() * 12 + d.getMonth();
-      if (!groups.length || groups[groups.length - 1].key !== key) groups.push({ key: key, date: d, items: [] });
-      groups[groups.length - 1].items.push(e);
-    });
+    } else {
+      // Eventos longos que já abriram (mais de uma semana) descem para um grupo próprio no fim do mês de hoje,
+      // para não esconderem as novidades e os eventos curtos dos próximos dias
+      var isLong = function (e) { return parse(e.s) < today && (parse(e.e) - parse(e.s)) / 86400000 > 7; };
+      var longOpen = dated.filter(isLong).sort(function (a, b) { return parse(a.e) - parse(b.e); });
+      dated.filter(function (e) { return !isLong(e); }).forEach(function (e) {
+        var d = parse(e.s) > today ? parse(e.s) : today, key = d.getFullYear() * 12 + d.getMonth();
+        if (!groups.length || groups[groups.length - 1].key !== key) groups.push({ key: key, date: d, items: [] });
+        groups[groups.length - 1].items.push(e);
+      });
+      if (longOpen.length) {
+        var cur = today.getFullYear() * 12 + today.getMonth();
+        var at = groups.length && groups[0].key === cur ? 1 : 0;
+        if (!at) groups.unshift({ key: cur, date: today, items: [] }), at = 1;
+        groups.splice(at, 0, { key: cur, date: today, sub: true, items: longOpen });
+      }
+    }
     groups.forEach(function (g) {
       var name = MONTHS_LONG[g.date.getMonth()];
       if (g.date.getFullYear() !== today.getFullYear()) name += L.ofYear + g.date.getFullYear();
       if (pr) name = g.title;
-      html += '<h3 class="month-sep">' + cap(name) + "</h3><ul class=\"list\">" + g.items.map(function (e) { return row(e, today, false); }).join("") + "</ul>";
+      if (g.sub) name = L.stillOpen;
+      if (!g.items.length) { html += '<h3 class="month-sep">' + cap(name) + "</h3>"; return; }
+      html += '<h3 class="month-sep' + (g.sub ? " sub" : "") + '">' + cap(name) + "</h3><ul class=\"list\">" + g.items.map(function (e) { return row(e, today, false); }).join("") + "</ul>";
     });
   }
   if (weekly.length) html += "<h2 class=\"sec\">" + L.everyWeek + "</h2><ul class=\"list\">" + weekly.map(function (e) { return row(e, today, true); }).join("") + "</ul>";

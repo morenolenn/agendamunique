@@ -172,6 +172,10 @@ svg.plane { width: 15px; height: 15px; stroke-width: 2.1; animation: plane-float
 .stat b { display: block; font-family: var(--font-display); font-weight: 800; font-size: clamp(2rem, 8vw, 3.4rem); letter-spacing: -0.05em; line-height: 1; }
 .stat span { display: block; color: var(--muted); font-size: 0.9rem; margin-top: 4px; }
 
+.search { position: relative; max-width: 560px; margin: 0 0 14px; }
+.search svg { position: absolute; left: 18px; top: 50%; width: 20px; height: 20px; margin-top: -10px; fill: none; stroke: var(--ink); stroke-width: 2; stroke-linecap: round; pointer-events: none; }
+.search input { width: 100%; min-height: 52px; padding: 0 18px 0 48px; border-radius: 999px; border: 2px solid var(--ink); background: #fff; color: var(--ink); font: 400 1rem var(--font-body); }
+.search input::placeholder { color: var(--muted); }
 .filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; }
 .filters + .filters { margin-top: -8px; }
 .chip {
@@ -418,6 +422,11 @@ a.act { gap: 6px; }
   <section class="now" id="now" aria-live="polite"></section>
   <div class="stats" id="stats"></div>
 
+  <div class="search" role="search">
+    <label class="vh" for="busca" data-i18n="searchLabel">Buscar evento</label>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+    <input id="busca" type="search" autocomplete="off" enterkeyhint="search" placeholder="Buscar evento, bairro ou lugar" data-i18n-ph="searchPh">
+  </div>
   <div class="filters" role="group" aria-label="Filtrar por tipo" data-i18n-aria="filterBy">
     <button class="chip" id="f-all" data-filter="all" aria-pressed="true" data-i18n="fAll">Todos</button>
     <button class="chip" id="f-natal" data-filter="natal" aria-pressed="false" data-i18n="fNatal">🎄 Natal</button>
@@ -746,6 +755,7 @@ var TEXT = {
     see: "Conferir a programação",
     suggest: "Sugerir um evento",
     filterBy: "Filtrar por tipo",
+    searchLabel: "Buscar evento", searchPh: "Buscar evento, bairro ou lugar", noResults: function (q) { return "Nada encontrado para “" + q + "”. Tente outra palavra ou escolha “Todos” e “Qualquer data”."; },
     fAll: "Todos", fNatal: "🎄 Natal", fFloh: "🧺 Flohmarkt", fRua: "🎭 Rua e tradição", fKids: "🧒 Com crianças",
     periodBy: "Filtrar por período", pAll: "📅 Qualquer data",
     missing: "Faltou algum evento?",
@@ -809,6 +819,7 @@ var TEXT = {
     see: "Zum Programm",
     suggest: "Termin vorschlagen",
     filterBy: "Nach Art filtern",
+    searchLabel: "Veranstaltung suchen", searchPh: "Markt, Viertel oder Ort suchen", noResults: function (q) { return "Nichts gefunden für „" + q + "“. Versuch ein anderes Wort oder wähle „Alle“ und „Jederzeit“."; },
     fAll: "Alle", fNatal: "🎄 Weihnachten", fFloh: "🧺 Flohmarkt", fRua: "🎭 Straße & Tradition", fKids: "🧒 Mit Kindern",
     periodBy: "Nach Zeitraum filtern", pAll: "📅 Jederzeit",
     missing: "Fehlt ein Termin?",
@@ -872,6 +883,7 @@ var TEXT = {
     see: "See what's on",
     suggest: "Suggest an event",
     filterBy: "Filter by type",
+    searchLabel: "Search events", searchPh: "Search events, areas or places", noResults: function (q) { return "Nothing found for “" + q + "”. Try another word or pick “All” and “Any date”."; },
     fAll: "All", fNatal: "🎄 Christmas", fFloh: "🧺 Flea market", fRua: "🎭 Street & tradition", fKids: "🧒 With kids",
     periodBy: "Filter by date", pAll: "📅 Any date",
     missing: "Missing an event?",
@@ -956,7 +968,17 @@ function placeLink(ev, withPin) {
   return '<a class="maplink" href="' + mapUrl(ev.q) + '" target="_blank" rel="noopener" title="' + L.openMap + '">' + (withPin ? "📍 " : "") + esc(tr(ev, "place")) + "</a>";
 }
 function whenText(ev) { return ev.s === ev.e ? fmt(ev.s) : L.range(fmt(ev.s), fmt(ev.e)); }
+var query = "";
+function norm(x) { return String(x || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase(); }
+// Busca em título, descrição, local e dias, nas três línguas, sem diferenciar acentos e maiúsculas
+function found(ev) {
+  if (!query) return true;
+  var text = [ev, ev.de || {}, ev.en || {}].map(function (o) { return [o.t, o.d, o.place, o.when, o.note].join(" "); }).join(" ");
+  text = norm(text);
+  return norm(query).split(/\s+/).every(function (w) { return !w || text.indexOf(w) !== -1; });
+}
 function matches(ev) {
+  if (!found(ev)) return false;
   if (filter === "all") return true;
   if (filter === "kids") return !!ev.kids;
   return ev.type === filter;
@@ -1150,7 +1172,7 @@ function build(now) {
     });
   }
   if (weekly.length) html += "<h2 class=\"sec\">" + L.everyWeek + "</h2><ul class=\"list\">" + weekly.map(function (e) { return row(e, today, true); }).join("") + "</ul>";
-  if (!html) html = '<p class="empty">' + L.empty + "</p>";
+  if (!html) html = '<p class="empty">' + (query ? L.noResults(esc(query)) : L.empty) + "</p>";
   return { list: html, now: buildNow(today), stats: buildStats(today), periods: buildPeriods(today) };
 }
 function render() {
@@ -1342,6 +1364,7 @@ document.getElementById("confirmed").addEventListener("click", function (e) { if
       render();
     });
   });
+  document.getElementById("busca").addEventListener("input", function (e) { query = e.target.value.trim(); render(); });
   render();
   goToHash();
   window.addEventListener("hashchange", goToHash);

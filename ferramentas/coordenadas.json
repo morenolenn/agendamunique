@@ -213,5 +213,16 @@
     "lat": 48.1900336,
     "lon": 11.4681053,
     "achou": "Allach, Oertelplatz, Allach, Allach-Untermenzing, München, Bayern, 80999, Deutschland"
+  },
+  "flohmarkt-munchen-riem": null,
+  "flohmarkt-im-olympiapark": {
+    "lat": 48.1733362,
+    "lon": 11.5409988,
+    "achou": "Parkharfe Olympiapark, B 2R, Milbertshofen-Am Hart, München, Bayern, 80809, Deutschland"
+  },
+  "antik-flohmarkt-daglfing": {
+    "lat": 48.1428528,
+    "lon": 11.6612749,
+    "achou": "Trabrennbahn, Rennbahnstraße, Dianapark, Daglfing, Bogenhausen, München, Bayern, 81929, Deutschland"
   }
 }

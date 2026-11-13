@@ -9,7 +9,10 @@
    }
 
    horario pode vir vazio quando o organizador não publica horário fixo: aí o cartão
-   mostra só se a temporada está em andamento, sem inventar hora. */
+   mostra só se a temporada está em andamento, sem inventar hora.
+
+   As feiras semanais não têm temporada: vêm com semanal: true, sem inicio, fim e abre.
+   Aí o cartão olha só o dia da semana e as exceções (as datas sem feira). */
 
 (function () {
   "use strict";
@@ -34,6 +37,29 @@
     return isNaN(d) ? new Date() : d;
   }
 
+  var DIAS = ["domingo", "segunda-feira", "terça-feira", "quarta-feira", "quinta-feira", "sexta-feira", "sábado"];
+  var MESES = ["janeiro", "fevereiro", "março", "abril", "maio", "junho",
+    "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"];
+
+  /* Semanais: procura o próximo dia com feira. EV.ateQuando é a última data que o
+     calendário do organizador cobre; depois dela não dá para prometer nada. */
+  function proximoDia(agora) {
+    var semResposta = "As próximas datas saem no site oficial";
+    for (var i = 1; i <= 60; i++) {
+      var d = new Date(agora.getTime() + i * 864e5);
+      if (EV.ateQuando && diaISO(d) > EV.ateQuando) return semResposta;
+      var f = horarioDe(d);
+      if (!f) continue;
+      if (i === 1) return "Volta amanhã às " + emTexto(f[0]);
+      if (i <= 7) {
+        var artigo = d.getDay() === 0 || d.getDay() === 6 ? "no " : "na ";
+        return "Volta " + artigo + DIAS[d.getDay()] + " às " + emTexto(f[0]);
+      }
+      return "A próxima é em " + d.getDate() + " de " + MESES[d.getMonth()] + ", às " + emTexto(f[0]);
+    }
+    return semResposta;
+  }
+
   function diz(alvo, texto, detalhe) {
     alvo.textContent = texto;
     if (detalhe) alvo.insertAdjacentHTML("afterend", "<small>" + detalhe + "</small>");
@@ -47,7 +73,21 @@
     var minutos = agora.getHours() * 60 + agora.getMinutes();
     var temHorario = !!(EV.horario && EV.horario.length);
 
-    if (iso < EV.inicio) {
+    if (EV.semanal) {
+      if (!temHorario) {
+        diz(alvo, "Acontece toda semana", "O horário de cada dia está no site oficial");
+      } else if (!faixa) {
+        diz(alvo, "Hoje não tem feira", proximoDia(agora));
+      } else if (minutos < faixa[0]) {
+        diz(alvo, "Abre às " + emTexto(faixa[0]), "");
+      } else if (minutos < faixa[1]) {
+        var restam = faixa[1] - minutos;
+        diz(alvo, "Aberta agora", "Fecha às " + emTexto(faixa[1]) + (restam <= 90 ? ", em " + restam + " minutos" : ""));
+        if (selo) { selo.textContent = "Aberta agora"; selo.className = "selo aberto"; }
+      } else {
+        diz(alvo, "Já fechou hoje", proximoDia(agora));
+      }
+    } else if (iso < EV.inicio) {
       diz(alvo, "Ainda não abriu", EV.abre ? "Abre em " + EV.abre : "");
     } else if (iso > EV.fim) {
       diz(alvo, "Já terminou", "Confira o site oficial para a próxima edição");
@@ -69,7 +109,7 @@
 
     // marca a linha da tabela que vale hoje
     var tabela = document.getElementById("tabela-horarios");
-    if (tabela && iso >= EV.inicio && iso <= EV.fim) {
+    if (tabela && (EV.semanal || (iso >= EV.inicio && iso <= EV.fim))) {
       var linha = tabela.querySelector('tr[data-data="' + iso + '"]') ||
         tabela.querySelector('tr[data-dia="' + agora.getDay() + '"]') ||
         tabela.querySelector('tr[data-dia="' + (agora.getDay() === 0 ? 0 : 1) + '"]');

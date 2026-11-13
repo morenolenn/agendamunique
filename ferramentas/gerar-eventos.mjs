@@ -19,6 +19,7 @@ const MESES = ["janeiro", "fevereiro", "março", "abril", "maio", "junho",
   "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"];
 const MESES_CURTOS = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
 const TIPOS = { natal: ["Mercados de Natal", "natal"], floh: ["Feiras de pulgas", "floh"], rua: ["Eventos de rua", "rua"] };
+const DIAS_SCHEMA = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
 const esc = (x) => String(x ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 const idDe = (t) => t.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
@@ -30,10 +31,13 @@ const curto = (iso) => `${dia(iso)} ${MESES_CURTOS[mes(iso)]}`;
 function carregarEventos() {
   const html = fs.readFileSync(path.join(RAIZ, "index.html"), "utf8");
   const bloco = html.split("// === DADOS DOS EVENTOS: INÍCIO")[1].split("// === DADOS DOS EVENTOS: FIM")[0];
-  const fn = new Function(bloco.replace(/^[^\n]*\n/, "") + "\nreturn { EVENTS, UPDATED };");
-  const { EVENTS } = fn();
-  EVENTS.forEach((e) => { e.id = idDe(e.t); });
-  return EVENTS;
+  const fn = new Function(bloco.replace(/^[^\n]*\n/, "") + "\nreturn { EVENTS, WEEKLY, UPDATED };");
+  const { EVENTS, WEEKLY } = fn();
+  // Os semanais (feiras de pulgas) não têm data de início e fim: ganham semanal = true
+  // e a página mostra a recorrência no lugar do período.
+  const todos = EVENTS.concat((WEEKLY || []).map((e) => Object.assign({}, e, { semanal: true })));
+  todos.forEach((e) => { e.id = idDe(e.t); });
+  return todos;
 }
 
 const lerJSON = (nome, vazio) => {
@@ -84,10 +88,17 @@ const emMinutos = (h) => {
   return Number(m[1]) * 60 + Number(m[2] || 0);
 };
 
-function horarios(linhas) {
+const emRelogio = (h) => {
+  const m = emMinutos(h);
+  return `${String(Math.floor(m / 60)).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}`;
+};
+
+/* Nos semanais, as datas sem feira entram como exceção fechada sem virar linha da tabela. */
+function horarios(linhas, semFeira) {
   if (!linhas || !linhas.length) return { tabela: "", semana: null, excecoes: {} };
   const semana = [null, null, null, null, null, null, null];
   const excecoes = {};
+  (semFeira || []).forEach((iso) => { excecoes[iso] = null; });
   const tr = linhas.map((l) => {
     const faixa = l.fechado ? null : [emMinutos(l.abre), emMinutos(l.fecha)];
     const texto = l.fechado || `${l.abre} às ${l.fecha}`;
@@ -102,9 +113,12 @@ function horarios(linhas) {
 function perto(ev, eventos, coords, comPagina) {
   const a = coords[ev.id];
   if (!a) return [];
+  const hoje = new Date().toISOString().slice(0, 10);
   const R = 6371000, rad = (g) => (g * Math.PI) / 180;
+  // O semanal acontece o ano todo: vizinho dele é qualquer evento com data que ainda não terminou.
+  const coincide = (o) => (ev.semanal ? o.e >= hoje : o.s <= ev.e && o.e >= ev.s);
   return eventos
-    .filter((o) => o.id !== ev.id && coords[o.id] && o.s <= ev.e && o.e >= ev.s)
+    .filter((o) => o.id !== ev.id && !o.semanal && coords[o.id] && coincide(o))
     .map((o) => {
       const b = coords[o.id];
       const dLat = rad(b.lat - a.lat), dLon = rad(b.lon - a.lon);
@@ -125,12 +139,19 @@ function perto(ev, eventos, coords, comPagina) {
 /* ---- a página ---- */
 function pagina(ev, d, coord, vizinhos) {
   const [rotuloTipo, filtroTipo] = TIPOS[ev.type] || ["Programação", ""];
-  const ano = ev.s.slice(0, 4);
-  const titulo = d.titulo || `${ev.t} ${ano}: datas, horários e como chegar`;
-  const descricao = d.descricao || `${ev.t} em Munique, em português: datas, horários, entrada e como chegar.`;
+  const ano = ev.semanal ? String(new Date().getFullYear()) : ev.s.slice(0, 4);
+  const tituloOg = ev.semanal ? ev.t : `${ev.t} ${ano}`;
+  const titulo = d.titulo || (ev.semanal
+    ? `${ev.t}: dias, horários e como chegar`
+    : `${ev.t} ${ano}: datas, horários e como chegar`);
+  const descricao = d.descricao || (ev.semanal
+    ? `${ev.t}, em português: em que dias acontece, horários, entrada e como chegar.`
+    : `${ev.t} em Munique, em português: datas, horários, entrada e como chegar.`);
   const local = d.local || ev.place;
-  const quando = ev.s === ev.e ? `${porExtenso(ev.s)} de ${ano}` : `${porExtenso(ev.s)} a ${porExtenso(ev.e)} de ${ev.e.slice(0, 4)}`;
-  const h = horarios(d.horarios);
+  const quando = ev.semanal
+    ? (d.quando || ev.when)
+    : (ev.s === ev.e ? `${porExtenso(ev.s)} de ${ano}` : `${porExtenso(ev.s)} a ${porExtenso(ev.e)} de ${ev.e.slice(0, 4)}`);
+  const h = horarios(d.horarios, d.semFeira);
   const oQueE = (d.oQueE && d.oQueE.length ? d.oQueE : [ev.d]).map((p) => `  <p>${p}</p>`).join("\n");
 
   const item = (dt, dd, nota) => `    <div class="ess-item">
@@ -143,7 +164,7 @@ function pagina(ev, d, coord, vizinhos) {
       <dt>Hoje</dt>
       <dd class="hoje" id="hoje">—</dd>
     </div>`,
-    item("Quando", esc(quando), d.quandoNota ? esc(d.quandoNota) : ""),
+    item("Quando", esc(quando), esc(d.quandoNota || (ev.semanal ? ev.note || "" : ""))),
     item("Onde", esc(local), d.endereco ? esc(d.endereco) : ""),
     d.transporte ? item("Como chegar", esc(d.transporte), d.transporteNota ? esc(d.transporteNota) : "") : "",
     item("Entrada", esc(d.entrada || (ev.free ? "Gratuita" : "Confira no site oficial")), d.entradaNota ? esc(d.entradaNota) : ""),
@@ -151,14 +172,23 @@ function pagina(ev, d, coord, vizinhos) {
   ].filter(Boolean).join("\n");
 
   const selos = [
-    `<span class="selo" id="selo-estado">${esc(ev.s === ev.e ? curto(ev.s) : `${curto(ev.s)} a ${curto(ev.e)}`)}</span>`,
+    `<span class="selo" id="selo-estado">${esc(ev.semanal ? "Toda semana" : (ev.s === ev.e ? curto(ev.s) : `${curto(ev.s)} a ${curto(ev.e)}`))}</span>`,
     ev.free ? '<span class="selo">Entrada gratuita</span>' : "",
     ev.kids ? '<span class="selo">Bom com crianças</span>' : "",
   ].filter(Boolean).join("\n    ");
 
+  // O semanal não tem início e fim: vira EventSeries com a recorrência em eventSchedule.
+  const agenda = (d.horarios || []).filter((l) => l.dias && !l.fechado).map((l) => ({
+    "@type": "Schedule",
+    byDay: l.dias.map((n) => `https://schema.org/${DIAS_SCHEMA[n]}`),
+    startTime: emRelogio(l.abre), endTime: emRelogio(l.fecha),
+    repeatFrequency: "P1W", scheduleTimezone: "Europe/Berlin",
+    ...(d.semFeira && d.semFeira.length ? { exceptDate: d.semFeira } : {}),
+  }));
+
   const jsonld = {
-    "@context": "https://schema.org", "@type": "Event", name: ev.t,
-    startDate: ev.s, endDate: ev.e,
+    "@context": "https://schema.org", "@type": ev.semanal ? "EventSeries" : "Event", name: ev.t,
+    ...(ev.semanal ? (agenda.length ? { eventSchedule: agenda } : {}) : { startDate: ev.s, endDate: ev.e }),
     eventStatus: "https://schema.org/EventScheduled",
     eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
     description: d.descricao || ev.d, image: `${SITE}/og.png`, url: `${SITE}/evento/${ev.id}/`,
@@ -172,7 +202,9 @@ function pagina(ev, d, coord, vizinhos) {
   };
 
   const EV = {
-    inicio: ev.s, fim: ev.e, abre: porExtenso(ev.s),
+    ...(ev.semanal
+      ? { semanal: true, ...(d.calendarioAte ? { ateQuando: d.calendarioAte } : {}) }
+      : { inicio: ev.s, fim: ev.e, abre: porExtenso(ev.s) }),
     ...(coord ? { lat: coord.lat, lon: coord.lon } : {}),
     horario: h.semana, excecoes: h.excecoes,
   };
@@ -190,7 +222,7 @@ function pagina(ev, d, coord, vizinhos) {
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Agenda Munique">
-<meta property="og:title" content="${esc(ev.t)} ${ano}">
+<meta property="og:title" content="${esc(tituloOg)}">
 <meta property="og:description" content="${esc(descricao)}">
 <meta property="og:url" content="${SITE}/evento/${ev.id}/">
 <meta property="og:image" content="${SITE}/og.png?v=2">
@@ -287,8 +319,15 @@ if (process.argv.includes("--listar")) {
   process.exit(0);
 }
 
+// Quem tem lat/lon escritos à mão em detalhes.json não vai ao Nominatim.
+const manuais = {};
+eventos.forEach((e) => {
+  const d = detalhes[e.id];
+  if (d && d.lat) manuais[e.id] = { lat: d.lat, lon: d.lon };
+});
+
 console.log("Coordenadas:");
-const coords = await coordenadas(eventos);
+const coords = Object.assign({}, await coordenadas(eventos.filter((e) => !manuais[e.id])), manuais);
 const comPagina = new Set(eventos.map((e) => e.id));
 
 let n = 0;

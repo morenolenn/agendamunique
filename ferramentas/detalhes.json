@@ -739,5 +739,182 @@
       }
     ],
     "horariosNota": "Os horários são os publicados pela prefeitura de Munique. Nos feriados do fim do ano confirme no site oficial antes de ir."
+  },
+  "flohmarkt-munchen-riem": {
+    "titulo": "Flohmarkt München-Riem: dias, horários e como chegar",
+    "descricao": "A maior feira de pulgas ao ar livre da Baviera, em português: sábados das 7h às 14h, entrada gratuita, como chegar de metrô e as datas sem feira.",
+    "local": "Messefreigelände, em Riem",
+    "endereco": "Am Messefreigelände, 81829 München (entrada dos visitantes em frente à torre da Messe)",
+    "rua": "Am Messefreigelände",
+    "cep": "81829",
+    "transporte": "U2, estação Messestadt Ost",
+    "transporteNota": "De carro, o estacionamento de visitantes custa 3 euros, pagos na hora, na guarita — não dá para reservar pela internet",
+    "entrada": "Gratuita",
+    "entradaNota": "Só o estacionamento é pago",
+    "quando": "Sábados, das 7h às 14h",
+    "quandoNota": "Não há feira em 28 de novembro. A última de 2026 é em 12 de dezembro e, pelo calendário do organizador, não há feira até pelo menos 16 de janeiro",
+    "oQueE": [
+      "A feira de Riem existe desde 1993 e o organizador a chama de maior feira de pulgas ao ar livre da Baviera: são 75 mil metros quadrados de barracas no terreno aberto da Messe, o centro de exposições de Munique.",
+      "Acontece só aos sábados. De novembro de 2026 a março de 2027 o horário é das 7h às 14h, e o próprio organizador avisa que o fim depende do tempo. Quem procura as melhores peças chega às 7h, com os vendedores ainda montando.",
+      "O terreno é todo ao ar livre, sem cobertura: num sábado de chuva ou de frio forte, não há para onde se abrigar. Há banheiros, barracas de comida e um posto de primeiros socorros.",
+      "Algumas regras valem para todo o terreno: os motores ficam desligados, bicicleta só empurrando, patins e patinetes não entram, e cachorro só na coleira. Quem dirige lá dentro anda a passo de gente."
+    ],
+    "criancas": [
+      "O pula-pula de graça, que o organizador anuncia no site, funciona só de abril a outubro. Entre novembro e março não tem — vale avisar as crianças antes de sair de casa, para não prometer o que não vai ter.",
+      "Carros andam dentro do terreno em passo de gente, e bicicletas têm de ser empurradas. Com criança pequena, andar de mãos dadas resolve quase tudo.",
+      "São 75 mil metros quadrados: combine um ponto de encontro assim que chegar. Banheiro, comida e posto de primeiros socorros ficam no terreno.",
+      "O horário é cedo e frio: às 7h ainda está escuro em dezembro. Começar por volta das 9h costuma ser mais fácil com crianças, e ainda sobram cinco horas de feira."
+    ],
+    "horarios": [
+      {
+        "dias": [
+          6
+        ],
+        "rotulo": "Sábado",
+        "abre": "7h",
+        "fecha": "14h"
+      },
+      {
+        "dias": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "rotulo": "Domingo a sexta",
+        "fechado": "Sem feira"
+      }
+    ],
+    "semFeira": [
+      "2026-11-28",
+      "2026-12-19",
+      "2026-12-26",
+      "2027-01-02",
+      "2027-01-09",
+      "2027-01-16"
+    ],
+    "horariosNota": "Horário de inverno, de novembro de 2026 a março de 2027, como o organizador publica. O fim da feira depende do tempo e os objetos comprados têm de ser retirados até as 14h. O calendário do organizador vai até 16 de janeiro de 2027; as datas seguintes ele ainda não publicou.",
+    "lat": 48.136594,
+    "lon": 11.70638,
+    "calendarioAte": "2027-01-16"
+  },
+  "flohmarkt-im-olympiapark": {
+    "titulo": "Flohmarkt im Olympiapark: dias, horários e como chegar",
+    "descricao": "A feira de pulgas da Cruz Vermelha no Olympiapark, em português: sextas e sábados das 7h às 16h, entrada gratuita e como chegar de metrô.",
+    "local": "Parkharfe, no Olympiapark",
+    "endereco": "Parkharfe, Sapporobogen, 80809 München — as barracas começam no bloco 5",
+    "rua": "Sapporobogen",
+    "cep": "80809",
+    "transporte": "U3, estação Olympiazentrum",
+    "entrada": "Gratuita",
+    "organizador": "BRK-Kreisverband München",
+    "quando": "Sextas e sábados, das 7h às 16h",
+    "quandoNota": "Não há feira em 28 de novembro. A última de 2026 é em 19 de dezembro e a feira volta em 8 de janeiro de 2027",
+    "oQueE": [
+      "A feira do Olympiapark é organizada pela Cruz Vermelha da Baviera (BRK) e acontece o ano inteiro, às sextas e aos sábados, das 7h às 16h, na Parkharfe — a área de estacionamento em leque do parque, do lado do Sapporobogen.",
+      "É feira de pulgas clássica, não de curadoria: livros, discos, roupa de segunda mão, bicicletas velhas, miudezas. Boa parte das barracas é de moradores da região esvaziando o porão, e é aí que aparecem as peças antigas.",
+      "Quem caça pechincha chega às 7h, quando as barracas abrem. Quem vai passear pode ir mais tarde, com calma: o terreno é grande e muita coisa só aparece no segundo olhar.",
+      "Leve dinheiro em notas pequenas. Em feira de pulgas, boa parte dos vendedores não tem maquininha de cartão.",
+      "Quando há grande evento no Olympiapark, a feira não acontece. Como o calendário do parque muda, vale conferir no site antes de sair."
+    ],
+    "criancas": [
+      "A feira fica num estacionamento do parque: o chão é plano e carrinho de bebê anda bem, o que nem toda feira de pulgas oferece.",
+      "Há barracas e food trucks com lanche e bebida no próprio terreno.",
+      "Começa às 7h, no frio. Chegando mais tarde a feira continua até as 16h, e depois o parque inteiro está logo ali para esticar o passeio."
+    ],
+    "horarios": [
+      {
+        "dias": [
+          5,
+          6
+        ],
+        "rotulo": "Sexta e sábado",
+        "abre": "7h",
+        "fecha": "16h"
+      },
+      {
+        "dias": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "rotulo": "Domingo a quinta",
+        "fechado": "Sem feira"
+      }
+    ],
+    "semFeira": [
+      "2026-11-28",
+      "2026-12-25",
+      "2026-12-26",
+      "2027-01-01",
+      "2027-01-02"
+    ],
+    "horariosNota": "A feira não acontece em dia de grande evento no Olympiapark, por isso confira o calendário do parque antes de sair.",
+    "lat": 48.171366,
+    "lon": 11.539501
+  },
+  "antik-flohmarkt-daglfing": {
+    "titulo": "Antik- & Flohmarkt Daglfing: dias, horários e como chegar",
+    "descricao": "A feira de antiguidades e pulgas da Trabrennbahn Daglfing, em português: sextas e sábados, entrada gratuita, como chegar de ônibus e o que fazer se chover.",
+    "local": "Trabrennbahn München-Daglfing",
+    "endereco": "Rennbahnstraße 35, 81929 München",
+    "rua": "Rennbahnstraße 35",
+    "cep": "81929",
+    "transporte": "Ônibus 183, parada Trabrennbahn",
+    "transporteNota": "O 183 passa a cada 20 minutos e pega o S8 em Daglfing, o U4 em Arabellapark e o U2 em Messestadt West",
+    "entrada": "Gratuita",
+    "entradaNota": "O estacionamento de visitantes custa 4 euros aos sábados; às sextas o organizador está deixando de graça",
+    "quando": "Sextas, das 7h às 15h; sábados, das 6h às 16h",
+    "quandoNota": "Todo fim de semana, menos feriados: isso tira 25 e 26 de dezembro e 1º de janeiro",
+    "oQueE": [
+      "A feira acontece no terreno aberto ao lado da pista do hipódromo de Daglfing, às sextas e aos sábados. É ao mesmo tempo feira de pulgas e de antiguidades, com mais de dois mil lugares de estacionamento no próprio terreno.",
+      "O sábado começa às 6h da manhã, mais cedo que qualquer outra feira grande de Munique, e vai até as 16h. Na sexta é das 7h às 15h.",
+      "É a feira a escolher quando a previsão é de chuva: no terreno há uma casa de antiguidades coberta e um restaurante com café, onde dá para esperar a pancada passar sem ir embora.",
+      "Além das barracas de usados, há vendedores de produtos novos e de comida."
+    ],
+    "criancas": [
+      "O organizador diz que roupa de criança e de bebê, brinquedo e coisas de enxoval aparecem sempre em quantidade, mesmo não sendo uma feira só de infantil.",
+      "A casa de antiguidades e o restaurante são cobertos: com criança pequena, isso é a diferença entre ficar e desistir quando começa a chover.",
+      "Não precisa chegar às 6h. A feira vai até as 16h aos sábados, e com criança o meio da manhã rende mais."
+    ],
+    "horarios": [
+      {
+        "dias": [
+          5
+        ],
+        "rotulo": "Sexta",
+        "abre": "7h",
+        "fecha": "15h"
+      },
+      {
+        "dias": [
+          6
+        ],
+        "rotulo": "Sábado",
+        "abre": "6h",
+        "fecha": "16h"
+      },
+      {
+        "dias": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "rotulo": "Domingo a quinta",
+        "fechado": "Sem feira"
+      }
+    ],
+    "horariosNota": "Em feriado não há feira. O próprio site do organizador escreve 15h para o sábado em uma página e 16h no calendário de datas; aqui está o 16h do calendário, que é a parte atualizada a cada semana.",
+    "semFeira": [
+      "2026-12-25",
+      "2026-12-26",
+      "2027-01-01"
+    ]
   }
 }

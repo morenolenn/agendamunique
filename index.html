@@ -951,18 +951,18 @@ var EVENTS = [
     en: { d: "Neighbourhood market on the four days before the last Advent weekend." } }
 ];
 var WEEKLY = [
-  { t: "Flohmarkt München-Riem", type: "floh", when: "Sábados, das 7h às 14h (horário de inverno)", place: "Riem", q: "Flohmarkt München-Riem", url: "https://www.flohmarkt-riem.com/", kids: true, dow: 6, rrule: "FREQ=WEEKLY;BYDAY=SA", note: "Não há feira em 28/11, 19/12 e 26/12.",
+  { t: "Flohmarkt München-Riem", type: "floh", when: "Sábados, das 7h às 14h (horário de inverno)", place: "Riem", q: "Flohmarkt München-Riem", url: "https://www.flohmarkt-riem.com/", kids: true, dow: 6, rrule: "FREQ=WEEKLY;BYDAY=SA", note: "Não há feira em 28/11. A última do ano é em 12/12; depois não há feira até pelo menos 16/1.",
     d: "Feira de pulgas semanal, indicada para toda a família.",
-    de: { when: "Samstags, 7 bis 14 Uhr (Winterzeit)", note: "Kein Markt am 28.11., 19.12. und 26.12.", d: "Wöchentlicher Flohmarkt, für die ganze Familie geeignet." },
-    en: { when: "Saturdays, 7am to 2pm (winter hours)", note: "No market on 28 November, 19 December or 26 December.", d: "Weekly flea market, good for the whole family." } },
+    de: { when: "Samstags, 7 bis 14 Uhr (Winterzeit)", note: "Kein Markt am 28.11. Der letzte Termin des Jahres ist der 12.12.; danach fällt der Markt bis mindestens 16.1. aus.", d: "Wöchentlicher Flohmarkt, für die ganze Familie geeignet." },
+    en: { when: "Saturdays, 7am to 2pm (winter hours)", note: "No market on 28 November. The last one of the year is on 12 December; after that there is no market until at least 16 January.", d: "Weekly flea market, good for the whole family." } },
   { t: "Flohmarkt im Olympiapark", type: "floh", when: "Sextas e sábados, 7h às 16h", place: "Parkharfe, Olympiapark", q: "Parkharfe Olympiapark München", url: "https://www.olympiapark.de/de/veranstaltungen/flohmarkt", dow: 6, rrule: "FREQ=WEEKLY;BYDAY=FR,SA", note: "Não há feira em 28/11; a última do ano é em 19/12 e volta em 8/1.",
     d: "Feira de pulgas da Cruz Vermelha (BRK) ao ar livre no Olympiapark. Não acontece em dias de grandes eventos no parque.",
     de: { when: "Freitags und samstags, 7 bis 16 Uhr", note: "Kein Markt am 28.11.; letzter Termin im Jahr am 19.12., weiter geht's am 8.1.", d: "Flohmarkt des BRK unter freiem Himmel im Olympiapark. Fällt bei Großveranstaltungen im Park aus." },
     en: { when: "Fridays and Saturdays, 7am to 4pm", note: "No market on 28 November; the last one of the year is on 19 December and it returns on 8 January.", d: "Open-air flea market run by the Bavarian Red Cross (BRK) in the Olympiapark. It does not take place during big events in the park." } },
-  { t: "Antik- & Flohmarkt Daglfing", type: "floh", when: "Sextas e sábados em datas selecionadas, 7h às 15h", place: "Trabrennbahn, Rennbahnstraße 35", q: "Trabrennbahn München-Daglfing", url: "https://flohmarkt-daglfing.de/", kids: true, dow: 6, note: "Datas selecionadas: confira o calendário do organizador antes de ir.",
-    d: "Feira de antiguidades e pulgas no hipódromo. Veja o calendário do organizador para as datas.",
-    de: { when: "Freitags und samstags an ausgewählten Terminen, 7 bis 15 Uhr", note: "Ausgewählte Termine: vor dem Besuch den Kalender des Veranstalters prüfen.", d: "Antik- und Flohmarkt auf der Trabrennbahn. Die Termine stehen im Kalender des Veranstalters." },
-    en: { when: "Selected Fridays and Saturdays, 7am to 3pm", note: "Selected dates only: check the organiser's calendar before you go.", d: "Antiques and flea market at the trotting track. See the organiser's calendar for dates." } }
+  { t: "Antik- & Flohmarkt Daglfing", type: "floh", when: "Sextas, 7h às 15h; sábados, 6h às 16h", place: "Trabrennbahn, Rennbahnstraße 35", q: "Trabrennbahn München-Daglfing", url: "https://flohmarkt-daglfing.de/", kids: true, dow: 6, note: "Todo fim de semana, menos feriados. Confira o calendário do organizador antes de ir.",
+    d: "Feira de antiguidades e pulgas no hipódromo, com casa de antiguidades e restaurante cobertos para o caso de chuva.",
+    de: { when: "Freitags 7 bis 15 Uhr, samstags 6 bis 16 Uhr", note: "Jedes Wochenende außer an Feiertagen. Vor dem Besuch den Kalender des Veranstalters prüfen.", d: "Antik- und Flohmarkt auf der Trabrennbahn, mit überdachtem Antikhaus und Restaurant bei Regen." },
+    en: { when: "Fridays 7am to 3pm, Saturdays 6am to 4pm", note: "Every weekend except public holidays. Check the organiser's calendar before you go.", d: "Antiques and flea market at the trotting track, with an indoor antiques hall and restaurant for rainy days." } }
 ];
 // Destaque do hero: ilustração de um evento especial no lugar da cidade 3D, só entre s e e (inclusive).
 // Arte: PNG/WebP com fundo transparente, cena compacta perto de 4:3, sem texto. Para tirar, use DESTAQUE = null.
@@ -1328,7 +1328,7 @@ function row(ev, today, weekly) {
   var cal = '<button type="button" class="act" data-ics="' + ev.id + '">' + L.addCal + "</button>" +
     (ev.url ? '<a class="act" href="' + esc(ev.url) + '" target="_blank" rel="noopener">' + L.site + ' <span aria-hidden="true">↗</span></a>' : "");
   // As páginas de evento são só em português por enquanto, por isso o link não aparece em de/en
-  var temPagina = !weekly && lang === "pt";
+  var temPagina = lang === "pt";
   var pagina = "/evento/" + ev.id + "/";
   var titulo = esc(tr(ev, "t"));
   if (temPagina) titulo = '<a class="ir" href="' + pagina + '">' + titulo + "</a>";

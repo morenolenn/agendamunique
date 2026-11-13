@@ -4,8 +4,10 @@
     "descricao": "O mercado de Natal principal de Munique, em português: datas, horário de cada dia, entrada, o que tem para crianças e como chegar de U-Bahn e S-Bahn.",
     "local": "Marienplatz e zona de pedestres",
     "endereco": "Marienplatz 1, 80331 München",
-    "rua": "Marienplatz 1", "cep": "80331",
-    "lat": 48.1373, "lon": 11.5754,
+    "rua": "Marienplatz 1",
+    "cep": "80331",
+    "lat": 48.1373,
+    "lon": 11.5754,
     "transporte": "U3/U6 e S1 a S8, estação Marienplatz",
     "transporteNota": "A saída dá direto na praça",
     "entrada": "Gratuita",
@@ -23,11 +25,719 @@
       "De domingo a quinta, às 17h15, tem música ao vivo na sacada da prefeitura. São uns 20 minutos, e é o melhor momento para estar na praça com as crianças."
     ],
     "horarios": [
-      { "dias": [1, 2, 3, 4, 5, 6], "rotulo": "Segunda a sábado", "abre": "10h", "fecha": "21h" },
-      { "dias": [0], "rotulo": "Domingo", "abre": "10h", "fecha": "20h" },
-      { "data": "2026-12-24", "rotulo": "24 de dezembro", "abre": "10h", "fecha": "14h" },
-      { "data": "2026-11-22", "rotulo": "22 de novembro", "fechado": "Fechado (Totensonntag)" }
+      {
+        "dias": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "rotulo": "Segunda a sábado",
+        "abre": "10h",
+        "fecha": "21h"
+      },
+      {
+        "dias": [
+          0
+        ],
+        "rotulo": "Domingo",
+        "abre": "10h",
+        "fecha": "20h"
+      },
+      {
+        "data": "2026-12-24",
+        "rotulo": "24 de dezembro",
+        "abre": "10h",
+        "fecha": "14h"
+      },
+      {
+        "data": "2026-11-22",
+        "rotulo": "22 de novembro",
+        "fechado": "Fechado (Totensonntag)"
+      }
     ],
     "horariosNota": "Os horários são os publicados pelo organizador. Em dias de muita chuva ou vento forte algumas barracas fecham antes."
+  },
+  "tollwood-winterfestival": {
+    "titulo": "Tollwood de inverno 2026: horários, entrada e como chegar",
+    "descricao": "O Tollwood Winterfestival na Theresienwiese, em português: horário de cada dia, o que tem no Markt der Ideen, programação para crianças e como chegar de U-Bahn.",
+    "local": "Theresienwiese",
+    "endereco": "Theresienwiese, 80336 München",
+    "transporte": "U4/U5, estação Theresienwiese",
+    "transporteNota": "U3/U6 até Goetheplatz também dá, com uma caminhada curta",
+    "entrada": "Gratuita",
+    "entradaNota": "Entrar no terreno e no mercado não paga nada. Dos 416 eventos da programação, cerca de 90% são de graça; os espetáculos do Grand Chapiteau pedem ingresso",
+    "quandoNota": "Depois do dia 23 o festival só volta em 31 de dezembro, para a festa de Ano-Novo",
+    "organizador": "Tollwood GmbH",
+    "oQueE": [
+      "É o maior evento de inverno de Munique e o menos parecido com os outros mercados. Acontece na Theresienwiese, o mesmo campo da Oktoberfest, e quase tudo fica dentro de tendas enormes. O coração é o <strong>Markt der Ideen</strong>, com cerca de 200 expositores de artesanato internacional, roupa, joia, decoração e presentes, boa parte de comércio justo.",
+      "A comida é toda certificada orgânica, em mais de 50 barracas, de petisco a prato quente de vários países. É o lugar da cidade onde uma família com restrição alimentar tem mais escolha, inclusive vegetariana e vegana, o que nos mercados tradicionais costuma ser difícil.",
+      "Como é coberto, é o único que funciona bem em dia de chuva ou frio forte — e justamente por isso fica cheio quando o tempo está ruim. Nas tendas também rolam uns 70 shows no Hexenkessel, todos de entrada franca, então dá para passar a tarde e emendar a noite sem gastar ingresso."
+    ],
+    "criancas": [
+      "Tem programação infantil própria todos os dias. No <strong>Performanceplatz</strong>, três mini-palcos itinerantes apresentam teatro de bonecos, arte com objetos e peças curtas. Algumas sessões têm lugar limitado e pedem reserva, que é gratuita.",
+      "No <strong>Cube</strong>, também de graça, tem acrobacia, música e espetáculo de fogo ao longo do dia. É o tipo de atração que prende criança pequena sem precisar comprar nada.",
+      "Para crianças maiores e adolescentes, as três produções do Grand Chapiteau são circo contemporâneo de verdade, com ingresso: <em>Ten Thousand Hours</em> de 25 a 29 de novembro, <em>Triptych</em> de 2 a 9 de dezembro e <em>Mad in Finland</em> de 12 a 20 de dezembro."
+    ],
+    "horarios": [
+      {
+        "dias": [
+          1
+        ],
+        "rotulo": "Segunda",
+        "abre": "14h",
+        "fecha": "22h30"
+      },
+      {
+        "dias": [
+          2,
+          3,
+          4,
+          5
+        ],
+        "rotulo": "Terça a sexta",
+        "abre": "14h",
+        "fecha": "23h30"
+      },
+      {
+        "dias": [
+          6
+        ],
+        "rotulo": "Sábado",
+        "abre": "11h",
+        "fecha": "23h30"
+      },
+      {
+        "dias": [
+          0
+        ],
+        "rotulo": "Domingo",
+        "abre": "11h",
+        "fecha": "22h30"
+      },
+      {
+        "data": "2026-12-23",
+        "rotulo": "23 de dezembro, último dia",
+        "abre": "14h",
+        "fecha": "22h"
+      }
+    ],
+    "horariosNota": "Os horários são os do Markt der Ideen. Os espetáculos com ingresso têm horário próprio, no site do festival."
+  },
+  "mercado-de-natal-da-torre-chinesa": {
+    "titulo": "Mercado de Natal da Torre Chinesa 2026: horários e o que tem",
+    "descricao": "O Weihnachtsmarkt am Chinesischen Turm, no Jardim Inglês, em português: dias e horários, Eisstock, carrossel antigo e o que esperar com crianças.",
+    "local": "Chinesischer Turm, Englischer Garten",
+    "endereco": "Englischer Garten 3, 80538 München",
+    "entrada": "Gratuita",
+    "entradaNota": "As pistas de Eisstock, o carrossel, o trenzinho e os passeios de charrete são pagos à parte",
+    "quandoNota": "Só de quarta a domingo, mais os dias 21, 22 e 23 de dezembro",
+    "organizador": "Weihnachtsmarkt am Chinesischen Turm",
+    "oQueE": [
+      "Fica no meio do Jardim Inglês, em volta da pagoda de madeira que dá nome ao lugar — o mesmo quiosque do famoso Biergarten de verão. É o mercado mais bonito da cidade ao anoitecer, quando as luzes acendem entre as árvores, e o único em que você chega atravessando um parque em vez de uma rua movimentada.",
+      "As barracas são de madeira, com artesanato e arte, e a cozinha trabalha com carne de produtores regionais e legumes do entorno de Munique. Tem Ochsensemmel (o sanduíche de boi da Ochsenbraterei, com versão vegana), Käsespätzle, Schupfnudeln com chucrute, salmão na brasa, crepe, waffle e castanha assada.",
+      "Para beber tem Glühwein branco e tinto feito na casa, Eierpunsch e, sem álcool, o ponche de laranja sanguínea e o <em>Engelstrunk</em> — vale pedir para as crianças em vez de procurar refrigerante."
+    ],
+    "criancas": [
+      "Tem um <strong>carrossel infantil antigo</strong> e um <strong>trenzinho</strong>, as duas atrações que seguram criança pequena por mais tempo. São pagos na hora.",
+      "As <strong>pistas de Eisstock</strong>, o boliche no gelo da Baviera, funcionam com reserva pela internet em blocos de horário (happy hour, 14h às 17h e 17h às 20h). São duas pistas em paralelo, até 10 pessoas em cada — funciona bem para festa de aniversário ou grupo de famílias.",
+      "O <strong>Nikolaus</strong> aparece nos dias 5 e 6 de dezembro a partir do meio-dia. E tem música quase todos os dias: Turmbläser (sopro na torre) nos fins de semana das 16h às 19h, corais, tocadores de trompa alpina e, nos dias 27 de novembro e 18 de dezembro, os Brucker Perchten — as figuras assustadoras do inverno alpino, que podem apavorar criança pequena."
+    ],
+    "horarios": [
+      {
+        "dias": [
+          3,
+          4,
+          5
+        ],
+        "rotulo": "Quarta a sexta",
+        "abre": "11h30",
+        "fecha": "20h30"
+      },
+      {
+        "dias": [
+          6,
+          0
+        ],
+        "rotulo": "Sábado e domingo",
+        "abre": "11h",
+        "fecha": "20h30"
+      },
+      {
+        "dias": [
+          1,
+          2
+        ],
+        "rotulo": "Segunda e terça",
+        "fechado": "Fechado"
+      },
+      {
+        "data": "2026-12-21",
+        "rotulo": "21 de dezembro",
+        "abre": "11h",
+        "fecha": "20h30"
+      },
+      {
+        "data": "2026-12-22",
+        "rotulo": "22 de dezembro",
+        "abre": "11h",
+        "fecha": "20h30"
+      },
+      {
+        "data": "2026-12-23",
+        "rotulo": "23 de dezembro",
+        "abre": "11h",
+        "fecha": "20h30"
+      }
+    ],
+    "horariosNota": "No dia 22 de novembro, o Totensonntag, o calendário do mercado marca dia de silêncio, sem programação musical."
+  },
+  "mercado-de-natal-do-viktualienmarkt": {
+    "titulo": "Winterzauber no Viktualienmarkt 2026: horários e o que tem",
+    "descricao": "O Winterzauber no Viktualienmarkt, em português: horário de cada dia, o que as barracas vendem no inverno, o presépio e a visita do Nikolaus.",
+    "local": "Viktualienmarkt",
+    "endereco": "Viktualienmarkt, 80331 München",
+    "transporte": "U3/U6 e S1 a S8, estação Marienplatz",
+    "transporteNota": "É uma quadra a pé do Marienplatz",
+    "entrada": "Gratuita",
+    "entradaNota": "É o mercado de rua de sempre, com as barracas vendendo também coisas de inverno",
+    "quandoNota": "Não funciona aos domingos nem em feriado",
+    "organizador": "Landeshauptstadt München",
+    "oQueE": [
+      "O Winterzauber não é um mercado montado do zero: é o próprio Viktualienmarkt, a feira permanente de Munique, que no inverno ganha luzes e 29 barraqueiros ampliando o que vendem. Por isso tem uma cara diferente dos outros — é o lugar onde os moradores fazem compra, não um cenário armado para dezembro.",
+      "Entre as coisas da estação aparecem Glüh-Aperol, petiscos de caça, langos em várias versões e galettes frescas, além de Glühwein. Também tem produto e presente que não se acha nos mercados de Natal comuns, como roupa de lã batida.",
+      "Nesta temporada falta o símbolo da praça: o Maibaum foi desmontado em setembro de 2026 e o novo só será erguido em 9 de maio de 2027. Se você vier atrás da foto clássica com o mastro azul e branco, ele não está lá."
+    ],
+    "criancas": [
+      "No Biergarten fica um <strong>presépio especial</strong>, que em vez da cena de Belém retrata o próprio movimento do Viktualienmarkt. É pequeno e fácil de achar as figuras com as crianças.",
+      "O <strong>Nikolaus</strong> passa no dia 4 de dezembro, das 16h às 18h, no Biergarten.",
+      "Por ser um mercado de verdade e não um corredor de barracas, é o mais tranquilo do centro para andar com carrinho de bebê durante a manhã. Depois das 17h, quando o pessoal sai do trabalho, enche."
+    ],
+    "horarios": [
+      {
+        "dias": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "rotulo": "Segunda a sábado",
+        "abre": "10h",
+        "fecha": "20h"
+      },
+      {
+        "dias": [
+          0
+        ],
+        "rotulo": "Domingo",
+        "fechado": "Fechado"
+      }
+    ],
+    "horariosNota": "Aos domingos e feriados o mercado não funciona. O organizador anuncia duas noites longas, até 22h30, em 28 de novembro e 13 de dezembro."
+  },
+  "weihnachtsdorf-na-residenz": {
+    "titulo": "Weihnachtsdorf na Residenz 2026: horários, Märchenwald e como chegar",
+    "descricao": "A vila de Natal no Kaiserhof da Residenz, em português: horários, o bosque de contos gratuito, Kasperletheater, pintura de rosto e visita do Nikolaus.",
+    "local": "Kaiserhof da Residenz",
+    "endereco": "Residenzstraße 1, 80333 München",
+    "transporte": "Estação Odeonsplatz (U3, U4, U5 e U6)",
+    "transporteNota": "A entrada do pátio é pela Residenzstraße",
+    "entrada": "Gratuita",
+    "entradaNota": "O Märchenwald, o teatro de fantoches e a pintura de rosto também são de graça",
+    "quandoNota": "Fechado em 22 de novembro",
+    "organizador": "Das Weihnachtsdorf",
+    "oQueE": [
+      "Acontece dentro do Kaiserhof, um dos pátios internos da Residenz, o antigo palácio dos reis da Baviera. Por ser um pátio fechado, o vento não entra e o barulho da cidade fica do lado de fora — é bem mais calmo que os mercados de praça, embora receba mais de 100 mil pessoas por temporada.",
+      "São mais de 50 barracas de artesanato, com destaque para presépios e figuras de madeira feitas à mão, no estilo tradicional da Baviera. A casa faz o próprio Eierpunsch e serve Glühwein em várias versões, com preços que o organizador chama de populares — na prática, mais baratos que os do Marienplatz.",
+      "Está no 19º ano e faz campanha para a fundação do hospital infantil domiciliar de Munique (Ambulantes Kinderhospiz), com arrecadação no próprio mercado."
+    ],
+    "criancas": [
+      "O <strong>Märchenwald</strong>, o bosque de contos de fadas, é gratuito: as cenas se animam quando a criança aperta o botão. É a melhor atração para crianças pequenas entre todos os mercados do centro, e não tem fila como a do Marienplatz.",
+      "O <strong>Kasperletheater</strong>, teatro de fantoches, é de graça, das 15h às 16h, nos dias 23 e 30 de novembro e 8 e 14 de dezembro. A <strong>pintura de rosto</strong>, também gratuita, vai das 16h às 18h nos dias 24 de novembro, 1, 9 e 15 de dezembro.",
+      "O <strong>Nikolaus</strong> vem duas vezes, nos dias 6 e 7 de dezembro, sempre a partir das 17h, e traz presentes — só enquanto durarem, então vale chegar antes das 17h."
+    ],
+    "horarios": [
+      {
+        "dias": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "rotulo": "Todos os dias",
+        "abre": "11h",
+        "fecha": "21h"
+      },
+      {
+        "data": "2026-11-22",
+        "rotulo": "22 de novembro",
+        "fechado": "Fechado (Totensonntag)"
+      },
+      {
+        "data": "2026-12-22",
+        "rotulo": "22 de dezembro, último dia",
+        "abre": "11h",
+        "fecha": "20h"
+      }
+    ],
+    "horariosNota": "Os horários são os publicados pelo organizador."
+  },
+  "mercado-de-natal-medieval": {
+    "titulo": "Mercado de Natal Medieval de Munique 2026: horários e o que tem",
+    "descricao": "O Mittelaltermarkt no Wittelsbacherplatz, em português: horários, o que tem de artesanato e história e como é com crianças.",
+    "local": "Wittelsbacher Platz",
+    "endereco": "Brienner Straße 6-10, 80333 München",
+    "entrada": "Gratuita",
+    "entradaNota": "As canecas são cópias de peças históricas e costumam ter caução, devolvida na entrega",
+    "quandoNota": "Fechado em 22 de novembro",
+    "organizador": "Mittelaltermarkt München",
+    "oQueE": [
+      "Acontece desde 2005 no Wittelsbacherplatz, uma praça fechada por palacetes na Maxvorstadt, e é o mercado de Natal mais caracterizado de Munique: as barracas, as roupas e até os copos reproduzem o jeito de uma feira medieval, com ofícios sendo feitos na frente de quem passa.",
+      "A ligação com a história da cidade é levada a sério. Num dos balcões de Glühwein fica uma escultura em madeira de Jörg Kazmair, o primeiro prefeito de Munique, que viveu entre 1350 e 1417 — o original está no Alte Rathaus. Feiras de Advento aparecem nos estatutos da cidade já em 1320.",
+      "Tem programação cultural em todos os fins de semana do Advento. Em 2026 o mercado abriu quatro dias mais cedo que de costume, no dia 20 de novembro."
+    ],
+    "criancas": [
+      "É o mercado que mais prende a atenção de criança sem precisar de brinquedo: artesão trabalhando ao vivo, ferreiro, fogo aceso e gente fantasiada circulando o tempo todo.",
+      "A praça é pequena e fechada, o que ajuda a não perder criança de vista, mas também significa que à noite fica apertada. Com carrinho de bebê, o melhor horário é o começo da tarde.",
+      "Vale avisar antes: a estética medieval inclui figuras sombrias e fogo, e algumas crianças pequenas se assustam."
+    ],
+    "horarios": [
+      {
+        "dias": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "rotulo": "Todos os dias",
+        "abre": "11h",
+        "fecha": "21h"
+      },
+      {
+        "data": "2026-11-22",
+        "rotulo": "22 de novembro",
+        "fechado": "Fechado (Totensonntag)"
+      }
+    ],
+    "horariosNota": "Os horários são os publicados pelo organizador."
+  },
+  "schwabinger-weihnachtsmarkt": {
+    "titulo": "Mercado de Natal de Schwabing 2026: horários, arte e programação",
+    "descricao": "O Schwabinger Weihnachtsmarkt na Münchner Freiheit, em português: horários, o programa gratuito de música e de crianças e os 50 anos do mercado.",
+    "local": "Münchner Freiheit, Schwabing",
+    "endereco": "Münchner Freiheit, 80802 München",
+    "transporte": "U3/U6, estação Münchner Freiheit",
+    "transporteNota": "A saída dá na própria praça",
+    "entrada": "Gratuita",
+    "entradaNota": "O programa de música, o programa infantil e a visita guiada pela cidade também são de graça",
+    "quandoNota": "Em 24 de dezembro fecha às 14h",
+    "organizador": "Schwabinger Weihnachtsmarkt e.V.",
+    "oQueE": [
+      "Existe desde 1976 e faz 50 anos em 2026. O que o diferencia é quem o organiza: os próprios artistas que expõem ali — não uma empresa nem a prefeitura. Isso se nota no que está à venda, que é arte e artesanato feito à mão, não produto de revenda.",
+      "Fica na Münchner Freiheit, no meio de Schwabing, o bairro boêmio de Munique. É menor e mais calmo que os do centro, e é onde faz mais sentido ir se você quer comprar um presente que não se acha em outro lugar.",
+      "A gastronomia fecha meia hora depois das barracas, às 21h, então dá para continuar com o Glühwein depois que as compras acabam."
+    ],
+    "criancas": [
+      "Tem <strong>programa infantil gratuito</strong> no palco de música, além de oficinas com os próprios artistas — a chance de a criança ver como a peça é feita, e não só vê-la pronta.",
+      "O <strong>Nikolaus</strong> vem em 6 de dezembro. Em 5 de dezembro tem o show de papel de Lorenzo Torres, e nos dias 7 e 9 de dezembro, das 12h às 15h30, o <em>Portrait to go</em>, retrato feito na hora.",
+      "Tem também um jogo de procurar pelo mercado para as crianças, e em 13 de dezembro, às 14h30, uma visita guiada gratuita."
+    ],
+    "horarios": [
+      {
+        "dias": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "rotulo": "Segunda a sexta",
+        "abre": "12h",
+        "fecha": "20h30"
+      },
+      {
+        "dias": [
+          6,
+          0
+        ],
+        "rotulo": "Sábado e domingo",
+        "abre": "11h",
+        "fecha": "20h30"
+      },
+      {
+        "data": "2026-12-24",
+        "rotulo": "24 de dezembro",
+        "abre": "11h",
+        "fecha": "14h"
+      }
+    ],
+    "horariosNota": "As barracas fecham nesses horários; a gastronomia segue até as 21h. O programa gratuito de música é de terça a domingo, às 18h."
+  },
+  "marchenbazar": {
+    "titulo": "Märchenbazar 2026: horários, circo e programação infantil",
+    "descricao": "O Märchenbazar no Olympiapark Süd, em português: horários de cada dia, as tendas de circo, o programa infantil gratuito e como chegar de tram e ônibus.",
+    "local": "Olympiapark Süd, antigo terreno do Tollwood de verão",
+    "endereco": "Spiridon-Louis-Ring 100, 80809 München",
+    "transporte": "Tram 12, 20 ou 21, ou ônibus 53, 59 e 144",
+    "transporteNota": "Pontos Olympiaberg, Infanteriestraße, Leonrodplatz e Heideckstraße. Não há estacionamento no local",
+    "entrada": "Confira no site oficial",
+    "entradaNota": "O programa infantil diário é gratuito. A festa de Ano-Novo, em 31 de dezembro, tem ingresso à parte",
+    "quandoNota": "Fechado em 24 de dezembro; segue aberto entre o Natal e o fim do ano",
+    "organizador": "Märchenbazar",
+    "oQueE": [
+      "É um mercado de inverno montado em tendas de circo antigas e construções de parque de diversões de época, no terreno onde acontece o Tollwood de verão. A proposta é nostálgica: névoa, luzes quentes e um ar de feira do começo do século, bem diferente das barracas de madeira dos mercados tradicionais.",
+      "Dentro das tendas tem números de circo e apresentações artísticas, e música ao vivo todos os dias nos palcos — de artistas da cidade a atrações de outros países.",
+      "É dos poucos que continuam abertos depois do Natal, até 28 de dezembro, o que resolve aquela semana morta entre o dia 25 e o Ano-Novo em que quase tudo em Munique fecha."
+    ],
+    "criancas": [
+      "Tem <strong>programa infantil gratuito todos os dias</strong>: hora do conto, fabricação de velas de cera, teatro de fantoches e oficinas de artesanato. É o mercado com a programação infantil mais consistente da cidade — não depende de ser fim de semana.",
+      "Como quase tudo fica dentro de tenda, funciona em dia de chuva. Nos dias de semana só abre às 14h, então não serve para manhã de criança pequena; no domingo abre às 11h.",
+      "Não tem estacionamento no terreno, e o organizador pede para ir de transporte público ou bicicleta. Com carrinho de bebê, o tram 20 ou 21 até Heideckstraße é o caminho mais curto."
+    ],
+    "horarios": [
+      {
+        "dias": [
+          1,
+          2,
+          3
+        ],
+        "rotulo": "Segunda a quarta",
+        "abre": "14h",
+        "fecha": "22h"
+      },
+      {
+        "dias": [
+          4,
+          5
+        ],
+        "rotulo": "Quinta e sexta",
+        "abre": "14h",
+        "fecha": "23h"
+      },
+      {
+        "dias": [
+          6
+        ],
+        "rotulo": "Sábado",
+        "abre": "12h",
+        "fecha": "23h"
+      },
+      {
+        "dias": [
+          0
+        ],
+        "rotulo": "Domingo",
+        "abre": "11h",
+        "fecha": "21h"
+      },
+      {
+        "data": "2026-12-24",
+        "rotulo": "24 de dezembro",
+        "fechado": "Fechado"
+      },
+      {
+        "data": "2026-12-25",
+        "rotulo": "25 de dezembro",
+        "abre": "12h",
+        "fecha": "21h"
+      },
+      {
+        "data": "2026-12-26",
+        "rotulo": "26 de dezembro",
+        "abre": "12h",
+        "fecha": "21h"
+      },
+      {
+        "data": "2026-12-27",
+        "rotulo": "27 de dezembro",
+        "abre": "11h",
+        "fecha": "21h"
+      },
+      {
+        "data": "2026-12-28",
+        "rotulo": "28 de dezembro, último dia",
+        "abre": "14h",
+        "fecha": "22h"
+      }
+    ],
+    "horariosNota": "Os horários são os publicados pelo organizador."
+  },
+  "munchner-eiszauber": {
+    "titulo": "Münchner Eiszauber 2026: preços, horários e patinação no Stachus",
+    "descricao": "A pista de patinação no gelo do Stachus, em português: preço por bloco de horário, aluguel de patins e capacete, horários e descontos para crianças.",
+    "local": "Karlsplatz (Stachus)",
+    "endereco": "Karlsplatz, 80335 München",
+    "transporte": "U-Bahn e S-Bahn, estação Karlsplatz (Stachus)",
+    "transporteNota": "A pista fica na praça, em cima da saída da estação",
+    "entrada": "Paga, por bloco de horário",
+    "entradaNota": "Adulto (a partir de 12 anos) de 8 a 14 euros e criança (até 11) de 6 a 10 euros, conforme o horário. Só se paga com cartão em todo o terreno",
+    "quandoNota": "Vai até 10 de janeiro, bem depois dos mercados de Natal",
+    "organizador": "Münchner Eiszauber",
+    "oQueE": [
+      "É a maior pista de patinação ao ar livre de Munique: 750 metros quadrados de gelo no meio do Stachus, uma das praças mais movimentadas da cidade. Não é um mercado de Natal, é um evento de patinação com barracas em volta.",
+      "O gelo é vendido em blocos de duas horas e meia. Quanto mais tarde, mais caro: das 10h30 às 13h custa 8 euros para adulto e 6 para criança; das 13h30 às 16h, 10 e 8; das 16h30 às 19h, 12 e 8; e das 19h30 às 22h, 14 e 10 euros. Quem tem o Münchner Ferienpass ou Familienpass paga 2 euros a menos.",
+      "Em volta da pista ficam a Schmankerl-Hütte, com comida, e a Glühwein-Alm. <strong>Em todo o terreno só se paga com cartão</strong>, sem dinheiro vivo — a única exceção é a caução dos patins. Vale saber antes de chegar com as crianças."
+    ],
+    "criancas": [
+      "O <strong>aluguel de patins</strong> custa 8 euros o par, com caução de 50 euros ou documento de identidade. O <strong>capacete</strong> sai por 3 euros, com caução de 30 euros — para criança que está aprendendo, vale os 3 euros.",
+      "O bloco da manhã, das 10h30 às 13h, é o mais barato e o mais vazio: melhor momento para criança pequena treinar sem ser atropelada.",
+      "Creches e turmas de escola pagam 4 euros por criança de segunda a sexta nos dois primeiros blocos, com acompanhantes de graça, mediante pedido por e-mail ao organizador.",
+      "Quem patina a temporada inteira pode comprar o passe de 80 euros para adulto e 50 para criança."
+    ],
+    "horarios": [
+      {
+        "dias": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "rotulo": "Todos os dias",
+        "abre": "10h30",
+        "fecha": "22h"
+      },
+      {
+        "data": "2026-12-24",
+        "rotulo": "24 de dezembro",
+        "abre": "10h30",
+        "fecha": "16h"
+      },
+      {
+        "data": "2026-12-31",
+        "rotulo": "31 de dezembro",
+        "abre": "10h30",
+        "fecha": "18h"
+      }
+    ],
+    "horariosNota": "Em 31 de dezembro a patinação vai só até as 16h. Nos dias 15 e 22 de novembro o gelo fica fechado, mas a Schmankerl-Hütte e a Glühwein-Alm abrem normalmente."
+  },
+  "pink-christmas": {
+    "titulo": "Pink Christmas 2026: horários, shows e programação no Stephansplatz",
+    "descricao": "O mercado de Natal queer de Munique, no Stephansplatz, em português: horários, programação de shows e o que esperar da praça.",
+    "local": "Stephansplatz, Glockenbachviertel",
+    "endereco": "Stephansplatz, Glockenbachviertel, München",
+    "entrada": "Gratuita",
+    "entradaNota": "Os shows no palco também são de graça",
+    "quandoNota": "Fechado em 22 de novembro",
+    "organizador": "Pink Christmas",
+    "oQueE": [
+      "É o mercado de Natal queer de Munique, no Stephansplatz, dentro do Glockenbachviertel — o bairro que concentra a vida LGBT+ da cidade. Está no 22º ano e em 2026 ganhou autorização da Câmara Municipal para abrir mais cedo, no dia 20 de novembro.",
+      "São 30 noites de Glühwein com palco montado: música todas as noites, com DJ James Munich de segunda a sábado a partir das 18h, e seis shows grandes ao longo da temporada.",
+      "Em 1º de dezembro, Dia Mundial de Luta contra a Aids, a praça tem programação própria: às 17h a gravação ao vivo do podcast <em>Glockenbach LIVE</em> com integrantes dos Münchner Positive, e às 19h30 o programa da noite, com fala da ministra estadual Ulrike Scharf e show de Gloria Gray."
+    ],
+    "criancas": [
+      "É um mercado de fim de tarde e noite, com palco e música alta — a praça não tem atração montada para crianças, como carrossel ou oficina.",
+      "Se você quiser conhecer com a família, o melhor momento é sábado ou domingo logo na abertura, às 14h, antes de o programa de palco começar. A praça é pequena e fica cheia depois das 18h."
+    ],
+    "horarios": [
+      {
+        "dias": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "rotulo": "Segunda a sexta",
+        "abre": "16h",
+        "fecha": "22h"
+      },
+      {
+        "dias": [
+          6,
+          0
+        ],
+        "rotulo": "Sábado e domingo",
+        "abre": "14h",
+        "fecha": "22h"
+      },
+      {
+        "data": "2026-11-22",
+        "rotulo": "22 de novembro",
+        "fechado": "Fechado (Totensonntag)"
+      }
+    ],
+    "horariosNota": "Os horários são os publicados pelo organizador."
+  },
+  "haidhauser-weihnachtsmarkt": {
+    "titulo": "Mercado de Natal de Haidhausen 2026: horários e programação",
+    "descricao": "O Haidhauser Weihnachtsmarkt no Weißenburger Platz, em português: horários, o teatro do Kasperl para crianças e o que tem de comida e artesanato.",
+    "local": "Weißenburger Platz, Haidhausen",
+    "endereco": "Weißenburger Platz, 81667 München",
+    "entrada": "Gratuita",
+    "entradaNota": "Comida e bebida são pagas",
+    "quandoNota": "Em 24 de dezembro abre só das 10h às 14h",
+    "organizador": "Haidhauser Weihnachtsmarkt",
+    "oQueE": [
+      "Tem mais de 45 anos e é um dos mercados de bairro mais queridos de Munique. Fica no Weißenburger Platz, uma praça redonda com chafariz no meio de Haidhausen, cercada de prédios antigos — o enquadramento é um dos mais bonitos da cidade, e sem a multidão do centro.",
+      "Boa parte dos barraqueiros é a mesma há anos, o que dá ao mercado uma cara de encontro de vizinhos. Tem artesanato, ideias de presente, Glühwein, hidromel, vinho e cerveja de festa, além de barracas de salsicha, batata e salmão na brasa.",
+      "Nos fins de semana tem música ao vivo. No segundo domingo do Advento, às 10h30, acontece a tradicional oração ecumênica na frente do presépio — um momento calmo, antes de a praça encher."
+    ],
+    "criancas": [
+      "O <strong>Kasperl</strong>, o teatro de fantoches, se apresenta pelo menos duas vezes por semana. É a atração fixa para as crianças, e o organizador avisa as datas no site e no Instagram.",
+      "Por ser praça de bairro e não corredor de barracas, é dos melhores do centro expandido para ir com carrinho de bebê: tem espaço em volta do chafariz e bancos para sentar.",
+      "Para família com criança pequena, o horário de abertura, às 11h, é o melhor. À noite a praça vira ponto de encontro de adultos depois do trabalho."
+    ],
+    "horarios": [
+      {
+        "dias": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "rotulo": "Todos os dias",
+        "abre": "11h",
+        "fecha": "21h"
+      },
+      {
+        "data": "2026-11-22",
+        "rotulo": "22 de novembro",
+        "fechado": "Fechado (Totensonntag)"
+      },
+      {
+        "data": "2026-12-24",
+        "rotulo": "24 de dezembro",
+        "abre": "10h",
+        "fecha": "14h"
+      }
+    ],
+    "horariosNota": "Os horários são os publicados pelo organizador."
+  },
+  "mercado-de-natal-do-harry-potter": {
+    "titulo": "Mercado de Natal do Harry Potter 2026: horários e entrada",
+    "descricao": "O mercado de Natal do Harry Potter na Praterinsel, em português: horário de cada um dos nove dias, entrada e o que tem no local.",
+    "local": "Praterinsel",
+    "endereco": "Praterinsel 3-4, 80538 München",
+    "entrada": "Gratuita",
+    "entradaNota": "Comida, bebida e algumas atrações são pagas à parte",
+    "quandoNota": "São só nove dias, de 28 de novembro a 6 de dezembro",
+    "organizador": "Harry-Potter-Weihnachtsmarkt",
+    "oQueE": [
+      "Acontece na Praterinsel, uma ilha no rio Isar perto do centro, e é inteiramente inspirado em <em>Harry Potter e a Pedra Filosofal</em>. Segundo o organizador, é o primeiro mercado de Natal do mundo com esse tema oficial.",
+      "O lugar é montado como cenário: dá para tirar foto em vários ambientes da história, e tem ações e atrações temáticas espalhadas pela ilha. A comida e a bebida seguem o mesmo tema.",
+      "A entrada é gratuita, mas são apenas nove dias e o espaço da ilha é limitado — é o mercado desta lista com maior chance de fila. Nos dias de semana só abre às 14h."
+    ],
+    "criancas": [
+      "É o mercado mais indicado para criança que já conhece a história; para quem não leu nem assistiu, a graça se perde, porque quase tudo é referência.",
+      "O primeiro dia, 28 de novembro, abre só às 19h e vai até as 22h — tarde demais para criança pequena. Os melhores dias com família são 29 de novembro e 4, 5 e 6 de dezembro, que abrem ao meio-dia."
+    ],
+    "horarios": [
+      {
+        "data": "2026-11-28",
+        "rotulo": "28 de novembro",
+        "abre": "19h",
+        "fecha": "22h"
+      },
+      {
+        "data": "2026-11-29",
+        "rotulo": "29 de novembro",
+        "abre": "12h",
+        "fecha": "22h"
+      },
+      {
+        "data": "2026-11-30",
+        "rotulo": "30 de novembro",
+        "abre": "14h",
+        "fecha": "22h"
+      },
+      {
+        "data": "2026-12-01",
+        "rotulo": "1 de dezembro",
+        "abre": "14h",
+        "fecha": "22h"
+      },
+      {
+        "data": "2026-12-02",
+        "rotulo": "2 de dezembro",
+        "abre": "14h",
+        "fecha": "22h"
+      },
+      {
+        "data": "2026-12-03",
+        "rotulo": "3 de dezembro",
+        "abre": "14h",
+        "fecha": "22h"
+      },
+      {
+        "data": "2026-12-04",
+        "rotulo": "4 de dezembro",
+        "abre": "12h",
+        "fecha": "22h"
+      },
+      {
+        "data": "2026-12-05",
+        "rotulo": "5 de dezembro",
+        "abre": "12h",
+        "fecha": "22h"
+      },
+      {
+        "data": "2026-12-06",
+        "rotulo": "6 de dezembro, último dia",
+        "abre": "12h",
+        "fecha": "22h"
+      }
+    ],
+    "horariosNota": "Os horários são os publicados pela prefeitura de Munique."
+  },
+  "winter-wonderland": {
+    "titulo": "Winter Wonderland 2026 no Pineapple Park: horários e brinquedos",
+    "descricao": "O Winter Wonderland no Pineapple Park, em português: horários, os brinquedos de parque de diversões e até quando vai.",
+    "local": "Pineapple Park, Alte Paketposthalle",
+    "endereco": "Arnulfstraße 195, 80634 München",
+    "entrada": "Confira no site oficial",
+    "entradaNota": "Os brinquedos são pagos à parte",
+    "quandoNota": "Vai até 6 de janeiro, bem depois dos mercados de Natal",
+    "organizador": "Pineapple Park",
+    "oQueE": [
+      "Fica no Pineapple Park, na antiga central de encomendas dos Correios, e é o mercado de inverno com mais cara de parque de diversões da cidade: além das barracas de Glühwein e comida, tem brinquedos de verdade, como o Power Express e o Crazy Vegas.",
+      "A programação tem apresentações, música e dois Krampusläufe — o desfile das figuras assustadoras do inverno alpino, que vale conferir a data antes se você for com criança pequena.",
+      "É dos últimos a fechar: segue até 6 de janeiro, quando quase todos os outros já desmontaram. Para quem passa o Ano-Novo em Munique, é uma das poucas opções abertas."
+    ],
+    "criancas": [
+      "Os brinquedos fazem a diferença aqui: é o lugar desta lista onde criança maior se diverte sozinha, em vez de só andar entre barracas.",
+      "Os <strong>Krampusläufe</strong> são o oposto: figuras com máscara e chifres, barulho e correria. Criança pequena costuma se assustar — confira a data no site antes de ir.",
+      "Aos domingos abre só ao meio-dia; nos outros dias, às 11h."
+    ],
+    "horarios": [
+      {
+        "dias": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "rotulo": "Segunda a sábado",
+        "abre": "11h",
+        "fecha": "22h"
+      },
+      {
+        "dias": [
+          0
+        ],
+        "rotulo": "Domingo",
+        "abre": "12h",
+        "fecha": "22h"
+      }
+    ],
+    "horariosNota": "Os horários são os publicados pela prefeitura de Munique. Nos feriados do fim do ano confirme no site oficial antes de ir."
   }
 }

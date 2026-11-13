@@ -1,0 +1,33 @@
+{
+  "christkindlmarkt-do-marienplatz": {
+    "titulo": "Christkindlmarkt do Marienplatz 2026: horários, o que tem e como chegar",
+    "descricao": "O mercado de Natal principal de Munique, em português: datas, horário de cada dia, entrada, o que tem para crianças e como chegar de U-Bahn e S-Bahn.",
+    "local": "Marienplatz e zona de pedestres",
+    "endereco": "Marienplatz 1, 80331 München",
+    "rua": "Marienplatz 1", "cep": "80331",
+    "lat": 48.1373, "lon": 11.5754,
+    "transporte": "U3/U6 e S1 a S8, estação Marienplatz",
+    "transporteNota": "A saída dá direto na praça",
+    "entrada": "Gratuita",
+    "entradaNota": "Comida e bebida são pagas, e a caneca de Glühwein costuma ter caução devolvida na entrega",
+    "quandoNota": "Fechado em 22 de novembro",
+    "organizador": "Landeshauptstadt München",
+    "oQueE": [
+      "É o mercado de Natal principal de Munique e o mais antigo da cidade: acontece no Marienplatz desde o século XIV, na frente da prefeitura nova. Se você só tem tempo para um, é esse. Também é o mais cheio, principalmente no fim de semana depois das 17h, quando o pessoal sai do trabalho.",
+      "A árvore de Natal gigante fica no meio da praça, e as barracas se espalham dali até a zona de pedestres, em direção ao Karlsplatz. São artesanato, enfeites de madeira, doces, castanha assada, salsicha e Glühwein, o vinho quente com especiarias. Peça um <em>Kinderpunsch</em> para as crianças: é a versão sem álcool, e todas as barracas têm.",
+      "De sexta a domingo é difícil andar com carrinho de bebê depois das 17h. Se for com criança pequena, vá de manhã ou no começo da tarde, quando dá para circular com calma e as barracas ainda têm tudo."
+    ],
+    "criancas": [
+      "Na igreja St. Peter, ao lado da praça, fica o <strong>Kripperlmarkt</strong>, o mercado de presépios, com peças de madeira feitas à mão. Vale a parada mesmo sem comprar nada.",
+      "A <strong>Himmelswerkstatt</strong> é uma oficina gratuita para crianças de 6 a 12 anos, com atividades de Natal. Fica na própria praça e não precisa reservar, mas tem fila nos fins de semana.",
+      "De domingo a quinta, às 17h15, tem música ao vivo na sacada da prefeitura. São uns 20 minutos, e é o melhor momento para estar na praça com as crianças."
+    ],
+    "horarios": [
+      { "dias": [1, 2, 3, 4, 5, 6], "rotulo": "Segunda a sábado", "abre": "10h", "fecha": "21h" },
+      { "dias": [0], "rotulo": "Domingo", "abre": "10h", "fecha": "20h" },
+      { "data": "2026-12-24", "rotulo": "24 de dezembro", "abre": "10h", "fecha": "14h" },
+      { "data": "2026-11-22", "rotulo": "22 de novembro", "fechado": "Fechado (Totensonntag)" }
+    ],
+    "horariosNota": "Os horários são os publicados pelo organizador. Em dias de muita chuva ou vento forte algumas barracas fecham antes."
+  }
+}

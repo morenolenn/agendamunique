@@ -1,0 +1,217 @@
+{
+  "midnight-bazar": {
+    "lat": 48.1469549,
+    "lon": 11.5233504,
+    "achou": "Casa Padel Pineapple Park, 195-199, Arnulfstraße, Siedlung Neuhausen, Nymphenburg, Neuhausen-Nymphenburg, München, Bayern, 80634, Deutschland"
+  },
+  "winterworld": {
+    "lat": 48.1964526,
+    "lon": 11.6067923,
+    "achou": "Motorworld München, 8, Am Ausbesserungswerk, Neufreimann, Freimann, Schwabing-Freimann, München, Bayern, 80939, Deutschland"
+  },
+  "herzlmarkt": {
+    "lat": 48.1300409,
+    "lon": 11.582909,
+    "achou": "Deutsches Museum, 1, Museumsinsel, Gärtnerplatz, Isarvorstadt, Ludwigsvorstadt-Isarvorstadt, München, Bayern, 80538, Deutschland"
+  },
+  "faschingsauftakt-no-viktualienmarkt": {
+    "lat": 48.1352755,
+    "lon": 11.5764257,
+    "achou": "Biergarten am Viktualienmarkt, Viktualienmarkt, Graggenauerviertel, Altstadt-Lehel, München, Bayern, 80331, Deutschland"
+  },
+  "martinsumzug-no-centro": {
+    "lat": 48.1384367,
+    "lon": 11.5744155,
+    "achou": "Frauenplatz, Kreuzviertel, Altstadt-Lehel, München, Bayern, 80331, Deutschland"
+  },
+  "weihnachtszauberwald": {
+    "lat": 48.1524608,
+    "lon": 11.6196673,
+    "achou": "4, Rosenkavalierplatz, Arabellapark, Priel, Bogenhausen, München, Bayern, 81925, Deutschland"
+  },
+  "winterrausch-im-hexenhaus": {
+    "lat": 48.1182532,
+    "lon": 11.5747992,
+    "achou": "Gans Woanders, 13, Pilgersheimer Straße, Untergiesing-Harlaching, Giesing, München, Bayern, 81543, Deutschland"
+  },
+  "mercado-de-natal-do-werksviertel": {
+    "lat": 48.1243893,
+    "lon": 11.6055351,
+    "achou": "Knödelplatz, Werksviertel München, Berg am Laim, München, Bayern, 81671, Deutschland"
+  },
+  "alpenwahn": {
+    "lat": 48.1347514,
+    "lon": 11.5751968,
+    "achou": "Der Pschorr, 15, Viktualienmarkt, Graggenauerviertel, Altstadt-Lehel, München, Bayern, 80331, Deutschland"
+  },
+  "fan-fest-da-nfl-na-odeonsplatz": {
+    "lat": 48.1427658,
+    "lon": 11.5763171,
+    "achou": "Odeonsplatz, Brienner Straße, Kreuzviertel, Altstadt-Lehel, München, Bayern, 80333, Deutschland"
+  },
+  "munchner-eiszauber": {
+    "lat": 48.1395114,
+    "lon": 11.5657861,
+    "achou": "Karlsplatz (Stachus), Karls-Rondell, Hackenviertel, Altstadt-Lehel, München, Bayern, 80335, Deutschland"
+  },
+  "mercado-de-natal-do-aeroporto": {
+    "lat": 48.3537694,
+    "lon": 11.7861263,
+    "achou": "MAC-Forum, entre os terminais, Nordallee 25, Flughafen München"
+  },
+  "wintergarten-im-rosengarten": {
+    "lat": 48.1237759,
+    "lon": 11.5086304,
+    "achou": "Rosengarten P, Westendstraße, Am Westpark, Sendling-Westpark, München, Bayern, 81377, Deutschland"
+  },
+  "weihnachtsdorf-na-residenz": {
+    "lat": 48.1421714,
+    "lon": 11.5778676,
+    "achou": "1, Residenzstraße, Graggenauerviertel, Altstadt-Lehel, München, Bayern, 80333, Deutschland"
+  },
+  "moosacher-huttenzauber": {
+    "lat": 48.1818348,
+    "lon": 11.5188145,
+    "achou": "Moosacher St.-Martins-Platz, Pelkovenstraße, Alt-Moosach, Moosach, München, Bayern, 80992, Deutschland"
+  },
+  "winterhof": {
+    "lat": 48.1382036,
+    "lon": 11.5780147,
+    "achou": "Alter Hof, 3, Alter Hof, Graggenauerviertel, Altstadt-Lehel, München, Bayern, 80331, Deutschland"
+  },
+  "sternenflotte-na-alte-utting": {
+    "lat": 48.1199816,
+    "lon": 11.5562612,
+    "achou": "Alte Utting, 15, Lagerhausstraße, Sendlinger Feld, Sendling, München, Bayern, 81371, Deutschland"
+  },
+  "weihnachtsmacherei": {
+    "lat": 48.1302874,
+    "lon": 11.6244437,
+    "achou": "Die Macherei, Baumkirchen, Berg am Laim, München, Bayern, Deutschland"
+  },
+  "mercado-de-natal-da-torre-chinesa": {
+    "lat": 48.1525525,
+    "lon": 11.5920973,
+    "achou": "Chinesischer Turm, Englischer Garten, Kleinhesselohe, Alt-Schwabing, Altstadt-Lehel, Schwabing-Freimann, München, Bayern, 80538, Deutschland"
+  },
+  "mondscheinexpress": {
+    "lat": 48.1222748,
+    "lon": 11.5548426,
+    "achou": "Bahnwärter Thiel, 45, Tumblingerstraße, Am Schlachthof, Ludwigsvorstadt, Ludwigsvorstadt-Isarvorstadt, München, Bayern, 80337, Deutschland"
+  },
+  "christkindlmarkt-do-marienplatz": {
+    "lat": 48.1371436,
+    "lon": 11.5753989,
+    "achou": "Marienplatz, Kreuzviertel, Altstadt-Lehel, München, Bayern, 80331, Deutschland"
+  },
+  "mercado-de-natal-do-viktualienmarkt": {
+    "lat": 48.135109,
+    "lon": 11.5755367,
+    "achou": "Viktualienmarkt, Angerviertel, Altstadt-Lehel, München, Bayern, 80331, Deutschland"
+  },
+  "christkindlmarkt-am-sendlinger-tor": {
+    "lat": 48.1334608,
+    "lon": 11.5668639,
+    "achou": "Sendlinger Tor, Sendlinger-Tor-Platz, Hackenviertel, Altstadt-Lehel, München, Bayern, 80336, Deutschland"
+  },
+  "mercado-de-natal-medieval": {
+    "lat": 48.1434538,
+    "lon": 11.576163,
+    "achou": "Wittelsbacherplatz, Schönfeldvorstadt, Maxvorstadt, München, Bayern, 80333, Deutschland"
+  },
+  "pink-christmas": {
+    "lat": 48.1309886,
+    "lon": 11.566642,
+    "achou": "Stephansplatz, Am Alten Südlichen Friedhof, Glockenbach, Isarvorstadt, Ludwigsvorstadt-Isarvorstadt, München, Bayern, 80337, Deutschland"
+  },
+  "neuhauser-weihnachtsmarkt": {
+    "lat": 48.1540479,
+    "lon": 11.5330186,
+    "achou": "Rotkreuzplatz, Nymphenburger Straße, Ebenau, Neuhausen-Nymphenburg, München, Bayern, 80634, Deutschland"
+  },
+  "haidhauser-weihnachtsmarkt": {
+    "lat": 48.128559,
+    "lon": 11.596116,
+    "achou": "Weißenburger Platz, Haidhausen-Süd, Haidhausen, Au-Haidhausen, München, Bayern, Deutschland"
+  },
+  "sendlinger-bergweihnacht": {
+    "lat": 48.1170397,
+    "lon": 11.5396019,
+    "achou": "Harras, Sendlinger Berg, Untersendling, Sendling, München, Bayern, 81373, Deutschland"
+  },
+  "christkindlmarkt-unterm-maibaum": {
+    "lat": 48.1101094,
+    "lon": 11.5194119,
+    "achou": "Luise-Kiesselbach-Platz, Am Waldfriedhof, Sendling-Westpark, München, Bayern, 81369, Deutschland"
+  },
+  "winter-wonderland": {
+    "lat": 48.1469549,
+    "lon": 11.5233504,
+    "achou": "Casa Padel Pineapple Park, 195-199, Arnulfstraße, Siedlung Neuhausen, Nymphenburg, Neuhausen-Nymphenburg, München, Bayern, 80634, Deutschland"
+  },
+  "weihnachtsmarkt-am-schneckenplatz": {
+    "lat": 48.1309136,
+    "lon": 11.5430036,
+    "achou": "Bavariapark, Schwanthalerhöhe, München, Bayern, Deutschland"
+  },
+  "munchner-feuerzangenbowle": {
+    "lat": 48.135105,
+    "lon": 11.58204,
+    "achou": "Isartor, Tal, Graggenauerviertel, Altstadt-Lehel, München, Bayern, 80331, Deutschland"
+  },
+  "tollwood-winterfestival": {
+    "lat": 48.135672,
+    "lon": 11.5522316,
+    "achou": "Theresienwiese, Sankt-Pauls-Platz, Klinikviertel, Ludwigsvorstadt, Ludwigsvorstadt-Isarvorstadt, München, Bayern, 80336, Deutschland"
+  },
+  "schwabinger-weihnachtsmarkt": {
+    "lat": 48.161985,
+    "lon": 11.5865312,
+    "achou": "Münchner Freiheit, Leopoldstraße, Alt-Schwabing, Schwabing, Schwabing-Freimann, München, Bayern, 80802, Deutschland"
+  },
+  "marchenbazar": {
+    "lat": 48.1670601,
+    "lon": 11.5487933,
+    "achou": "100, Spiridon-Louis-Ring, Oberwiesenfeld Süd, Ebenau, Neuhausen-Nymphenburg, München, Bayern, 80809, Deutschland"
+  },
+  "winterzauber-gans-am-wasser": {
+    "lat": 48.1249334,
+    "lon": 11.5305206,
+    "achou": "Café Gans am Wasser, Siegenburger Straße, Hansapark, Sendling-Westpark, München, Bayern, 81373, Deutschland"
+  },
+  "andreasmarkt": {
+    "lat": 48.1265569,
+    "lon": 11.5537158,
+    "achou": "46, Zenettistraße, Am Schlachthof, Ludwigsvorstadt, Ludwigsvorstadt-Isarvorstadt, München, Bayern, 80337, Deutschland"
+  },
+  "pasinger-christkindlmarkt": {
+    "lat": 48.1446083,
+    "lon": 11.4627798,
+    "achou": "Schererplatz, Neupasing, Pasing, Pasing-Obermenzing, München, Bayern, 81241, Deutschland"
+  },
+  "mercado-de-natal-do-harry-potter": {
+    "lat": 48.1364794,
+    "lon": 11.5907123,
+    "achou": "Praterinsel, Haidhausen-Süd, Altstadt-Lehel, Au-Haidhausen, München, Bayern, Deutschland"
+  },
+  "truderinger-christkindlmarkt": {
+    "lat": 48.1195736,
+    "lon": 11.6706898,
+    "achou": "Kulturzentrum Trudering, Wasserburger Landstraße, Straßtrudering, Neutrudering, Trudering-Riem, München, Bayern, 81825, Deutschland"
+  },
+  "blutenburger-weihnacht": {
+    "lat": 48.1630868,
+    "lon": 11.4568547,
+    "achou": "Schloss Blutenburg, 15, Seldweg, Pipping, Obermenzing, Pasing-Obermenzing, München, Bayern, 81247, Deutschland"
+  },
+  "krampuslauf": {
+    "lat": 48.1387009,
+    "lon": 11.5721617,
+    "achou": "Augustinerstraße, Kreuzviertel, Altstadt-Lehel, München, Bayern, 80331, Deutschland"
+  },
+  "allacher-christkindlmarkt": {
+    "lat": 48.1900336,
+    "lon": 11.4681053,
+    "achou": "Allach, Oertelplatz, Allach, Allach-Untermenzing, München, Bayern, 80999, Deutschland"
+  }
+}

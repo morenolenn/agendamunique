@@ -8,7 +8,7 @@ import { fileURLToPath } from "node:url";
 import vm from "node:vm";
 
 const PASTA = dirname(fileURLToPath(import.meta.url));
-const SITE = "https://agendamunique.com/";
+const SITE = "https://munichcalendar.com/";
 const html = readFileSync(join(PASTA, "..", "index.html"), "utf8");
 const bloco = html.slice(html.indexOf("// === DADOS DOS EVENTOS: INÍCIO"), html.indexOf("// === DADOS DOS EVENTOS: FIM"));
 const dados = {};
@@ -37,7 +37,7 @@ const TXT = {
     ate: (d) => "até " + d, abre: (d) => "abre " + d,
     gratis: "Entrada gratuita", criancas: "Bom com crianças", mais: (n) => "E mais " + n + " no site →",
     mapa: "Ver no mapa", siteOf: "Site oficial", tudo: "Ver a programação completa",
-    navegador: "Ver no navegador", porque: "Você recebe este e-mail porque se inscreveu em agendamunique.com.",
+    navegador: "Ver no navegador", porque: "Você recebe este e-mail porque se inscreveu no Munich Calendar (antes Agenda Munique).",
     sair: "Cancelar a newsletter", nada: "Nenhuma estreia neste fim de semana. Mas tem muita coisa aberta:",
     fimDeSemana: (s, d) => "Fim de semana, " + (s.getUTCMonth() === d.getUTCMonth() ? s.getUTCDate() + " e " + TXT.pt.data(d) : TXT.pt.data(s) + " e " + TXT.pt.data(d)),
   },
@@ -53,7 +53,7 @@ const TXT = {
     ate: (d) => "bis " + d, abre: (d) => "ab " + d,
     gratis: "Eintritt frei", criancas: "Gut mit Kindern", mais: (n) => "Und " + n + " weitere auf der Seite →",
     mapa: "Auf der Karte", siteOf: "Offizielle Seite", tudo: "Das ganze Programm ansehen",
-    navegador: "Im Browser ansehen", porque: "Du bekommst diese E-Mail, weil du dich auf agendamunique.com eingetragen hast.",
+    navegador: "Im Browser ansehen", porque: "Du bekommst diese E-Mail, weil du dich bei Munich Calendar (früher Agenda Munique) eingetragen hast.",
     sair: "Newsletter abbestellen", nada: "An diesem Wochenende startet nichts Neues. Aber vieles hat geöffnet:",
     fimDeSemana: (s, d) => "Wochenende, " + (s.getUTCMonth() === d.getUTCMonth() ? s.getUTCDate() + ". und " + TXT.de.data(d) : TXT.de.data(s) + " und " + TXT.de.data(d)),
   },
@@ -69,7 +69,7 @@ const TXT = {
     ate: (d) => "until " + d, abre: (d) => "opens " + d,
     gratis: "Free entry", criancas: "Good with kids", mais: (n) => "And " + n + " more on the site →",
     mapa: "Open in maps", siteOf: "Official site", tudo: "See the full programme",
-    navegador: "View in browser", porque: "You're getting this email because you signed up at agendamunique.com.",
+    navegador: "View in browser", porque: "You're getting this email because you signed up for Munich Calendar (formerly Agenda Munique).",
     sair: "Unsubscribe", nada: "Nothing new opens this weekend. But plenty is open:",
     fimDeSemana: (s, d) => "Weekend of " + (s.getUTCMonth() === d.getUTCMonth() ? s.getUTCDate() + " and " + TXT.en.data(d) : TXT.en.data(s) + " and " + TXT.en.data(d)),
   },
@@ -86,7 +86,7 @@ const mapa = (q) => "https://www.google.com/maps/search/?api=1&query=" + encodeU
 function gerar(lang) {
   const T = TXT[lang];
   const tr = (ev, k) => (lang !== "pt" && ev[lang] && ev[lang][k]) || ev[k];
-  const siteLang = SITE + (lang === "pt" ? "" : lang + "/");
+  const siteLang = SITE + (lang === "en" ? "" : lang + "/");
   const utm = "utm_source=newsletter&utm_medium=email&utm_campaign=" + iso(hoje);
   const comUtm = (u) => u + (u.includes("?") ? "&" : "?") + utm;
   const arquivo = iso(hoje) + "-" + lang + ".html";
@@ -117,7 +117,7 @@ function gerar(lang) {
 <div style="font-size:15px;line-height:1.45;margin:0 0 6px">${esc(tr(e, "d"))}</div>
 <div style="font-size:14px;font-weight:600;margin:0 0 10px">📍 <a href="${esc(mapa(e.q))}" style="color:${C.ink}">${esc(tr(e, "place"))}</a></div>
 ${tags ? `<div style="margin:0 0 8px">${tags}</div>` : ""}
-${e.url ? botao(e.url, T.siteOf, true) : botao(comUtm(siteLang) + "#ev-" + idDe(e), "agendamunique.com", false)}
+${e.url ? botao(e.url, T.siteOf, true) : botao(comUtm(siteLang) + "#ev-" + idDe(e), "munichcalendar.com", false)}
 </td></tr></table></td></tr>`;
   };
 
@@ -161,7 +161,7 @@ ${e.url ? botao(e.url, T.siteOf, true) : botao(comUtm(siteLang) + "#ev-" + idDe(
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:${C.cream}"><tr><td align="center" class="pad" style="padding:24px 16px 40px">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px">
 <tr><td style="background:${C.lime};border-radius:30px;padding:28px 26px 26px">
-<div style="font-family:${DISPLAY};font-size:22px;font-weight:800;color:${C.ink};letter-spacing:-0.5px;margin:0 0 20px">Agenda <span style="background:${C.yellow};border-radius:10px;padding:0 6px">Munique</span></div>
+<div style="font-family:${DISPLAY};font-size:22px;font-weight:800;color:${C.ink};letter-spacing:-0.5px;margin:0 0 20px">Munich <span style="background:${C.yellow};border-radius:10px;padding:0 6px">Calendar</span></div>
 <div style="font-family:${DISPLAY};font-size:36px;font-weight:800;line-height:1;color:${C.ink};letter-spacing:-1.4px;margin:0 0 12px">${esc(T.fimDeSemana(sab, dom))}</div>
 <div style="font:600 17px/1.45 ${BODY};color:${C.ink}">${esc(T.oi)}</div>
 </td></tr>
@@ -170,7 +170,7 @@ ${corpo}
 <tr><td style="padding:26px 6px 0;font:400 13px/1.5 ${BODY};color:${C.muted};text-align:center">
 ${esc(T.porque)}<br>
 <a href="${SITE}newsletter/${arquivo}" style="color:${C.muted}">${esc(T.navegador)}</a> · <a href="{{{RESEND_UNSUBSCRIBE_URL}}}" style="color:${C.muted}">${esc(T.sair)}</a><br>
-Agenda Munique · {{ENDERECO}}
+Munich Calendar · {{ENDERECO}}
 </td></tr>
 </table></td></tr></table>
 </body></html>

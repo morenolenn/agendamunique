@@ -348,3 +348,6 @@ ${eventos.map((e) => `  <url><loc>${SITE}/evento/${e.id}/</loc></url>`).join("\n
 `;
 fs.writeFileSync(path.join(RAIZ, "sitemap.xml"), sitemap);
 console.log(`\n${n} páginas geradas e sitemap.xml atualizado.`);
+
+// Os dados do aplicativo saem da mesma programação: gera app/dados.json junto.
+await import("./gerar-app.mjs");

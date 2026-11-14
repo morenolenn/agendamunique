@@ -916,5 +916,49 @@
       "2026-12-26",
       "2027-01-01"
     ]
+  },
+  "neuhauser-weihnachtsmarkt": {
+    "titulo": "Mercado de Natal de Neuhausen 2026: horários e programação",
+    "descricao": "O Neuhauser Weihnachtsmarkt no Rotkreuzplatz, em português: datas, horários, teatro de bonecos, São Nicolau, presépio vivo e como chegar de U-Bahn.",
+    "local": "Rotkreuzplatz, Neuhausen",
+    "endereco": "Rotkreuzplatz, 80634 München",
+    "entrada": "Gratuita",
+    "entradaNota": "Comida e bebida são pagas",
+    "quandoNota": "Fechado em 22 de novembro",
+    "organizador": "Neuhauser Weihnachtsmarkt e. V.",
+    "transporte": "U1 e U7, estação Rotkreuzplatz",
+    "transporteNota": "A saída dá direto no mercado. O tram 12 para em frente à praça, e os ônibus 53, 62, 63 e 144 também passam ali",
+    "oQueE": [
+      "É o mercado de Natal do bairro de Neuhausen, montado no Rotkreuzplatz, em cima da estação de metrô. Quem organiza é uma associação do próprio bairro, o Neuhauser Weihnachtsmarkt e. V., e o clima é de vizinhança, longe da multidão do centro.",
+      "Nas barracas tem artesanato feito à mão: enfeites de árvore, figuras de presépio, velas de cera de abelha e entalhes em madeira. Para comer e beber há Glühwein, Feuerzangenbowle, Bombardino, crepes, Bratwurst, Flammkuchen, Kässpatzen, Schupfnudeln e amêndoas torradas.",
+      "Quase toda noite tem música às 17h, com grupos como os Schwabinger Turmbläser, tocadores de trompa alpina e os Goaßlschnalzer. No sábado, 28 de novembro, às 16h, aparecem os Krampus de Moosburg. Em 16 de dezembro, às 18h, chega a Luz da Paz de Belém, e em 18 de dezembro, às 17h, acontece o sorteio de dez gansos de Natal da tradicional tômbola."
+    ],
+    "criancas": [
+      "O <strong>Kasperltheater</strong>, o teatro de bonecos, tem duas sessões, às 14h e às 15h, nos domingos 29 de novembro e 6, 13 e 20 de dezembro.",
+      "<strong>São Nicolau</strong> visita o mercado no sábado, 5 de dezembro, às 17h. No domingo, 6 de dezembro, tem <strong>presépio vivo</strong> às 15h30 e às 16h45.",
+      "Para as crianças e para quem não bebe álcool tem Kinderpunsch. Com a estação de metrô embaixo da praça, dá para chegar sem caminhar no frio."
+    ],
+    "horarios": [
+      {
+        "dias": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "rotulo": "Todos os dias",
+        "abre": "11h",
+        "fecha": "20h30"
+      },
+      {
+        "data": "2026-11-22",
+        "rotulo": "22 de novembro",
+        "fechado": "Fechado (Totensonntag)"
+      }
+    ],
+    "horariosNota": "Os horários são os publicados pelo organizador. A abertura é na sexta, 20 de novembro, às 11h."
   }
 }

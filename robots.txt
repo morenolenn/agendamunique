@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://agendamunique.com/sitemap.xml
+Sitemap: https://munichcalendar.com/sitemap.xml

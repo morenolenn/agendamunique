@@ -1,11 +1,11 @@
-/* Gera app/dados.json: tudo o que o aplicativo do Agenda Munique precisa, num arquivo só.
+/* Gera app/dados.json: tudo o que o aplicativo do Munich Calendar precisa, num arquivo só.
    Junta o EVENTS, o WEEKLY e o DESTAQUE da programação (index.html) com os textos de
    ferramentas/detalhes.json e as coordenadas de ferramentas/coordenadas.json.
 
    node ferramentas/gerar-app.mjs
 
    Rode depois da atualização semanal e do gerar-eventos.mjs (que busca as coordenadas novas).
-   O app baixa https://agendamunique.com/app/dados.json ao abrir; sem internet, usa a última cópia. */
+   O app baixa https://munichcalendar.com/app/dados.json ao abrir; sem internet, usa a última cópia. */
 
 import fs from "node:fs";
 import path from "node:path";
@@ -13,7 +13,7 @@ import { fileURLToPath } from "node:url";
 
 const AQUI = path.dirname(fileURLToPath(import.meta.url));
 const RAIZ = path.join(AQUI, "..");
-const SITE = "https://agendamunique.com";
+const SITE = "https://munichcalendar.com";
 
 const idDe = (t) => t.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 const lerJSON = (nome) => JSON.parse(fs.readFileSync(path.join(AQUI, nome), "utf8"));

@@ -13,7 +13,7 @@ import { fileURLToPath } from "node:url";
 
 const AQUI = path.dirname(fileURLToPath(import.meta.url));
 const RAIZ = path.join(AQUI, "..");
-const SITE = "https://agendamunique.com";
+const SITE = "https://munichcalendar.com";
 
 const MESES = ["janeiro", "fevereiro", "março", "abril", "maio", "junho",
   "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"];
@@ -52,7 +52,7 @@ async function coordenadas(eventos) {
   for (const ev of eventos) {
     if (cache[ev.id]) continue;
     const url = "https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=de&q=" + encodeURIComponent(ev.q);
-    const r = await fetch(url, { headers: { "User-Agent": "AgendaMunique/1.0 (+https://agendamunique.com)" } });
+    const r = await fetch(url, { headers: { "User-Agent": "MunichCalendar/1.0 (+https://munichcalendar.com)" } });
     const j = await r.json();
     cache[ev.id] = j[0] ? { lat: Number(j[0].lat), lon: Number(j[0].lon), achou: j[0].display_name } : null;
     console.log(cache[ev.id] ? `  ${ev.id} → ${cache[ev.id].lat}, ${cache[ev.id].lon}` : `  ${ev.id} → não encontrado (${ev.q})`);
@@ -221,11 +221,11 @@ function pagina(ev, d, coord, vizinhos) {
 <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta property="og:type" content="article">
-<meta property="og:site_name" content="Agenda Munique">
+<meta property="og:site_name" content="Munich Calendar">
 <meta property="og:title" content="${esc(tituloOg)}">
 <meta property="og:description" content="${esc(descricao)}">
 <meta property="og:url" content="${SITE}/evento/${ev.id}/">
-<meta property="og:image" content="${SITE}/og.png?v=2">
+<meta property="og:image" content="${SITE}/og.png?v=3">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#a5d86a">
 <style>:root{color-scheme:light}body{margin:0}[hidden]{display:none!important}</style>
@@ -234,15 +234,15 @@ function pagina(ev, d, coord, vizinhos) {
 <body>
 
 <div class="top">
-  <a class="logo" href="/" aria-label="Agenda Munique, início">
+  <a class="logo" href="/pt/" aria-label="Munich Calendar, início">
     <svg viewBox="12 -1 88 88" aria-hidden="true"><rect x="10.6163" y="13.3935" width="79.6215" height="73" rx="22" transform="rotate(-9.68402 10.6163 13.3935)" fill="#a6d86a"/><circle cx="70.1856" cy="27.0938" r="15.5" fill="#f7d84a"/></svg>
-    Agenda Munique
+    Munich Calendar
   </a>
-  <a class="voltar" href="/">← Toda a programação</a>
+  <a class="voltar" href="/pt/">← Toda a programação</a>
 </div>
 
 <main class="wrap">
-  <p class="trilha"><a href="/">Agenda Munique</a> › <a href="/?tipo=${filtroTipo}">${rotuloTipo}</a> › ${esc(ev.t)}</p>
+  <p class="trilha"><a href="/pt/">Munich Calendar</a> › <a href="/?lang=pt&tipo=${filtroTipo}">${rotuloTipo}</a> › ${esc(ev.t)}</p>
 
   <h1>${esc(ev.t)}</h1>
   <div class="selos">
@@ -286,14 +286,14 @@ ${vizinhos.join("\n")}
 ` : ""}
   <div class="news">
     <p>📬 Receba a programação toda quinta-feira no seu e-mail</p>
-    <a class="btn" href="/#newsletter">Quero receber →</a>
+    <a class="btn" href="/pt/#newsletter">Quero receber →</a>
   </div>
 </main>
 
 <footer class="foot">
   <div class="foot-in">
-    <p>O Agenda Munique é um agregador de eventos de Munique. Todas as informações vêm dos sites dos próprios eventos, por isso confira${ev.url ? ` no <a href="${esc(ev.url)}" target="_blank" rel="noopener">site oficial</a>` : " no site oficial"} as datas, os locais e os valores antes de sair.</p>
-    <p><a href="/">Ver toda a programação</a></p>
+    <p>O Munich Calendar é um agregador de eventos de Munique. Todas as informações vêm dos sites dos próprios eventos, por isso confira${ev.url ? ` no <a href="${esc(ev.url)}" target="_blank" rel="noopener">site oficial</a>` : " no site oficial"} as datas, os locais e os valores antes de sair.</p>
+    <p><a href="/pt/">Ver toda a programação</a></p>
   </div>
 </footer>
 
@@ -343,6 +343,8 @@ for (const ev of eventos) {
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>${SITE}/</loc></url>
+  <url><loc>${SITE}/pt/</loc></url>
+  <url><loc>${SITE}/de/</loc></url>
 ${eventos.map((e) => `  <url><loc>${SITE}/evento/${e.id}/</loc></url>`).join("\n")}
 </urlset>
 `;

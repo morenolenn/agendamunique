@@ -967,11 +967,13 @@ var WEEKLY = [
 // Destaque do hero: ilustração de um evento especial no lugar da cidade 3D, só entre s e e (inclusive).
 // Arte: PNG/WebP com fundo transparente, cena compacta perto de 4:3, sem texto. Para tirar, use DESTAQUE = null.
 // ev: o título (t) do evento em EVENTS; a legenda embaixo da arte sai dele, já traduzida.
-var DESTAQUE = { img: "/destaques/nfl-fan-fest.webp", s: "2026-11-13", e: "2026-11-14", ev: "Fan Fest da NFL na Odeonsplatz",
-  alt: { pt: "Ilustração do Fan Fest da NFL na Odeonsplatz, com a Feldherrnhalle, a Theatinerkirche, uma bola de futebol americano gigante e torcedores",
-         de: "Illustration des NFL Fan Fests am Odeonsplatz mit Feldherrnhalle, Theatinerkirche, einem riesigen Football und Fans",
-         en: "Illustration of the NFL Fan Fest on Odeonsplatz, with the Feldherrnhalle, the Theatinerkirche, a giant football and fans" } };
+var DESTAQUE = { img: "/destaques/natal-marienplatz.webp", s: "2026-11-20", e: "2026-12-24", ev: "Christkindlmarkt do Marienplatz",
+  alt: { pt: "Ilustração da feira de Natal na Marienplatz, com a Neues Rathaus, as torres da Frauenkirche, a Mariensäule, uma árvore de Natal iluminada e barraquinhas com neve",
+         de: "Illustration des Christkindlmarkts am Marienplatz mit Neuem Rathaus, den Türmen der Frauenkirche, der Mariensäule, einem beleuchteten Christbaum und verschneiten Buden",
+         en: "Illustration of the Christmas market on Marienplatz, with the New Town Hall, the Frauenkirche towers, the Mariensäule, a lit Christmas tree and snowy stalls" } };
 // === DADOS DOS EVENTOS: FIM ===
+// ?destaque=1 mostra o destaque fora da data. Lido aqui, antes de syncUrl limpar o endereço.
+var PREVIA_DESTAQUE = /[?&]destaque=1/.test(location.search);
 // Textos da página em português, alemão e inglês. O HTML já vem em português; em alemão, applyLang troca os elementos marcados com data-i18n.
 var TEXT = {
   pt: {
@@ -1671,7 +1673,7 @@ function heroDestaque() {
   if (typeof DESTAQUE === "undefined" || !DESTAQUE || !DESTAQUE.img) return false;
   var n = new Date(), p = function (v) { return (v < 10 ? "0" : "") + v; };
   var hoje = n.getFullYear() + "-" + p(n.getMonth() + 1) + "-" + p(n.getDate());
-  if (/[?&]destaque=1/.test(location.search)) hoje = DESTAQUE.s; // para conferir antes da data
+  if (PREVIA_DESTAQUE) hoje = DESTAQUE.s; // para conferir antes da data
   if (hoje < DESTAQUE.s || hoje > DESTAQUE.e) return false;
   var hero = document.querySelector(".hero"), txt = hero.querySelector(".hero-text");
   var fig = document.createElement("figure");

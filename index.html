@@ -1702,7 +1702,7 @@ function updateDestaque() {
   EVENTS.forEach(function (e) { if (e.t === DESTAQUE.ev) ev = e; });
   if (!ev) { cap.hidden = true; return; }
   cap.hidden = false;
-  cap.innerHTML = "<strong>" + esc(tr(ev, "t")) + "</strong> <span>" + esc(whenText(ev)) + ", " + esc(tr(ev, "place")) + "</span>";
+  cap.innerHTML = "<strong>" + esc(tr(ev, "t")) + "</strong> <span>" + esc(whenText(ev)) + "</span>";
 }
 // este bloco é um <script type="module">, com escopo próprio: o applyLang só enxerga a função assim
 window.updateDestaque = updateDestaque;

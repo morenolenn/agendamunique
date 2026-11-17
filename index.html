@@ -184,6 +184,14 @@ svg.plane { width: 15px; height: 15px; stroke-width: 2.1; animation: plane-float
 .count span { font-family: var(--font-display); font-weight: 700; font-size: 1.3rem; line-height: 1.1; letter-spacing: -0.02em; max-width: 12ch; }
 .now > ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
 .now > ul > li { display: block; }
+/* Respiro e linha fina entre o "Neste fim de semana" e a busca da lista completa */
+.now { margin-bottom: 0; }
+.sec-div { border: 0; border-top: 1.5px solid rgba(29, 42, 26, .14); margin: 36px 8px 36px; }
+@media (min-width: 720px) { .sec-div { margin: 52px 16px 48px; } }
+/* Lista do fim de semana: 5 linhas e o botão "Ver todos" para o resto */
+.now > ul.short > li:nth-child(n+6) { display: none; }
+.now-more { justify-self: start; cursor: pointer; margin-top: 4px; }
+.now:not(:has(.count)) .now-more { margin-top: 14px; }
 .now strong { font-family: var(--font-display); font-weight: 700; }
 
 .stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px 6px; margin-bottom: 30px; }
@@ -433,9 +441,13 @@ body { background: var(--page); }
 .nav-search { white-space: nowrap; }
 .search { scroll-margin-top: 16px; }
 .nav-search svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; flex: none; }
+/* Instagram na navbar: só o ícone, em todos os tamanhos de tela */
+.top .nav-insta { padding: 8px 10px; }
+.nav-insta svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 2.1; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+.top .nav-insta:hover { opacity: .7; }
 @media (max-width: 559px) {
   .nav-search span, .nav-menu summary span { display: none; }
-  .top .nav-search, .top .nav-menu summary, .top .lang-menu summary { padding: 8px 9px; }
+  .top .nav-search, .top .nav-menu summary, .top .lang-menu summary, .top .nav-insta { padding: 8px 9px; }
   .top-r { gap: 0; }
   .top .logo { font-size: 1.02rem; gap: 8px; }
   .top .logo svg { width: 26px; height: 26px; }
@@ -591,14 +603,13 @@ body { background: var(--page); }
   <details class="nav-menu">
     <summary class="pill ghost plain" aria-label="Menu"><span>Menu</span> <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary>
     <nav class="menu-panel" aria-label="Menu">
-      <a href="#lista" data-i18n="navProg">Programação</a>
       <a href="#sugerir" data-suggest data-i18n="navSuggest">Sugira um evento</a>
       <a href="#newsletter" data-i18n="navNews">Newsletter</a>
       <button type="button" data-share="site" data-i18n="navShare">Compartilhe</button>
       <button type="button" data-partner data-i18n="partnerBtn">Seja parceiro</button>
     </nav>
   </details>
-  <a class="go nav-cta nav-link" href="#lista"><span data-i18n="navProg">Programação</span> <i aria-hidden="true"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M3.5 8.5L8 13l4.5-4.5"/></svg></i></a>
+  <a class="pill ghost plain nav-insta" href="https://www.instagram.com/munichcalendar/" target="_blank" rel="noopener" aria-label="Instagram @munichcalendar" title="@munichcalendar"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".6" fill="currentColor"/></svg></a>
   <details class="lang-menu">
     <summary class="pill ghost plain" aria-label="Idioma" data-i18n-aria="langLabel"><span id="lang-cur">PT</span> <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/></svg></summary>
     <nav class="langs" aria-label="Idioma" data-i18n-aria="langLabel">
@@ -626,6 +637,7 @@ body { background: var(--page); }
   <div class="updated-row"><span class="updated-chip" id="updated"></span></div>
   <div class="stats" id="stats"></div>
   <section class="now" id="now" aria-live="polite"></section>
+  <hr class="sec-div">
 
   <div class="search" role="search">
     <label class="vh" for="busca" data-i18n="searchLabel">Buscar evento</label>
@@ -1025,6 +1037,7 @@ var TEXT = {
     free: "Entrada gratuita", kids: "Bom com crianças",
     everyWeek: "Toda semana", until: "até", site: "Site oficial", recurring: "Recorrente", addCal: "Adicionar na agenda",
     weekend: "Neste fim de semana", today: "Hoje",
+    nowAll: function (n) { return "Ver todos os " + n + " eventos"; }, nowLess: "Mostrar menos",
     nothing: "<h2>Por enquanto é só isso</h2><p>Nada com data marcada à vista. Os Flohmärkte semanais continuam rolando.</p>",
     nextOpen: "Próximas aberturas",
     daysTo: function (n) { return (n === 1 ? "dia" : "dias") + " para a primeira feira abrir"; },
@@ -1090,6 +1103,7 @@ var TEXT = {
     free: "Eintritt frei", kids: "Kinderfreundlich",
     everyWeek: "Jede Woche", until: "bis", site: "Offizielle Website", recurring: "Regelmäßig", addCal: "Zum Kalender hinzufügen",
     weekend: "Dieses Wochenende", today: "Heute",
+    nowAll: function (n) { return "Alle " + n + " Termine anzeigen"; }, nowLess: "Weniger anzeigen",
     nothing: "<h2>Das war's vorerst</h2><p>Gerade stehen keine weiteren Termine an. Die wöchentlichen Flohmärkte laufen weiter.</p>",
     nextOpen: "Bald geht's los",
     daysTo: function (n) { return (n === 1 ? "Tag" : "Tage") + " bis der erste Markt öffnet"; },
@@ -1155,6 +1169,7 @@ var TEXT = {
     free: "Free entry", kids: "Kid-friendly",
     everyWeek: "Every week", until: "until", site: "Official website", recurring: "Recurring", addCal: "Add to calendar",
     weekend: "This weekend", today: "Today",
+    nowAll: function (n) { return "See all " + n + " events"; }, nowLess: "Show less",
     nothing: "<h2>That's all for now</h2><p>No more events coming up for now. The weekly flea markets carry on.</p>",
     nextOpen: "Opening soon",
     daysTo: function (n) { return (n === 1 ? "day" : "days") + " until the first market opens"; },
@@ -1351,6 +1366,7 @@ function nowItem(e, when, today) {
   return '<li><details class="now-item"><summary><strong>' + esc(tr(e, "t")) + "</strong><span>" + when + ", " + esc(tr(e, "place")) +
     '</span></summary><ul class="list">' + row(e, today, false).replace('id="ev-' + e.id + '"', "") + "</ul></details></li>";
 }
+var NOW_MAX = 5;
 function buildNow(today) {
   var w = weekendWindow(today);
   var active = EVENTS.filter(function (e) { return parse(e.s) <= w.b && parse(e.e) >= w.a; });
@@ -1358,9 +1374,11 @@ function buildNow(today) {
   var longOpen = function (e) { return parse(e.s) < today && (parse(e.e) - parse(e.s)) / 86400000 > 7 ? 1 : 0; };
   active.sort(function (a, b) { return longOpen(a) - longOpen(b) || parse(a.s) - parse(b.s); });
   if (active.length) {
-    return "<h2>" + w.label + " 🎉</h2><ul>" + active.map(function (e) {
+    // Mostra só os 5 primeiros; o botão abaixo da lista revela o resto
+    var many = active.length > NOW_MAX;
+    return "<h2>" + w.label + " 🎉</h2><ul" + (many ? ' class="short"' : "") + ">" + active.map(function (e) {
       return nowItem(e, esc(whenText(e)), today);
-    }).join("") + "</ul>";
+    }).join("") + "</ul>" + (many ? '<button class="act now-more" type="button" aria-expanded="false" data-n="' + active.length + '">' + L.nowAll(active.length) + "</button>" : "");
   }
   var next = EVENTS.filter(function (e) { return parse(e.s) > today; })
     .sort(function (a, b) { return parse(a.s) - parse(b.s); }).slice(0, 3);
@@ -1554,6 +1572,21 @@ Array.prototype.forEach.call(document.querySelectorAll("[data-suggest]"), functi
 }); });
 Array.prototype.forEach.call(document.querySelectorAll('[data-close="suggest"]'), function (b) { b.addEventListener("click", function () { closeDialog("suggest"); }); });
 document.getElementById("suggest").addEventListener("click", function (e) { if (e.target.id === "suggest") closeDialog("suggest"); });
+// "Ver todos": abre e fecha o resto da lista do fim de semana
+document.getElementById("now").addEventListener("click", function (e) {
+  var b = e.target.closest(".now-more");
+  if (!b) return;
+  var ul = this.querySelector(":scope > ul");
+  var open = ul.classList.toggle("short") === false;
+  b.setAttribute("aria-expanded", open);
+  b.textContent = open ? L.nowLess : L.nowAll(+b.dataset.n);
+  // Ao recolher, fecha o que estava aberto lá embaixo e volta o título para a tela
+  if (!open) {
+    Array.prototype.forEach.call(ul.querySelectorAll(":scope > li:nth-child(n+" + (NOW_MAX + 1) + ") .now-item[open]"), function (d) { d.open = false; });
+    var r = this.getBoundingClientRect();
+    if (r.top < 0) this.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+});
 // No "Neste fim de semana", abrir um evento fecha o que estava aberto
 document.getElementById("now").addEventListener("toggle", function (e) {
   var d = e.target;

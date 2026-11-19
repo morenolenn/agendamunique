@@ -224,5 +224,35 @@
     "lat": 48.1428528,
     "lon": 11.6612749,
     "achou": "Trabrennbahn, Rennbahnstraße, Dianapark, Daglfing, Bogenhausen, München, Bayern, 81929, Deutschland"
+  },
+  "singen-unterm-christbaum": {
+    "lat": 48.1389266,
+    "lon": 11.5704194,
+    "achou": "Sankt Michael, 6, Neuhauser Straße, Hackenviertel, Altstadt-Lehel, München, Bayern, 80331, Deutschland"
+  },
+  "perlacher-christkindlmarkt": {
+    "lat": 48.1000503,
+    "lon": 11.6306901,
+    "achou": "Pfanzeltplatz, Perlach, Ramersdorf-Perlach, München, Bayern, 81737, Deutschland"
+  },
+  "ramersdorfer-christkindlmarkt": {
+    "lat": 48.1149391,
+    "lon": 11.6145257,
+    "achou": "Alter Wirt, 6, Aribonenstraße, Ramersdorf, Ramersdorf-Perlach, München, Bayern, 81669, Deutschland"
+  },
+  "winterzauber-x-herzlmarkt": {
+    "lat": 48.1634751,
+    "lon": 11.6307966,
+    "achou": "Neue Ziegelei, 34, Ruth-Drexel-Straße, Prinz-Eugen-Park, Priel, Englschalking, Bogenhausen, München, Bayern, 81927, Deutschland"
+  },
+  "christkindlmarkt-feldmoching": {
+    "lat": 48.2086981,
+    "lon": 11.5308562,
+    "achou": "Georg-Zech-Allee, Feldmoching, Feldmoching-Hasenbergl, München, Bayern, 80995, Deutschland"
+  },
+  "mercado-de-natal-vegano": {
+    "lat": 48.1364794,
+    "lon": 11.5907123,
+    "achou": "Praterinsel, Haidhausen-Süd, Altstadt-Lehel, Au-Haidhausen, München, Bayern, Deutschland"
   }
 }
